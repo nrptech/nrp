@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Invoice extends Model
 {
     use HasFactory;
-    protected $table = 'users';
+    protected $table = 'invoices';
 
     protected $fillable = [
-        'idUser', 'Carts_idCart', 'name', 'surname', 'email', 'password', 'Userscol',
+        'idInvoices', 'Orders_idOrder', 'total', 'date',
     ];
 }

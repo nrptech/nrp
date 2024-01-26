@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Cart extends Model
 {
     use HasFactory;
-    protected $table = 'users';
+    protected $table = 'carts';
 
     protected $fillable = [
-        'idUser', 'Carts_idCart', 'name', 'surname', 'email', 'password', 'Userscol',
     ];
 }
