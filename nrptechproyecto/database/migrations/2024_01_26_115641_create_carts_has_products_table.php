@@ -18,8 +18,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->timestamps();
 
-            $table->foreign('Carts_idCart')->references('idCart')->on('carts');
-            $table->foreign('Products_idProduct')->references('idProduct')->on('products');
+
         });
     }
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('idUser');
             $table->timestamps();
 
-            $table->foreign('idUser')->references('id')->on('users');
+
         });
     }
 

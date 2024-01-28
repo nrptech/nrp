@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('date');
             $table->timestamps();
 
-            $table->foreign('Orders_idOrder')->references('idOrder')->on('orders');
         });
     }
     /**

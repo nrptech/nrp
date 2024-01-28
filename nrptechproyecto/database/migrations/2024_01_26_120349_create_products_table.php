@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('features', 255);
             $table->timestamps();
 
-            $table->foreign('Taxes_idTax')->references('idTax')->on('taxes');
         });
     }
 

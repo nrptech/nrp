@@ -17,8 +17,7 @@ return new class extends Migration
             $table->integer('Products_idProduct');
             $table->timestamps();
 
-            $table->foreign('Orders_idOrder')->references('idOrder')->on('orders');
-            $table->foreign('Products_idProduct')->references('idProduct')->on('products');
+
         });
     }
 
