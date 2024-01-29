@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('categories_has_products', function (Blueprint $table) {
             $table->id('idPivot');
-            $table->integer('Categories_idCategorie');
-            $table->integer('Products_idProduct');
+            $table->unsignedBigInteger('idCategory');
+            $table->unsignedBigInteger('idProduct');
             $table->timestamps();
 
+            $table->foreign('idCategory')->references('idCategory')->on('categories')->onDelete('cascade');
+            $table->foreign('idProduct')->references('idProduct')->on('products')->onDelete('cascade');
         });
     }
 

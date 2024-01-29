@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('wishlist', function (Blueprint $table) {
             $table->id('idWishlist');
-            $table->integer('idUser');
+            $table->unsignedBigInteger('idUser');
             $table->timestamps();
 
-
+            $table->foreign('idUser')->references('idUser')->on('users')->onDelete('cascade');
+        
         });
     }
 

@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders_has_products', function (Blueprint $table) {
             $table->id('idPivot');
-            $table->integer('Orders_idOrder');
-            $table->integer('Products_idProduct');
+            $table->unsignedBigInteger('idOrder');
+            $table->unsignedBigInteger('idProduct');
             $table->timestamps();
 
-
+            $table->foreign('idOrder')->references('idOrder')->on('orders')->onDelete('cascade');
+            $table->foreign('idProduct')->references('idProduct')->on('products')->onDelete('cascade');
+           
         });
     }
 

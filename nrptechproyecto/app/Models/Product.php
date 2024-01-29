@@ -11,6 +11,36 @@ class Product extends Model
     protected $table = 'products';
 
     protected $fillable = [
-        'idProduct', 'name', 'price', 'description', 'discount', 'Taxes_idTaxe', 'color', 'stock', 'specs', 'features',
+        'idProduct', 'name', 'price', 'description', 'discount', 'idTax', 'color', 'stock', 'specs', 'features',
     ];
+
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class, 'cart_has_products');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
+
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class, 'idTax');
+    }
+
+    public function wishlists()
+    {
+        return $this->belongsToMany(Wishlist::class);
+    }
 }
