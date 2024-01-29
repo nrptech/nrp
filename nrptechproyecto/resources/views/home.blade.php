@@ -62,7 +62,15 @@
             </div>
         </div>
     </header>
-    <main></main>
+    <main>
+        <p>Hola planeta</p>
+        @role("admin")
+        <p>Esta pal admin</p>
+        @endrole
+        @role("user")
+        <p>Esta pa los usuarios</p>
+        @endrole
+    </main>
     <footer>
 
     </footer>

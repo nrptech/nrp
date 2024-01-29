@@ -11,6 +11,6 @@ class OrderProduct extends Model
     protected $table = 'orders_has_products';
 
     protected $fillable = [
-        'idPivot', 'Orders_idOrder', 'Products_idProduct',
+        'idPivot', 'idOrder', 'idProduct',
     ];
 }

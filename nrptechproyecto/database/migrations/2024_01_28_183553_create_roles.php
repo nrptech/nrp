@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -11,20 +14,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
-            $table->id('idInvoices');
-            $table->integer('Orders_idOrder');
-            $table->integer('total');
-            $table->date('date');
-            $table->timestamps();
-
-        });
+        // $role1= Role::create(["name" => "admin"]);
+        // $role2= Role::create(["name" => "usuario"]);
+        // $user = User::find(1);
+        // $user->assignRole($role1);
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+
     }
+    
+    
 };

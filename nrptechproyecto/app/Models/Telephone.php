@@ -13,4 +13,9 @@ class Telephone extends Model
     protected $fillable = [
         'idTelephone', 'tlfn', 'idUser',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
