@@ -11,11 +11,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
-    <link rel="stylesheet" href="{{ asset('assets/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/login.css') }}">
 </head>
 
 <body>
-    <section class="h-100 gradient-form" style="background-color: #eee;">
+    <section class="h-100 gradient-form">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10">
@@ -43,12 +43,6 @@
                                             <label class="form-label" for="form2Example11">Apellidos</label>
                                             <input type="text" name="surname" id="form2Example11" class="form-control"
                                                 placeholder="Ingresar apellidos" />
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Usercol?????</label>
-                                            <input type="text" name="usercol" id="form2Example11" class="form-control"
-                                                placeholder="Ingresar usercol" />
                                         </div>
 
                                         <div class="form-outline mb-4">
