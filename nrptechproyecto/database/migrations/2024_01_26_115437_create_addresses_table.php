@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('country', 45);
             $table->timestamps();
 
-            $table->foreign('idUser')->references('idUser')->on('users');
+            $table->foreign('idUser')->references('id')->on('users');
         });
     }
 
