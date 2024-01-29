@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('state', 45);
             $table->timestamps();
 
-            $table->foreign('idUser')->references('id')->on('users');
         });
     }
 
