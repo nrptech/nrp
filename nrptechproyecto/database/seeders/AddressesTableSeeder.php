@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Address;
+use Illuminate\Support\Facades\DB;
+
 
 class AddressesTableSeeder extends Seeder
 {
@@ -13,7 +15,7 @@ class AddressesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Address::create([
+        DB::table('addresses')->insert([
             'idUser' => 1,
             'province' => 'ProvinciaEjemplo',
             'city' => 'CiudadEjemplo',
