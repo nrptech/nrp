@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('specs', 255);
             $table->string('features', 255);
             $table->timestamps();
-
-            $table->foreign('idTax')->references('idTax')->on('taxes')->onDelete('cascade');
         
         });
     }
