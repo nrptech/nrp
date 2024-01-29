@@ -11,7 +11,7 @@ class Tax extends Model
     protected $table = 'taxes';
 
     protected $fillable = [
-        'idTax', 'amount',
+        'taxName','idTax', 'amount',
     ];
 
     public function products()

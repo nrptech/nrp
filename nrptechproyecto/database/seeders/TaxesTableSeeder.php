@@ -14,6 +14,7 @@ class TaxesTableSeeder extends Seeder
     public function run(): void
     {
         Tax::create([
+            'taxName' => "IVA",
             'idTax' => 1,
             'amount' => 5.00, // Ajusta según tus necesidades
         ]);
