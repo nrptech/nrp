@@ -13,4 +13,9 @@ class Tax extends Model
     protected $fillable = [
         'idTax', 'amount',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'idTax');
+    }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id('idAddress');
-            $table->integer('idUser');
+            $table->unsignedBigInteger('idUser');
             $table->string('province', 45);
             $table->string('city', 45);
             $table->string('street', 60);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('country', 45);
             $table->timestamps();
 
-
+            $table->foreign('idUser')->references('idUser')->on('users');
         });
     }
 

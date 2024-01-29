@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id('idRole');
-            $table->string('type', 45);
-            $table->integer('idUser');
+        Schema::create('invoices', function (Blueprint $table) {
+            $table->id('idInvoices');
+            $table->unsignedBigInteger('idOrder');
+            $table->integer('total');
+            $table->date('date');
             $table->timestamps();
 
-
+            $table->foreign('idOrder')->references('idOrder')->on('orders')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('invoices');
     }
 };
