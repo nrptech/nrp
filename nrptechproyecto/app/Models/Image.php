@@ -11,6 +11,11 @@ class Image extends Model
     protected $table = 'images';
 
     protected $fillable = [
-        'idImage', 'Products_idProduct', 'url',
+        'idImage', 'idProduct', 'url',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

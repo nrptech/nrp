@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('telephones', function (Blueprint $table) {
             $table->id('idTelephone');
             $table->integer('tlfn');
-            $table->integer('idUser');
+            $table->unsignedBigInteger('idUser');
             $table->timestamps();
 
+            $table->foreign('idUser')->references('idUser')->on('users')->onDelete('cascade');
 
         });
     }

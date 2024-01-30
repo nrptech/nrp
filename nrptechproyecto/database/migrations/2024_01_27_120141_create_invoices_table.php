@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id('idInvoices');
-            $table->integer('Orders_idOrder');
+            $table->unsignedBigInteger('idOrder');
             $table->integer('total');
             $table->date('date');
             $table->timestamps();
 
+            $table->foreign('idOrder')->references('idOrder')->on('orders')->onDelete('cascade');
         });
     }
     /**

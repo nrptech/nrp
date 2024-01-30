@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('wishlist_has_products', function (Blueprint $table) {
             $table->id('idPivot');
-            $table->integer('Wishlist_idWishlist');
-            $table->integer('Products_idProduct');
+            $table->unsignedBigInteger('idWishlist');
+            $table->unsignedBigInteger('idProduct');
             $table->timestamps();
 
-
+            $table->foreign('idWishlist')->references('idWishlist')->on('wishlists')->onDelete('cascade');
+            $table->foreign('idProduct')->references('idProduct')->on('products')->onDelete('cascade');        
         });
     }
 
