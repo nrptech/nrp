@@ -11,6 +11,11 @@ class Category extends Model
     protected $table = 'categories';
 
     protected $fillable = [
-        'idCategorie', 'name',
+        'name',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

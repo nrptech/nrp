@@ -11,6 +11,11 @@ class Tax extends Model
     protected $table = 'taxes';
 
     protected $fillable = [
-        'idTax', 'amount',
+        'taxName', 'amount',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'tax_id'  , 'id');
+    }
 }

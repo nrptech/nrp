@@ -11,6 +11,11 @@ class Invoice extends Model
     protected $table = 'invoices';
 
     protected $fillable = [
-        'idInvoices', 'Orders_idOrder', 'total', 'date',
+        'order_id', 'total', 'date',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

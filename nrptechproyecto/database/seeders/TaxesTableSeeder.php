@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Tax;
+use Illuminate\Support\Facades\DB;
+
 
 class TaxesTableSeeder extends Seeder
 {
@@ -13,9 +15,12 @@ class TaxesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Tax::create([
-            'idTax' => 1,
-            'amount' => 5.00, // Ajusta según tus necesidades
+        DB::table('taxes')->insert([
+            'id' => 1,
+            'taxName' => 'Primerita',
+            'amount' => 5598,
+            'created_at' => '2023-12-10',
+            'updated_at' => '2023-12-11',
         ]);
 
     }

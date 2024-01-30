@@ -11,6 +11,11 @@ class Telephone extends Model
     protected $table = 'telephones';
 
     protected $fillable = [
-        'idTelephone', 'tlfn', 'idUser',
+        'tlfn', 'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductsTableSeeder extends Seeder
 {
@@ -13,18 +15,17 @@ class ProductsTableSeeder extends Seeder
      */
     public function run(): void
     {
-
-        Product::create([
-            'idProduct' => 1,
-            'name' => 'ProductoEjemplo',
-            'price' => 50.00,
-            'description' => 'Descripción del producto',
-            'discount' => 10,
-            'Taxes_idTax' => 1,
-            'color' => 'Rojo',
+        DB::table('products')->insert([
+            'id' => 1,
+            'name' => 'Portátil to tocho',
+            'price' => 375000,
+            'description' => 'Está to fuerte',
+            'discount' => 6,
+            'tax_id' => 1,
+            'color' => 'Azul',
             'stock' => 100,
-            'specs' => 'Especificaciones del producto',
-            'features' => 'Características del producto',
+            'specs' => 'Equipo gaming RGB caro caro',
+            'features' => 'Cosas guapas',
         ]);
     }
 }

@@ -11,6 +11,21 @@ class Order extends Model
     protected $table = 'orders';
 
     protected $fillable = [
-        'idOrder', 'idUser', 'state',
+        'user_id', 'state',
     ];
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function user(){
+        return $this->hasOner(user::class);
+    }
+    
 }
