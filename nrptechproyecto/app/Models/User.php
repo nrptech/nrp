@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function addresses()
     {
-        return $this->hasMany(Address::class, 'user_id');
+        return $this->hasMany(Address::class, 'user_id'  ,'id');
     }
 
     public function cart()
@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function telephones()
     {
-        return $this->hasMany(Telephone::class);
+        return $this->hasMany(Telephone::class, "user_id"  , "id");
     }
 
     public function wishlist()
@@ -72,6 +72,6 @@ class User extends Authenticatable
     }
 
     public function orders(){
-        return $this->hasMany(Order::class, "user_id");
+        return $this->hasMany(Order::class, "user_id"  , "id")->orderBy("created_at", "DESC");
     }
 }

@@ -41,7 +41,7 @@ class Product extends Model
 
     public function tax()
     {
-        return $this->belongsTo(Tax::class, 'tax_id');
+        return $this->belongsTo(Tax::class, 'tax_id'  , 'id');
     }
 
     public function wishlists()
