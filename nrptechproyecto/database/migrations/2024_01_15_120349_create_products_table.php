@@ -12,20 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id('idProduct');
+            $table->id();
             $table->string('name');
             $table->integer('price');
             $table->string('description', 255);
             $table->integer('discount');
-            $table->unsignedBigInteger('idTax')->default(1);
+            $table->unsignedBigInteger('idTax');
             $table->string('color', 45);
             $table->integer('stock');
             $table->string('specs', 255);
             $table->string('features', 255);
             $table->timestamps();
-
-            $table->foreign('idTax')->references('idTax')->on('taxes')->name('idTax');
-
         
         });
     }

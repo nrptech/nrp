@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('idWishlist')->references('id')->on('wishlists');
-            $table->foreign('idProduct')->references('idProduct')->on('products');        
+            $table->foreign('idProduct')->references('id')->on('products');        
         });
     }
 

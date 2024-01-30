@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('taxes', function (Blueprint $table) {
-            $table->id('idTax');
+            $table->id();
+            $table->string("taxName", 45);
             $table->integer('amount');
             $table->timestamps();
         });
