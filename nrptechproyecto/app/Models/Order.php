@@ -11,7 +11,7 @@ class Order extends Model
     protected $table = 'orders';
 
     protected $fillable = [
-        'idUser', 'state',
+        'user_id', 'state',
     ];
 
     public function invoice()

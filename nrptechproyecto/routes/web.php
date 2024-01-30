@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +24,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->get('/products', [Product::class, 'showProducts']);
+Route::middleware(['auth'])->get('/products', [Product::class, 'showProducts'])->name("products");
 
+Route::middleware(["auth"])->get('/cart', [CartController::class, 'showCart'])->name('cart');
 
+Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
+
+Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update');
 

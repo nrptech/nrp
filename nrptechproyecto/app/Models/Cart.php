@@ -11,7 +11,7 @@ class Cart extends Model
     protected $table = 'carts';
 
     protected $fillable = [
-        'idUser'
+        'user_id'
     ];
 
     public function user()
@@ -21,6 +21,7 @@ class Cart extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'cart_has_products');
+        return $this->belongsToMany(Product::class, 'cart_has_products')->withPivot("amount");
     }
+
 }

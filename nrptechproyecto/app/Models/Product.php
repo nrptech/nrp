@@ -11,12 +11,12 @@ class Product extends Model
     protected $table = 'products';
 
     protected $fillable = [
-       'name', 'price', 'description', 'discount', 'idTax', 'color', 'stock', 'specs', 'features',
+       'name', 'price', 'description', 'discount', 'tax_id', 'color', 'stock', 'specs', 'features',
     ];
 
     public function carts()
     {
-        return $this->belongsToMany(Cart::class, 'cart_has_products');
+        return $this->belongsToMany(Cart::class, 'cart_has_products')->withPivot("amount");
     }
 
     public function categories()
@@ -36,7 +36,7 @@ class Product extends Model
 
     public function tax()
     {
-        return $this->belongsTo(Tax::class, 'idTax');
+        return $this->belongsTo(Tax::class, 'tax_id');
     }
 
     public function wishlists()

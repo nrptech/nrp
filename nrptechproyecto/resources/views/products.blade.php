@@ -41,6 +41,12 @@ use App\Models\Product;
             <p><strong>Stock:</strong> {{ $product->stock }}</p>
             <p><strong>Specs:</strong> {{ $product->specs }}</p>
             <p><strong>Features:</strong> {{ $product->features }}</p>
+            <form action="{{ route('cart.add', $product) }}" method="post">
+                @csrf
+                <input type="number" name="amount" value="1" min="1">
+                <button type="submit">Agregar al carrito</button>
+            </form>
+            
         </div>
     @endforeach
 </body>
