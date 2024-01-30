@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Tax;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $role1= Role::create(["name" => "admin"]);
+        $role2= Role::create(["name" => "usuario"]);
+
         $user = new User();
         $product = new Product();
         $tax = new Tax();
@@ -39,7 +43,7 @@ class DatabaseSeeder extends Seeder
         $user->surname="Admin Admin";
         $user->idRole=1;
 
-
+        $user->assignRole($role1);
         $tax->save();
         $product->save();
         $user->save();
