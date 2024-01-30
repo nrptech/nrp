@@ -1,0 +1,19 @@
+
+html{
+    height: 100%;
+    background-color: #eee;
+}
+
+body{
+    background-color: #eee;
+}
+
+.gradient-custom-2 {
+    
+    background: rgb(1,45,98);
+    background: -moz-linear-gradient(90deg, rgba(1,45,98,1) 0%, rgba(63,212,245,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(1,45,98,1) 0%, rgba(63,212,245,1) 100%);
+    background: linear-gradient(90deg, rgba(1,45,98,1) 0%, rgba(63,212,245,1) 100%);
+    
+}
+

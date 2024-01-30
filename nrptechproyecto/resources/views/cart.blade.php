@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Home</title>
+    <title>Carrito</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -21,23 +21,37 @@
 </head>
 
 <body>
-
     @include('header')
 
     <main>
-        <p>Hola planeta</p>
-        @role('admin')
-            <p>Esta pal admin</p>
-        @endrole
-        @role('user')
-            <p>Esta pa los usuarios</p>
-        @endrole
+        <h1>Carrito de Compras</h1>
+
+        @if ($products->isEmpty())
+        <p>El carrito está vacío</p>
+    @else
+        <ul>
+            @foreach ($products as $product)
+                <li>
+                    {{ $product->name }} - Cantidad: {{ $product->pivot->amount }}
+                    
+                    <!-- Formulario para eliminar cantidad -->
+                    <form action="{{ route('cart.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="number" name="amount" min="1" max="{{ $product->pivot->amount }}" value="1">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </li>
+                <!-- Agrega aquí más detalles del producto si es necesario -->
+            @endforeach
+        </ul>
+    @endif
+
     </main>
+
     <footer>
 
     </footer>
-
-
 </body>
 
 </html>

@@ -11,7 +11,7 @@ class Invoice extends Model
     protected $table = 'invoices';
 
     protected $fillable = [
-        'idInvoices', 'idOrder', 'total', 'date',
+        'order_id', 'total', 'date',
     ];
 
     public function order()

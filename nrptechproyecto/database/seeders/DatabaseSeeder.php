@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Tax;
 use App\Models\User;
