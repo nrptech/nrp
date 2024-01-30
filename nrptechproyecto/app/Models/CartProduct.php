@@ -11,6 +11,6 @@ class CartProduct extends Model
     protected $table = 'carts_has_products';
 
     protected $fillable = [
-        // Define las columnas según la tabla carts_has_products
+        "idCart", "idProduct"
     ];
 }
