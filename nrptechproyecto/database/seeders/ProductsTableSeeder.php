@@ -16,11 +16,12 @@ class ProductsTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('products')->insert([
-            'idProduct' => 1,
+            'id' => 1,
             'name' => 'Portátil to tocho',
             'price' => 375000,
             'description' => 'Está to fuerte',
             'discount' => 6,
+            'idTax' => 1,
             'color' => 'Azul',
             'stock' => 100,
             'specs' => 'Equipo gaming RGB caro caro',

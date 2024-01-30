@@ -14,9 +14,10 @@ class PermissionsTableSeeder extends Seeder
     {
         DB::table('permissions')->insert([
             'id' => 1,
-            'name'=> '',
-            'guard_name' => '',
-            'created_at' => '',
+            'name'=> 'Admin',
+            'guard_name' => 'web',
+            'created_at' => '2024-12-12',
+            'updated_at' => '2024-12-12',
             
         ]);
     }
