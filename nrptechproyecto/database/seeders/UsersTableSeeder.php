@@ -16,20 +16,26 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'idUser' => 1,
+                'id' => 1,
                 'name' => 'Admin',
                 'email' => 'admin@dominio.com',
+                'email_verified_at' => '2024-01-28 12:34:56',
+                'password' => Hash::make('contraseña123'),
+                'remember_token' => '2024-01-28 12:31:56',
+                'created_at' => '2024-01-28 12:32:56',
+                'updated_at' => '2024-01-28 12:32:57',
                 'surname' => 'Master',
-                'password' => Hash::make('contraseña123'), // Utiliza Hash::make para encriptar la contraseña
-                'email_verified_at' => '2024-01-29 12:34:56'
             ],
             [
-                'idUser' => 2,
+                'id' => 2,
                 'name' => 'Usuario',
                 'email' => 'usuario@dominio.com',
-                'surname' => 'ApellidoEjemplo',
+                'email_verified_at' => '2024-01-29 12:34:56',
                 'password' => Hash::make('contraseña123'),
-                'email_verified_at' => '2024-01-29 12:34:56'
+                'remember_token' => '2024-01-29 12:31:56',
+                'created_at' => '2024-01-29 12:32:56',
+                'updated_at' => '2024-01-29 12:32:57',
+                'surname' => 'ApellidoEjemplo',
             ]
         ]);
     }

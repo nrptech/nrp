@@ -17,16 +17,16 @@ class RolesTableSeeder extends Seeder
     {
         DB::table('roles')->insert([
             [
-                'idRole' => 1,
-                'type' => 'Admin',
-                'idUser' => '1',
-                'created_at' => '2017-07-23',
-                'updated_at' => '2017-07-23'
+                'id' => 1,
+                'name' => 'Admin',
+                'guard_name' => 'Administrador',
+                'created_at' => '2017-07-22',
+                'updated_at' => '2017-07-22'
             ],
             [
-                'idRole' => 1,
-                'type' => 'Admin',
-                'idUser' => '2',
+                'id' => 2,
+                'name' => 'User',
+                'guardname' => 'Usuario',
                 'created_at' => '2017-07-23',
                 'updated_at' => '2017-07-23'
             ]
