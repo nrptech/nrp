@@ -20,11 +20,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(TaxesTableSeeder::class); 
+        // $this->call(TaxesTableSeeder::class); 
         // $this->call(RolesTableSeeder::class);
         // $this->call(UsersTableSeeder::class);
         // $this->call(AddressesTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
+        // $this->call(ProductsTableSeeder::class);
         // $this->call(PermissionsTableSeeder::class);
         // $this->call(RolesPermissionsSeeder::class);
 
@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
 
         $user = new User();
         $product = new Product();
+        $product2 = new Product();
         $tax = new Tax();
 
         $tax->taxName="IVA";
@@ -42,23 +43,35 @@ class DatabaseSeeder extends Seeder
         $product->price= 129;
         $product->description="Es muy bueno!!";
         $product->discount=1;
-        $product->idTax=1;
+        $product->tax_id=1;
         $product->color="ROJO";
         $product->stock=100;
         $product->specs="Muy poderoso";
         $product->features="Hace muchas cosas";
-
+        
+        $product2->name="Productoria2";
+        $product2->price= 78;
+        $product2->description="No es tan bueno";
+        $product2->discount=1;
+        $product2->tax_id=1;
+        $product2->color="VERDE";
+        $product2->stock=100;
+        $product2->specs="Ta bien";
+        $product2->features="Se maneja guay";
+        
         $user->name="Admin";
         $user->email="admin@admin.com";
         $user->password=bcrypt('12345678');
         $user->surname="Admin Admin";
-        $user->idRole=1;
-
+        $user->role_id=1;
+        
         $user->assignRole($role1);
         $tax->save();
         $product->save();
+        $product2->save();
         $user->save();
 
+        \App\Models\User::factory(10)->create();
         
     }
 }

@@ -21,7 +21,7 @@ class ProductsTableSeeder extends Seeder
             'price' => 375000,
             'description' => 'Está to fuerte',
             'discount' => 6,
-            'idTax' => 1,
+            'tax_id' => 1,
             'color' => 'Azul',
             'stock' => 100,
             'specs' => 'Equipo gaming RGB caro caro',
