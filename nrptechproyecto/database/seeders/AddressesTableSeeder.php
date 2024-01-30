@@ -16,7 +16,7 @@ class AddressesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('addresses')->insert([
-            'idUser' => 1,
+            'idUser' => 2,
             'province' => 'ProvinciaEjemplo',
             'city' => 'CiudadEjemplo',
             'street' => 'CalleEjemplo',
