@@ -11,11 +11,11 @@ class Address extends Model
     protected $table = 'addresses';
 
     protected $fillable = [
-        'idUser', 'province', 'city', 'street', 'number', 'pc', 'country',
+        'user_id', 'province', 'city', 'street', 'number', 'pc', 'country',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'idUser');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

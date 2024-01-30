@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('wishlist_has_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idWishlist');
-            $table->unsignedBigInteger('idProduct');
+            $table->unsignedBigInteger('wishlist_id');
+            $table->unsignedBigInteger('product_id');
             $table->timestamps();
 
-            $table->foreign('idWishlist')->references('id')->on('wishlists');
-            $table->foreign('idProduct')->references('id')->on('products');        
+            $table->foreign('wishlist_id')->references('id')->on('wishlists');
+            $table->foreign('product_id')->references('id')->on('products');        
         });
     }
 
