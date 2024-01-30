@@ -17,20 +17,18 @@ class RolesTableSeeder extends Seeder
     {
         DB::table('roles')->insert([
             [
-                'idUser' => 1,
-                'name' => 'Admin',
-                'email' => 'admin@dominio.com',
-                'surname' => 'Master',
-                'password' => Hash::make('contraseña123'), // Utiliza Hash::make para encriptar la contraseña
-                'email_verified_at' => '2024-01-29 12:34:56'
+                'idRole' => 1,
+                'type' => 'Admin',
+                'idUser' => '1',
+                'created_at' => '2017-07-23',
+                'updated_at' => '2017-07-23'
             ],
             [
-                'idUser' => 2,
-                'name' => 'Usuario',
-                'email' => 'usuario@dominio.com',
-                'surname' => 'ApellidoEjemplo',
-                'password' => Hash::make('contraseña123'),
-                'email_verified_at' => '2024-01-29 12:34:56'
+                'idRole' => 1,
+                'type' => 'Admin',
+                'idUser' => '2',
+                'created_at' => '2017-07-23',
+                'updated_at' => '2017-07-23'
             ]
         ]);
     }
