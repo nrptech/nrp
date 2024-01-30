@@ -47,12 +47,6 @@
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Usercol?????</label>
-                                            <input type="text" name="usercol" id="form2Example11" class="form-control"
-                                                placeholder="Ingresar usercol" />
-                                        </div>
-
-                                        <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
                                             <input type="email" name="email" id="form2Example11" class="form-control"
                                                 placeholder="Correo electrónico" />
