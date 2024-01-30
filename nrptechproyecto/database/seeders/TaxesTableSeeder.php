@@ -16,8 +16,9 @@ class TaxesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('taxes')->insert([
-            'idTax' => 1,
-            'amount' => 5.00,
+            'id' => 1,
+            'taxName' => 'Primerita',
+            'amount' => 5598,
             'created_at' => '2023-12-10',
             'updated_at' => '2023-12-11',
         ]);

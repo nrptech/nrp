@@ -18,24 +18,26 @@ class UsersTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Admin',
+                'surname' => 'Master',
                 'email' => 'admin@dominio.com',
                 'email_verified_at' => '2024-01-28 12:34:56',
-                'password' => Hash::make('contraseña123'),
+                'password' => Hash::make('12345678'),
+                'idRole' => 1,
                 'remember_token' => '2024-01-28 12:31:56',
                 'created_at' => '2024-01-28 12:32:56',
                 'updated_at' => '2024-01-28 12:32:57',
-                'surname' => 'Master',
             ],
             [
                 'id' => 2,
                 'name' => 'Usuario',
+                'surname' => 'ApellidoEjemplo',
                 'email' => 'usuario@dominio.com',
                 'email_verified_at' => '2024-01-29 12:34:56',
-                'password' => Hash::make('contraseña123'),
+                'password' => Hash::make('12345678'),
+                'idRole' => 2,
                 'remember_token' => '2024-01-29 12:31:56',
                 'created_at' => '2024-01-29 12:32:56',
                 'updated_at' => '2024-01-29 12:32:57',
-                'surname' => 'ApellidoEjemplo',
             ]
         ]);
     }
