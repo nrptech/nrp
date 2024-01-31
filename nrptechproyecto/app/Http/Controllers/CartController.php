@@ -8,21 +8,28 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-   
     public function showCart()
     {
         $user = Auth::user();
         $cart = $user->cart;
     
+        if (!$cart) {
+            return view('cart', ['products' => []]); // No hay carrito, retornar vista con una lista vacía
+        }
+    
         $productsInCart = $cart->products;
     
-        return view('/cart', ['products' => $productsInCart]);
+        return view('cart', ['products' => $productsInCart]);
     }
-
+    
     public function addToCart(Product $product, Request $request)
     {
         $user = Auth::user();
         $cart = $user->cart;
+    
+        if (!$cart) {
+            $cart = $user->cart()->create();
+        }
     
         $amount = $request->input('amount', 1);
     
@@ -30,11 +37,15 @@ class CartController extends Controller
     
         return redirect()->back()->with('status', 'Producto agregado al carrito');
     }
-
+    
     public function updateCart(Request $request)
     {
         $user = Auth::user();
         $cart = $user->cart;
+    
+        if (!$cart) {
+            return redirect()->back()->with('error', 'El usuario no tiene un carrito');
+        }
     
         $productId = $request->input('product_id');
         $amount = $request->input('amount');
@@ -52,5 +63,4 @@ class CartController extends Controller
         return redirect()->back()->with('status', 'Cantidad actualizada en el carrito');
     }
     
-
 }

@@ -26,7 +26,7 @@
     <main>
         <h1>Carrito de Compras</h1>
 
-        @if ($products->isEmpty())
+        @if (empty($products))
         <p>El carrito está vacío</p>
     @else
         <ul>
