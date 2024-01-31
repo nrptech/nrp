@@ -27,7 +27,13 @@ class CartController extends Controller
     
         $amount = $request->input('amount', 1);
     
-        $cart->products()->attach($product, ['amount' => $amount]);
+        if ($cart->products->contains($product)) {
+            $existingAmount = $cart->products()->where('product_id', $product->id)->first()->pivot->amount;
+            $newAmount = $existingAmount + $amount;
+            $cart->products()->updateExistingPivot($product, ['amount' => $newAmount]);
+        } else {
+            $cart->products()->attach($product, ['amount' => $amount]);
+        }
     
         return redirect()->back()->with('status', 'Producto agregado al carrito');
     }
