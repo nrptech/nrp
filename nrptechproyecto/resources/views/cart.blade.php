@@ -38,11 +38,13 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center"> <!-- Agregado align-items-center -->
                             <!-- Formulario para restar cantidad -->
-                            <form action="{{ route('cart.update') }}" method="POST" class="me-2">
+                            <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="amount" value="1">
+                                <!-- Puedes ajustar el valor si quieres restar una cantidad diferente -->
                                 <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
                             </form>
+
 
                             <!-- Mostrar cantidad y botón de sumar -->
                             <span class="badge bg-primary rounded-circle me-2">{{ $product->pivot->amount }}</span>
@@ -67,16 +69,6 @@
                         <span class="badge bg-dark rounded-pill me-2">
                             Precio por cantidad: ${{ number_format($product->price * $product->pivot->amount, 2) }}
                         </span>
-
-                        <!-- Formulario para eliminar cantidad -->
-                        <form action="{{ route('cart.update') }}" method="POST" class="ms-2">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="number" name="amount" min="1" max="{{ $product->pivot->amount }}"
-                                value="1" class="form-control d-inline-block" style="width: 70px;">
-                            <button type="submit" class="btn btn-danger btn-sm ms-2">Eliminar</button>
-                        </form>
-                    </li>
 
                     @php
                         $totalPrice += $product->price * $product->pivot->amount; // Suma al precio total

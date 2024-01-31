@@ -65,6 +65,32 @@ class CartController extends Controller
         return redirect()->back()->with('status', 'Cantidad reducida en el carrito');
     }
 
+    public function substracAmount(Product $product, Request $request)
+    {
+        $user = Auth::user();
+        $cart = $user->cart;
+
+        if (!$cart) {
+            return redirect()->back()->with('error', 'El usuario no tiene un carrito');
+        }
+
+        $amount = $request->input('amount', 1);
+
+        if ($cart->products->contains($product)) {
+            $existingAmount = $cart->products()->where('product_id', $product->id)->first()->pivot->amount;
+            $newAmount = $existingAmount - $amount;
+
+            if ($newAmount > 0) {
+                $cart->products()->updateExistingPivot($product, ['amount' => $newAmount]);
+            } else {
+                $cart->products()->detach($product->id);
+            }
+        }
+
+        return redirect()->back()->with('status', 'Cantidad restada en el carrito');
+    }
+
+
 
     public function updateCart(Request $request)
     {
