@@ -53,12 +53,12 @@
                         <form action="{{ route('cart.update') }}" method="POST" class="ms-2">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="number" name="amount" min="1" max="{{ $product->pivot->amount }}" value="1"
-                                class="form-control d-inline-block" style="width: 70px;">
+                            <input type="number" name="amount" min="1" max="{{ $product->pivot->amount }}"
+                                value="1" class="form-control d-inline-block" style="width: 70px;">
                             <button type="submit" class="btn btn-danger btn-sm ms-2">Eliminar</button>
                         </form>
                     </li>
-                    
+
                     @php
                         $totalPrice += $product->price * $product->pivot->amount; // Suma al precio total
                     @endphp
