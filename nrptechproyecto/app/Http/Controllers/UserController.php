@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
-use DB;
-use Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 
 class UserController extends Controller
@@ -19,7 +18,7 @@ class UserController extends Controller
     public function index(request $request)
     {
         $data = User::orderBy('id', 'DESC')->paginate(5);
-        return view('user.index', compact('data'))
+        return view('users.index', compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -30,7 +29,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return response()->view('user.create', compact('roles'));
+        return response()->view('users.create', compact('roles'));
     }
 
     /**
@@ -48,12 +47,12 @@ class UserController extends Controller
             'roles' => 'required'
         ]);
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        $input['password'] = bcrypt($input['password']);
 
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('user.index')
+        return redirect()->route('users.index')
             ->with('success', 'User created successfully')
             ->toResponse($request);
 
@@ -68,7 +67,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return response()->view('user.show', compact('user'));
+        return response()->view('users.show', compact('user'));
     }
 
     /**
@@ -82,7 +81,7 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
 
-        return response()->view('user.edit', compact('user', 'roles', 'userRole'));
+        return response()->view('users.edit', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -100,7 +99,7 @@ class UserController extends Controller
         ]);
         $input = $request->all();
         if (empty($input['password'])) {
-            $input['password'] = Hash::make($input['password']);
+            $input['password'] = bcrypt($input['password']);
         } else {
             $input = Arr::except($input, array('password'));
         }
@@ -111,7 +110,7 @@ class UserController extends Controller
 
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('user.index')
+        return redirect()->route('users.index')
             ->with('success', 'User updated successfully')
             ->toResponse($request);
     }

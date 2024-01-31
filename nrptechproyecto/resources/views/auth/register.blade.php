@@ -25,7 +25,7 @@
                                 <div class="card-body p-md-5 mx-md-4">
 
                                     <div class="text-center">
-                                        <img src="{{ Storage::url('nrp.png') }}"
+                                        <img src="{{ asset('images/nrp.webp') }}"
                                             style="width: 185px;" alt="logo">
                                     </div>
 
