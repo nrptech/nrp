@@ -26,7 +26,7 @@
     <main class="container mt-4">
         <h1 class="mb-4">Carrito de Compras</h1>
 
-        @if ($products->isEmpty())
+        @if (empty($products))
             <p class="alert alert-info">El carrito está vacío</p>
         @else
             <ul class="list-group">
