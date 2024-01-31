@@ -30,10 +30,24 @@
             <p class="alert alert-info">El carrito está vacío</p>
         @else
             <ul class="list-group">
+                @php
+                    $totalPrice = 0; // Inicializa el precio total
+                @endphp
+
                 @foreach ($products as $product)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{ $product->name }}
                         <span class="badge bg-primary rounded-pill">Cantidad: {{ $product->pivot->amount }}</span>
+
+                        <!-- Mostrar precio por unidad -->
+                        <span class="badge bg-success rounded-pill">
+                            Precio por unidad: ${{ number_format($product->price, 2) }}
+                        </span>
+
+                        <!-- Mostrar precio por cantidad -->
+                        <span class="badge bg-warning rounded-pill">
+                            Precio por cantidad: ${{ number_format($product->price * $product->pivot->amount, 2) }}
+                        </span>
 
                         <!-- Formulario para eliminar cantidad -->
                         <form action="{{ route('cart.update') }}" method="POST" class="ms-2">
@@ -44,9 +58,17 @@
                             <button type="submit" class="btn btn-danger btn-sm ms-2">Eliminar</button>
                         </form>
                     </li>
-                    <!-- Agrega aquí más detalles del producto si es necesario -->
+                    
+                    @php
+                        $totalPrice += $product->price * $product->pivot->amount; // Suma al precio total
+                    @endphp
                 @endforeach
             </ul>
+
+            <!-- Mostrar precio total del carrito -->
+            <div class="mt-3">
+                <h4>Precio total del carrito: ${{ number_format($totalPrice, 2) }}</h4>
+            </div>
         @endif
 
     </main>
