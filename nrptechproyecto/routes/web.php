@@ -37,7 +37,7 @@ Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->nam
 
 Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('productos', ProductController::class);
