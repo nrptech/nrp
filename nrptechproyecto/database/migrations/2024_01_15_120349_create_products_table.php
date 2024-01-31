@@ -18,12 +18,11 @@ return new class extends Migration
             $table->string('description', 255);
             $table->integer('discount');
             $table->unsignedBigInteger('tax_id');
-            $table->string('color', 45);
+            $table->string('color', 45)->default('')->nullable();
             $table->integer('stock');
-            $table->string('specs', 255);
-            $table->string('features', 255);
+            $table->string('specs', 255)->default('')->nullable();
+            $table->string('features', 255)->default('')->nullable();
             $table->timestamps();
-        
         });
     }
 

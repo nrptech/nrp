@@ -38,6 +38,7 @@
     </div>
     <div class="pull-right">
       <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+      <a class="btn btn-primary" href="{{ route('productos.index') }}"> Go to Productos</a>
     </div>
   </div>
 </div>
