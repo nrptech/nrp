@@ -23,7 +23,7 @@
         <body class="hold-transition skin-blue sidebar-mini">
           <div class="wrapper">
       
-           @include("header");
+           @include("header")
 
             <!-- Left side column. contains the logo and sidebar -->
             
