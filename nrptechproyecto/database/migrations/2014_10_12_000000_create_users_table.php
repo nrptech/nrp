@@ -21,8 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger("role_id")->default(2);
             $table->rememberToken();
             $table->timestamps();
-
-            
         });
     }
 

@@ -35,6 +35,12 @@ use App\Models\Product;
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->name }}</h5>
+                            <div class="product-images">
+                                @foreach ($product->images as $image)
+                                    <img src="{{ asset("$image->url") }}" alt="{{ $product->name }}"
+                                        class="img-fluid mb-2">
+                                @endforeach
+                            </div>
                             <p class="card-text"><strong>Precio:</strong> {{ $product->price }}</p>
                             <p class="card-text"><strong>Descripción:</strong> {{ $product->description }}</p>
                             <p class="card-text"><strong>Descuento:</strong> {{ $product->discount }}</p>

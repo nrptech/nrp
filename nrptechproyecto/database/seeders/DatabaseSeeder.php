@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Cart;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Tax;
 use App\Models\User;
@@ -31,10 +32,20 @@ class DatabaseSeeder extends Seeder
         $role1= Role::create(["name" => "admin"]);
         $role2= Role::create(["name" => "usuario"]);
 
+        $image = new Image();
+        $image2 = new Image();
+        $image3 = new Image();
         $user = new User();
         $product = new Product();
         $product2 = new Product();
         $tax = new Tax();
+
+        $image->product_id=1;
+        $image->url="images/nrp.webp";
+        $image2->product_id=2;
+        $image2->url="images/nrp.webp";
+        $image3->product_id=1;
+        $image3->url="images/xokas.jpg";
 
         $tax->taxName="IVA";
         $tax->amount=10;
@@ -65,11 +76,15 @@ class DatabaseSeeder extends Seeder
         $user->surname="Admin Admin";
         $user->role_id=1;
         
+        
         $user->assignRole($role1);
         $tax->save();
         $product->save();
         $product2->save();
         $user->save();
+        $image->save();
+        $image2->save();
+        $image3->save();
 
         \App\Models\User::factory(10)->create();
         
