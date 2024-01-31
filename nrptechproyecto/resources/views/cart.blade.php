@@ -36,16 +36,35 @@
 
                 @foreach ($products as $product)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $product->name }}
-                        <span class="badge bg-primary rounded-pill">Cantidad: {{ $product->pivot->amount }}</span>
+                        <div class="d-flex align-items-center"> <!-- Agregado align-items-center -->
+                            <!-- Formulario para restar cantidad -->
+                            <form action="{{ route('cart.update') }}" method="POST" class="me-2">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-secondary btn-sm">-</button>
+                            </form>
+
+                            <!-- Mostrar cantidad y botón de sumar -->
+                            <span class="badge bg-primary rounded-pill me-2">{{ $product->pivot->amount }}</span>
+
+                            <!-- Formulario para sumar cantidad -->
+                            <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
+                                @csrf
+                                <input type="hidden" name="amount" value="1">
+                                <button type="submit" class="btn btn-secondary btn-sm">+</button>
+                            </form>
+                        </div>
+
+                        <!-- Mostrar nombre del producto -->
+                        <span>{{ $product->name }}</span>
 
                         <!-- Mostrar precio por unidad -->
-                        <span class="badge bg-success rounded-pill">
+                        <span class="badge bg-success rounded-pill me-2">
                             Precio por unidad: ${{ number_format($product->price, 2) }}
                         </span>
 
                         <!-- Mostrar precio por cantidad -->
-                        <span class="badge bg-warning rounded-pill">
+                        <span class="badge bg-warning rounded-pill me-2">
                             Precio por cantidad: ${{ number_format($product->price * $product->pivot->amount, 2) }}
                         </span>
 

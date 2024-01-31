@@ -37,6 +37,8 @@ Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->nam
 
 Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update');
 
+// Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
