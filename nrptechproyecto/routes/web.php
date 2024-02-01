@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,8 @@ Route::middleware(["auth"])->get('/cart', [CartController::class, 'showCart'])->
 Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update');
+
+Route::put('/productos/{producto}', [ProductController::class, 'update'])->name('productos.update');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('roles', RoleController::class);

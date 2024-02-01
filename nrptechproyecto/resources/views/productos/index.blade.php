@@ -46,8 +46,8 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->detail }}</td>
                     <td>
-                        <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info">Show</a>
-                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info">Show</a>
+                    <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
                     </td>
                 </tr>
             @endforeach
