@@ -27,12 +27,20 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required|numeric', // Add validation for the price field
+            'price' => 'required|numeric',
             'description' => 'required',
-            // Add other fields as needed
+            'discount' => 'numeric',
+            'stock' => 'numeric',
+            'specs' => 'string',
+            'features' => 'string',
+            'tax_id' => 'numeric',
+            'color' => 'string',
+
         ]);
 
-        Product::create($request->all());
+        $data = $request->except('_token');
+
+        Product::create($data);
 
         return redirect()->route('productos.index')
             ->with('success', 'Product created successfully.');
@@ -48,18 +56,26 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, Product $product)
-    {
+{
         $request->validate([
             'name' => 'required',
-            'detail' => 'required',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'discount' => 'numeric',
+            'stock' => 'numeric',
+            'specs' => 'string',
+            'features' => 'string',
+            'tax_id' => 'numeric',
+            'color' => 'string',
         ]);
-
-        $product->update($request->all());
-
+    
+        $data = $request->all();
+        $product->update($data);
+    
         return redirect()->route('productos.index')
             ->with('success', 'Product updated successfully');
     }
-
+    
     public function destroy(Product $product)
     {
         $product->delete();

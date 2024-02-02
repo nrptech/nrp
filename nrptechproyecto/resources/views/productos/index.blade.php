@@ -1,5 +1,3 @@
-<!-- index.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +33,14 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Details</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Discount</th>
+                <th>Stock</th>
+                <th>Specs</th>
+                <th>Features</th>
+                <th>Tax ID</th>
+                <th>Color</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -44,10 +49,17 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->detail }}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->discount }}</td>
+                    <td>{{ $product->stock }}</td>
+                    <td>{{ $product->specs }}</td>
+                    <td>{{ $product->features }}</td>
+                    <td>{{ $product->tax_id }}</td>
+                    <td>{{ $product->color }}</td>
                     <td>
-                    <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info">Show</a>
-                    <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info">Show</a>
+                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
                     </td>
                 </tr>
             @endforeach
