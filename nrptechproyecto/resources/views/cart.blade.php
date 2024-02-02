@@ -20,6 +20,8 @@
     </script>
 </head>
 
+<!-- ... (código anterior) ... -->
+
 <body>
     @include('header')
 
@@ -36,20 +38,18 @@
 
                 @foreach ($products as $product)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center"> <!-- Agregado align-items-center -->
-                            <!-- Formulario para restar cantidad -->
+                        <div class="d-flex align-items-center">
+                            <!-- Restar cantidad -->
                             <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
                                 @csrf
                                 <input type="hidden" name="amount" value="1">
-                                <!-- Puedes ajustar el valor si quieres restar una cantidad diferente -->
                                 <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
                             </form>
 
-
-                            <!-- Mostrar cantidad y botón de sumar -->
+                            <!-- Mostrar cantidad -->
                             <span class="badge bg-primary rounded-circle me-2">{{ $product->pivot->amount }}</span>
 
-                            <!-- Formulario para sumar cantidad -->
+                            <!-- Sumar cantidad -->
                             <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
                                 @csrf
                                 <input type="hidden" name="amount" value="1">
@@ -70,6 +70,8 @@
                             Precio por cantidad: ${{ number_format($product->price * $product->pivot->amount, 2) }}
                         </span>
 
+                    </li>
+
                     @php
                         $totalPrice += $product->price * $product->pivot->amount; // Suma al precio total
                     @endphp
@@ -80,6 +82,11 @@
             <div class="mt-3">
                 <h4>Precio total del carrito: ${{ number_format($totalPrice, 2) }}</h4>
             </div>
+
+            <!-- Botón de compra -->
+            <div class="mt-3">
+                <a href="" class="btn btn-primary">Comprar</a>
+            </div>
         @endif
 
     </main>
@@ -88,5 +95,4 @@
         <!-- Agrega contenido del pie de página si es necesario -->
     </footer>
 </body>
-
 </html>

@@ -41,6 +41,9 @@ Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmoun
 
 // Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
 
+Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+
+
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
