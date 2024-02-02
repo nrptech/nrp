@@ -40,6 +40,8 @@ Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update')
 
 Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
 
+Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductController::class);
