@@ -39,6 +39,7 @@
     <div class="pull-right">
       <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
       <a class="btn btn-primary" href="{{ route('productos.index') }}"> Go to Productos</a>
+      <a href="{{ url('/') }}" class="btn btn-primary">Back to Home</a>
     </div>
   </div>
 </div>
@@ -86,7 +87,6 @@
 </table>
 
 {!! $data->render() !!}
-
 @endsection
 </body>
 </html>

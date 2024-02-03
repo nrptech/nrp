@@ -49,7 +49,4 @@
 </div>
 </div>
 {!! Form::close() !!}
-
-
-<p class="text-center text-primary"><small>Tutorial by ticsacorporativo.com</small></p>
 @endsection

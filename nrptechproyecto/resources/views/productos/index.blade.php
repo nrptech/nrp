@@ -72,6 +72,7 @@
     </table>
 
     <a href="{{ route('productos.create') }}" class="btn btn-success">Add New Product</a>
+    <a class="btn btn-primary" href="{{ route('users.index') }}"> Go to users</a>
     <a href="{{ url('/') }}" class="btn btn-primary">Back to Home</a>
 </body>
 </html>
