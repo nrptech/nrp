@@ -38,7 +38,8 @@
     @endif
 
 
-    <form method="POST" action="{{ route('productos.update', $product->id) }}">
+    <form method="POST" action="{{ route('productos.update', $producto->id) }}">
+
 
     @method('PUT')
     @csrf
@@ -47,55 +48,55 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
-                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{ $product->name }}">
+                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{ $producto->name }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="price" class="form-label">Price:</label>
-                    <input type="number" name="price" class="form-control" placeholder="Price" value="{{ $product->price }}">
+                    <input type="number" name="price" class="form-control" placeholder="Price" value="{{ $producto->price }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="description" class="form-label">Description:</label>
-                    <input type="text" name="description" class="form-control" placeholder="Description" value="{{ $product->description }}">
+                    <input type="text" name="description" class="form-control" placeholder="Description" value="{{ $producto->description }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="discount" class="form-label">Discount:</label>
-                    <input type="number" name="discount" class="form-control" placeholder="Discount" value="{{ $product->discount }}">
+                    <input type="number" name="discount" class="form-control" placeholder="Discount" value="{{ $producto->discount }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock:</label>
-                    <input type="number" name="stock" class="form-control" placeholder="Stock" value="{{ $product->stock }}">
+                    <input type="number" name="stock" class="form-control" placeholder="Stock" value="{{ $producto->stock }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="specs" class="form-label">Specs:</label>
-                    <input type="text" name="specs" class="form-control" placeholder="Specs" value="{{ $product->specs }}">
+                    <input type="text" name="specs" class="form-control" placeholder="Specs" value="{{ $producto->specs }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="features" class="form-label">Features:</label>
-                    <input type="text" name="features" class="form-control" placeholder="Features" value="{{ $product->features }}">
+                    <input type="text" name="features" class="form-control" placeholder="Features" value="{{ $producto->features }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="tax_id" class="form-label">Tax ID:</label>
-                    <input type="number" name="tax_id" class="form-control" placeholder="Tax ID" value="{{ $product->tax_id }}">
+                    <input type="number" name="tax_id" class="form-control" placeholder="Tax ID" value="{{ $producto->tax_id }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="color" class="form-label">Color:</label>
-                    <input type="text" name="color" class="form-control" placeholder="Color" value="{{ $product->color }}">
+                    <input type="text" name="color" class="form-control" placeholder="Color" value="{{ $producto->color }}">
                 </div>
             </div>
             <!-- Add more fields as needed -->
