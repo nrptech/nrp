@@ -43,6 +43,7 @@ Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmoun
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
+Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);

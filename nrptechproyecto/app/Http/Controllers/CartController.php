@@ -116,4 +116,18 @@ class CartController extends Controller
 
         return redirect()->back()->with('status', 'Cantidad actualizada en el carrito');
     }
+
+    public function mostrarAgradecimiento()
+    {
+        $user = Auth::user();
+        $cart = $user->cart;
+
+        if ($cart) {
+            // Eliminar el carrito y desvincular todos los productos
+            $cart->products()->detach();
+            $cart->delete();
+        }
+
+        return view('agradecimiento');
+    }
 }

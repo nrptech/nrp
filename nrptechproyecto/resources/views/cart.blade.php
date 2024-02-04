@@ -85,8 +85,9 @@
 
             <!-- Botón de compra -->
             <div class="mt-3">
-                <a href="" class="btn btn-primary">Comprar</a>
+                <a href="{{ route('agradecimiento') }}" class="btn btn-primary">Comprar</a>
             </div>
+
         @endif
 
     </main>
@@ -95,4 +96,5 @@
         <!-- Agrega contenido del pie de página si es necesario -->
     </footer>
 </body>
+
 </html>
