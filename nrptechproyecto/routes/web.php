@@ -5,11 +5,11 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,6 +44,13 @@ Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmoun
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
+Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
+Route::post('/order/confirm', [CartController::class, 'confirmOrder'])->name('confirmOrder');
+Route::post('/order/reject', [CartController::class, 'rejectOrder'])->name('rejectOrder');
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+Route::get('/invoice', [OrderController::class, 'showInvoice'])->name('invoice.show');
+Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
+Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
 Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
 
 Route::group(['middleware' => ['auth']], function () {

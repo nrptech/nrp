@@ -85,7 +85,7 @@
 
             <!-- Botón de compra -->
             <div class="mt-3">
-                <a href="{{ route('agradecimiento') }}" class="btn btn-primary">Comprar</a>
+                <a href="{{ route('order.show') }}" class="btn btn-primary">Proceder a la Orden</a>
             </div>
 
         @endif

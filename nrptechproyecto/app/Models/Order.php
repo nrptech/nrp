@@ -25,7 +25,7 @@ class Order extends Model
     }
 
     public function user(){
-        return $this->hasOner(user::class);
+        return $this->belongsTo(user::class);
     }
     
 }
