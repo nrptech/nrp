@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use App\Models\Invoice;
-use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -120,52 +122,63 @@ class CartController extends Controller
     }
 
     public function showOrder()
-{
-    $user = Auth::user();
-    $cart = $user->cart;
+    {
+        $user = Auth::user();
+        $cart = $user->cart;
 
-    if (!$cart || $cart->products->isEmpty()) {
-        return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
-    }
+        if (!$cart || $cart->products->isEmpty()) {
+            return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
+        }
 
-    $productsInCart = $cart->products;
-    $total = $cart->products->sum(function ($product) {
-        return $product->pivot->amount * $product->price;
-    });
-
-    return view('order', ['products' => $productsInCart, 'total' => $total]);
-}
-
-public function confirmOrder()
-{
-    $user = Auth::user();
-    $cart = $user->cart;
-
-    if (!$cart || $cart->products->isEmpty()) {
-        return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
-    }
-
-    // Crear un nuevo pedido asociado al usuario
-    $order = $user->orders()->create();
-
-    // Lógica para crear un nuevo invoice
-    $invoice = new Invoice([
-        'total' => $cart->products->sum(function ($product) {
+        $productsInCart = $cart->products;
+        $total = $cart->products->sum(function ($product) {
             return $product->pivot->amount * $product->price;
-        }),
-        'date' => now(), // Puedes ajustar la fecha según tus necesidades
-    ]);
+        });
 
-    // Asociar el Invoice con el Order
-    $invoice->order()->associate($order);
-    $invoice->save();
+        return view('order', ['products' => $productsInCart, 'total' => $total]);
+    }
 
-    // Eliminar el carrito y desvincular todos los productos
-    $cart->products()->detach();
-    $cart->delete();
+    public function confirmOrder()
+    {
+        $user = Auth::user();
+        $cart = $user->cart;
 
-    return view('agradecimiento');
-}
+        if (!$cart || $cart->products->isEmpty()) {
+            return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
+        }
+
+        // Crear un nuevo pedido asociado al usuario
+        $order = $user->orders()->create();
+
+        // Lógica para crear un nuevo invoice
+        $invoice = new Invoice([
+            'total' => $cart->products->sum(function ($product) {
+                return $product->pivot->amount * $product->price;
+            }),
+            'date' => now(), // Puedes ajustar la fecha según tus necesidades
+        ]);
+
+        // Asociar el Invoice con el Order
+        $invoice->order()->associate($order);
+        $invoice->save();
+
+        // Eliminar el carrito y desvincular todos los productos
+        $cart->products()->detach();
+        $cart->delete();
+
+        // Enviar el correo electrónico con el seguimiento
+        $orderData = [
+            'order_id' => $order->id,
+            'total' => $invoice->total,
+            // Agrega cualquier otra información que desees enviar en el correo
+        ];
+
+        Mail::to($user->email)->send(new OrderShipped($orderData));
+
+        // Redirigir a la vista de agradecimiento
+        return view('agradecimiento');
+    }
+
 
 
     public function rejectOrder()
