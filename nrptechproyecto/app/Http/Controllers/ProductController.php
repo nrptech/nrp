@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -35,20 +36,29 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'description' => 'required',
             'discount' => 'numeric',
+            'tax_id' => 'numeric',
+            'color' => 'string',
             'stock' => 'numeric',
             'specs' => 'string',
             'features' => 'string',
-            'tax_id' => 'numeric',
-            'color' => 'string',
         ]);
 
-        $data = $request->except('_token');
+        $productData = $request->except('_token', 'image');
 
-        Product::create($data);
+        $product = Product::create($productData);
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Product created successfully.');
+        if ($request->hasFile('image')) {
+            $file = $request->file("image");
+            $path = "images/";
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $uploadSucces = $request->file("image")->move($path, $filename);
+            $product->images()->create(['url' => $path.$filename]);
+        }
+
+        return redirect()->route('productos.index')->with('success', 'Product created successfully.');
     }
+
+
 
     public function show(Product $product)
     {
@@ -57,10 +67,8 @@ class ProductController extends Controller
 
     public function edit(Product $producto)
     {
-        // Check if the product exists
+
         if (!$producto) {
-            // Handle the case where the product is not found, you may redirect or display an error message
-            // For example, redirecting back to the index page with a message
             return redirect()->route('productos.index')->with('error', 'Product not found');
         }
 
