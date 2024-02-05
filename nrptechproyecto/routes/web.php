@@ -11,6 +11,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,9 +55,13 @@ Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoi
 Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
 Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
+
+Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
     Route::resource('productos', ProductController::class);
+    Route::resource('users', UserController::class);
     Route::resource('category', ProductController::class);
 });
