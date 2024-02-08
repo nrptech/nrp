@@ -37,8 +37,7 @@ use App\Models\Product;
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <div class="product-images">
                                 @foreach ($product->images as $image)
-                                    <img src="{{ asset("$image->url") }}" alt="{{ $product->name }}"
-                                        class="img-fluid mb-2">
+                                    <img src="{{ asset("$image->url") }}" alt="{{ $product->name }}" class="img-fluid mb-2">
                                 @endforeach
                             </div>
                             <p class="card-text"><strong>Precio:</strong> {{ $product->price }}</p>
@@ -51,7 +50,7 @@ use App\Models\Product;
                             <p class="card-text"><strong>Features:</strong> {{ $product->features }}</p>
                             <form action="{{ route('cart.add', $product) }}" method="post">
                                 @csrf
-                                <input type="number" name="amount" value="1" min="1"
+                                <input hidden type="number" name="amount" value="1" min="1"
                                     class="form-control mb-2">
                                 <button type="submit" class="btn btn-primary">Agregar al carrito</button>
                             </form>

@@ -29,6 +29,7 @@
 </head>
 <body>
   @extends('layouts.admin')
+  @include('header')
 
 @section('contenido')
 <div class="row">

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New User</title>
 </head>
+
 <body>
     @extends('layouts.admin')
+    @include('header')
+
 
     @section('contenido')
         <div class="row">
@@ -51,7 +55,8 @@
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password:</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"
+                    required>
             </div>
 
             <div class="form-group">
@@ -67,4 +72,5 @@
     @endsection
 
 </body>
+
 </html>

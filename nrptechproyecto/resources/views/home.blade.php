@@ -25,17 +25,7 @@
     @include('header')
 
     <main>
-        <p>Hola planeta</p>
-        
-        @role('admin')
-            <p>Esta pal admin</p>
-            <!-- Button visible only to admin -->
-            <a href="{{ route('users.index') }}" class="btn btn-primary">Panel de administrador</a>
-        @endrole
 
-        @role('user')
-            <p>Esta pa los usuarios</p>
-        @endrole
     </main>
 
     <footer>

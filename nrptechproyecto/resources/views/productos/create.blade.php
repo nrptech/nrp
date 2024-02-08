@@ -20,6 +20,8 @@
 
 <body>
     @extends('layouts.admin')
+    @include('header')
+
 
     @section('contenido')
         <div class="row">
@@ -108,7 +110,7 @@
                         <input type="file" class="form-control" id="image" name="image" accept="image">
                     </div>
                 </div>
-              </div>
+            </div>
             </div>
 
             <div class="text-center">
