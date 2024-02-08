@@ -38,7 +38,8 @@
     @endif
 
 
-    <form method="POST" action="{{ route('productos.update', $producto->id) }}">
+    <form method="POST" action="{{ route('productos.update', $producto->id) }}" enctype="multipart/form-data">
+
 
 
     @method('PUT')
@@ -99,7 +100,12 @@
                     <input type="text" name="color" class="form-control" placeholder="Color" value="{{ $producto->color }}">
                 </div>
             </div>
-            <!-- Add more fields as needed -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image:</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image">
+                </div>
+            </div>
         </div>
 
         <div class="text-center">

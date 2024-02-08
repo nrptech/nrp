@@ -58,49 +58,57 @@ class ProductController extends Controller
         return redirect()->route('productos.index')->with('success', 'Product created successfully.');
     }
 
-
-
-    public function show(Product $product)
-    {
-        return view('productos.show', compact('product'));
-    }
-
     public function edit(Product $producto)
     {
-
         if (!$producto) {
             return redirect()->route('productos.index')->with('error', 'Product not found');
         }
 
         return view('productos.edit', compact('producto'));
     }
+public function update(Request $request, Product $product)
+{
+    $request->validate([
+        'name' => 'required',
+        'price' => 'required|numeric',
+        'description' => 'required',
+        'discount' => 'numeric',
+        'stock' => 'numeric',
+        'specs' => 'string',
+        'features' => 'string',
+        'tax_id' => 'numeric',
+        'color' => 'string',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
+    ]);
 
-    public function update(Request $request, Product $product)
-    {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'description' => 'required',
-            'discount' => 'numeric',
-            'stock' => 'numeric',
-            'specs' => 'string',
-            'features' => 'string',
-            'tax_id' => 'numeric',
-            'color' => 'string',
-        ]);
+    // Update product information
+    $data = $request->except('image');
+    $product->update($data);
 
-        $data = $request->all();
-        $product->update($data);
+    // Delete the old image
+    $product->images()->delete();
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Product updated successfully');
+    // Upload and create a new image
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $path = "images/";
+        $filename = time() . "-" . $file->getClientOriginalName();
+        $file->move($path, $filename);
+        $product->images()->create(['url' => $path . $filename]);
     }
+
+    return redirect()->route('productos.index')
+        ->with('success', 'Product updated successfully');
+}
 
     public function destroy(Product $product)
     {
+        // Delete associated images
+        $product->images()->delete();
+
+        // Delete the product
         $product->delete();
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Product deleted successfully');
+        return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
     }
 }
