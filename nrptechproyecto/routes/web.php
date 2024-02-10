@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\CartController;
-use App\Models\Cart;
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
@@ -32,7 +30,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->get('/products', [Product::class, 'showProducts'])->name("products");
+Route::middleware(['auth'])->get('/products/index', [ProductController::class, 'showProducts'])->name("products.index");
+
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
 
 Route::middleware(["auth"])->get('/cart', [CartController::class, 'showCart'])->name('cart');
 

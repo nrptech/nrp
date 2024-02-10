@@ -59,7 +59,7 @@ class CartController extends Controller
 
         $existingAmount = $cart->products()->where('product_id', $product->id)->first()->pivot->amount;
 
-        if ($existingAmount > 1) {
+        if ($existingAmount > 1 ) {
             $newAmount = $existingAmount - 1;
             $cart->products()->updateExistingPivot($product, ['amount' => $newAmount]);
         } else {

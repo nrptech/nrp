@@ -52,7 +52,7 @@ class ProductController extends Controller
             $path = "images/";
             $filename = time() . "-" . $file->getClientOriginalName();
             $uploadSucces = $request->file("image")->move($path, $filename);
-            $product->images()->create(['url' => $path.$filename]);
+            $product->images()->create(['url' => $path . $filename]);
         }
 
         return redirect()->route('productos.index')->with('success', 'Product created successfully.');
@@ -66,40 +66,40 @@ class ProductController extends Controller
 
         return view('productos.edit', compact('producto'));
     }
-public function update(Request $request, Product $product)
-{
-    $request->validate([
-        'name' => 'required',
-        'price' => 'required|numeric',
-        'description' => 'required',
-        'discount' => 'numeric',
-        'stock' => 'numeric',
-        'specs' => 'string',
-        'features' => 'string',
-        'tax_id' => 'numeric',
-        'color' => 'string',
-        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
-    ]);
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'discount' => 'numeric',
+            'stock' => 'numeric',
+            'specs' => 'string',
+            'features' => 'string',
+            'tax_id' => 'numeric',
+            'color' => 'string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
+        ]);
 
-    // Update product information
-    $data = $request->except('image');
-    $product->update($data);
+        // Update product information
+        $data = $request->except('image');
+        $product->update($data);
 
-    // Delete the old image
-    $product->images()->delete();
+        // Delete the old image
+        $product->images()->delete();
 
-    // Upload and create a new image
-    if ($request->hasFile('image')) {
-        $file = $request->file('image');
-        $path = "images/";
-        $filename = time() . "-" . $file->getClientOriginalName();
-        $file->move($path, $filename);
-        $product->images()->create(['url' => $path . $filename]);
+        // Upload and create a new image
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = "images/";
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $file->move($path, $filename);
+            $product->images()->create(['url' => $path . $filename]);
+        }
+
+        return redirect()->route('productos.index')
+            ->with('success', 'Product updated successfully');
     }
-
-    return redirect()->route('productos.index')
-        ->with('success', 'Product updated successfully');
-}
 
     public function destroy(Product $product)
     {
@@ -110,5 +110,16 @@ public function update(Request $request, Product $product)
         $product->delete();
 
         return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function showProducts()
+    {
+        $products = Product::all();
+        return view('products/index', ['products' => $products]);
+    }
+
+    public function show(Product $product)
+    {
+        return view('products.show', compact('product'));
     }
 }

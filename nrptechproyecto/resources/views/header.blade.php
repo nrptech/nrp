@@ -11,7 +11,7 @@
                 <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
                 <li><a href="{{ url('/cart') }}" class="nav-link px-2 link-dark">Cart</a></li>
-                <li><a href="{{ url('/products') }}" class="nav-link px-2 link-dark">Products</a></li>
+                <li><a href="{{ route('products.index') }}" class="nav-link px-2 link-dark">Products</a></li>
                 <li> @role('admin')
                         <a href="{{ route('users.index') }}" class="btn btn-primary">Panel de administrador</a>
                     @endrole

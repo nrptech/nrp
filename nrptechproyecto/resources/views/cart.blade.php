@@ -38,6 +38,9 @@
 
                 @foreach ($products as $product)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                        <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+
                         <div class="d-flex align-items-center">
                             <!-- Restar cantidad -->
                             <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
@@ -47,7 +50,7 @@
                             </form>
 
                             <!-- Mostrar cantidad -->
-                            <span class="badge bg-primary rounded-circle me-2">{{ $product->pivot->amount }}</span>
+                            <span class="badge bg-primary rounded-circle me-2"></span>
 
                             <!-- Sumar cantidad -->
                             <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
@@ -57,30 +60,36 @@
                             </form>
                         </div>
 
-                        <!-- Mostrar nombre del producto -->
-                        <span>{{ $product->name }}</span>
+                        <span class="">
+                            Precio base: {{ number_format($product->price, 2) }}€
+                        </span>
 
-                        <!-- Mostrar precio por unidad -->
-                        <span class="badge bg-success rounded-pill me-2">
-                            Precio por unidad: ${{ number_format($product->price, 2) }}
+                        <span class="">
+                            {{ $product->tax->taxName . ' ' . $product->tax->amount }}%
+                        </span>
+
+                        <span class="">
+                            Precio tras inpuestos:
+                            {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€
                         </span>
 
                         <!-- Mostrar precio por cantidad -->
-                        <span class="badge bg-dark rounded-pill me-2">
-                            Precio por cantidad: ${{ number_format($product->price * $product->pivot->amount, 2) }}
+                        <span class="">
+                            Precio total:
+                            {{ number_format($product->price * (1 + $product->tax->amount / 100) * $product->pivot->amount, 2) }}€
                         </span>
 
                     </li>
 
                     @php
-                        $totalPrice += $product->price * $product->pivot->amount; // Suma al precio total
+                        $totalPrice += $product->price * (1 + $product->tax->amount / 100) * $product->pivot->amount;
                     @endphp
                 @endforeach
             </ul>
 
             <!-- Mostrar precio total del carrito -->
             <div class="mt-3">
-                <h4>Precio total del carrito: ${{ number_format($totalPrice, 2) }}</h4>
+                <h4>Precio total del carrito: {{ number_format($totalPrice, 2) }}€</h4>
             </div>
 
             <!-- Botón de compra -->
