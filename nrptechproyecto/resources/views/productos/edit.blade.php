@@ -66,7 +66,7 @@
                     <div class="mb-3">
                         <label for="price" class="form-label">Price:</label>
                         <input type="number" name="price" class="form-control" placeholder="Price"
-                            value="{{ $producto->price }}">
+                            value="{{ $producto->price }}" min=0>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -80,14 +80,14 @@
                     <div class="mb-3">
                         <label for="discount" class="form-label">Discount:</label>
                         <input type="number" name="discount" class="form-control" placeholder="Discount"
-                            value="{{ $producto->discount }}">
+                            value="{{ $producto->discount }}" min=0>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="stock" class="form-label">Stock:</label>
                         <input type="number" name="stock" class="form-control" placeholder="Stock"
-                            value="{{ $producto->stock }}">
+                            value="{{ $producto->stock }}" min=0>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -108,7 +108,7 @@
                     <div class="mb-3">
                         <label for="tax_id" class="form-label">Tax ID:</label>
                         <input type="number" name="tax_id" class="form-control" placeholder="Tax ID"
-                            value="{{ $producto->tax_id }}">
+                            value="{{ $producto->tax_id }}" min=0>
                     </div>
                 </div>
                 <div class="col-md-6">

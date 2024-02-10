@@ -59,7 +59,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="price" class="form-label">Price:</label>
-                        <input type="number" name="price" class="form-control" placeholder="Price">
+                        <input type="number" name="price" class="form-control" placeholder="Price" min="1">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -71,13 +71,13 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="discount" class="form-label">Discount:</label>
-                        <input type="number" name="discount" class="form-control" placeholder="Discount">
+                        <input type="number" name="discount" class="form-control" placeholder="Discount" min="0">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="stock" class="form-label">Stock:</label>
-                        <input type="number" name="stock" class="form-control" placeholder="Stock">
+                        <input type="number" name="stock" class="form-control" placeholder="Stock" min="0">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -95,7 +95,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="tax_id" class="form-label">Tax ID:</label>
-                        <input type="number" name="tax_id" class="form-control" placeholder="Tax ID">
+                        <input type="number" name="tax_id" class="form-control" placeholder="Tax ID" min="0">
                     </div>
                 </div>
                 <div class="col-md-6">

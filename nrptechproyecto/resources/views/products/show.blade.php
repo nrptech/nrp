@@ -58,7 +58,17 @@
                     <p class="text-danger">Fuera de stock</p>
                 @endif
 
-                <h3>Precio: {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }} €</h3>
+                @if ($product->discount > 0)
+                <h4 class="badge text-warning">¡Estamos de oferta!</h4>
+                <p>Rebaja del {{$product->discount}}%</p>
+                <p class="card-text">Precio original:<span class="text-decoration-line-through text-danger">
+                    {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€</span></p>
+                    <p class="card-text"><strong>Precio rebajado:</strong><span class="text-success">
+                        {{ number_format(($product->price * ((100-$product->discount)/100) ) * (1 + $product->tax->amount / 100), 2) }}€</span>
+            @else
+                <p class="card-text"><strong>Precio:</strong>
+                    {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€</p>
+            @endif
                 <form action="{{ route('cart.add', $product) }}" method="post">
                     @csrf
                     <input hidden type="number" name="amount" value="1" min="1" class="form-control mb-2">

@@ -34,9 +34,23 @@
             <ul class="list-group">
                 @php
                     $totalPrice = 0; // Inicializa el precio total
+
                 @endphp
 
                 @foreach ($products as $product)
+                    @php
+                        $basePrice = 0;
+                        $afterTaxes = 0;
+                        if ($product->discount > 0) {
+                            $basePrice = $product->price * ((100 - $product->discount) / 100);
+                            $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                        } else {
+                            $basePrice = $product->price;
+                            $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                        }
+                        $totalPrice += $afterTaxes * $product->pivot->amount;
+                    @endphp
+
                     <li class="list-group-item d-flex justify-content-between align-items-center">
 
                         <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
@@ -61,7 +75,7 @@
                         </div>
 
                         <span class="">
-                            Precio base: {{ number_format($product->price, 2) }}€
+                            Precio base: {{ number_format($basePrice, 2) }}€
                         </span>
 
                         <span class="">
@@ -69,21 +83,17 @@
                         </span>
 
                         <span class="">
-                            Precio tras inpuestos:
-                            {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€
+                            Precio tras impuestos:
+                            {{ number_format($afterTaxes, 2) }}€
                         </span>
 
-                        <!-- Mostrar precio por cantidad -->
+
                         <span class="">
                             Precio total:
-                            {{ number_format($product->price * (1 + $product->tax->amount / 100) * $product->pivot->amount, 2) }}€
+                            {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
                         </span>
 
                     </li>
-
-                    @php
-                        $totalPrice += $product->price * (1 + $product->tax->amount / 100) * $product->pivot->amount;
-                    @endphp
                 @endforeach
             </ul>
 

@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         $product->name="Productoria";
         $product->price= 129;
         $product->description="Es muy bueno!!";
-        $product->discount=1;
+        $product->discount=25;
         $product->tax_id=1;
         $product->color="ROJO";
         $product->stock=100;
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
         $product2->name="Productoria2";
         $product2->price= 78;
         $product2->description="No es tan bueno";
-        $product2->discount=1;
+        $product2->discount=0;
         $product2->tax_id=1;
         $product2->color="VERDE";
         $product2->stock=100;
