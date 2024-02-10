@@ -54,7 +54,6 @@
                     <td>{{ $product->tax_id }}</td>
                     <td>{{ $product->color }}</td>
                     <td>
-                        <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info">Show</a>
                         <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
                         <form method="POST" action="{{ route('productos.destroy', $product->id) }}"
                             style="display:inline">

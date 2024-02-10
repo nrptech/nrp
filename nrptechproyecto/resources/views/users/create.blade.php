@@ -62,8 +62,8 @@
             <div class="form-group">
                 <label for="roles">Role:</label>
                 <select name="roles[]" id="roles" class="form-control" required>
-                    <option value="usuarios">Usuario</option>
-                    <option value="admin">Admin</option>
+                    <option value="usuario">usuario</option>
+                    <option value="admin">admin</option>
                 </select>
             </div>
 
