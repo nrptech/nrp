@@ -2,6 +2,10 @@
 
 @section('title', 'Carrito')
 
+@section('links')
+    <script defer src="{{ asset('js/cart.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+@endsection
 @section('content')
     <h1 class="mb-4">Carrito de Compras</h1>
 
@@ -10,7 +14,7 @@
     @else
         <ul class="list-group">
             @php
-                $totalPrice = 0; // Inicializa el precio total
+                $totalPrice = 0;
 
             @endphp
 
@@ -28,27 +32,59 @@
                     $totalPrice += $afterTaxes * $product->pivot->amount;
                 @endphp
 
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item d-flex justify-content-between align-items-center singleItem">
+                    <div class="d-flex gap-2">
+                        <div class="imgMiniature">
+                            @if ($product->images->isNotEmpty())
+                                <img class="img-fluid" src="{{ asset($product->images->first()->url) }}"
+                                    alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
+                            @endif
+                        </div>
 
-                    <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+                        <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+                    </div>
 
-                    <div class="d-flex align-items-center">
-                        <!-- Restar cantidad -->
-                        <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
-                            @csrf
-                            <input type="hidden" name="amount" value="1">
-                            <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
-                        </form>
 
-                        <!-- Mostrar cantidad -->
-                        <span class="badge bg-primary rounded-circle me-2"></span>
+                    <div class="d-flex gap-2 align-items-center">
 
-                        <!-- Sumar cantidad -->
-                        <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
-                            @csrf
-                            <input type="hidden" name="amount" value="1">
-                            <button type="submit" class="btn btn-success btn-sm rounded-pill">+</button>
-                        </form>
+                        <button onclick="show(this)" class="btn btn-danger py-0 deletBtn">Eliminar</button>
+                        <div hidden>
+                            <div class="d-flex">
+                                <button onclick="hide(this)">
+                                    X
+                                </button>
+                                <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
+                                    @csrf
+                                    <input class="rounded-5 px-2" type="number" name="amount" value="1"
+                                        min="1" max="{{ $product->pivot->amount }}">
+                                    <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        @if ($product->pivot->amount >= $product->stock)
+                            <button onclick="show(this)" class="btn btn-success py-0 addBtn disabled">Añadir</button>
+                        @else
+                            <button onclick="show(this)" class="btn btn-success py-0 addBtn">Añadir</button>
+                        @endif
+
+                        <div hidden>
+                            <div class="d-flex">
+                                <button onclick="hide(this)">
+                                    X
+                                </button>
+                                <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
+                                    @csrf
+                                    <input class="rounded-5 px-2 W-25" type="number" name="amount" value="1"
+                                        min="1" max="{{ $product->stock - $product->pivot->amount }}">
+                                    <button type="submit" class="btn btn-success btn-sm">+</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+
                     </div>
 
                     <span class="">

@@ -1,44 +1,83 @@
-<!-- resources/views/order.blade.php -->
-@extends('layouts.app') <!-- Asegúrate de tener un layout base para tus vistas -->
+@extends('layouts.layout')
+
+@section('title', 'Pedido')
+
+@section('links')
+    <script defer src="{{ asset('js/cart.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+@endsection
 
 @section('content')
-    <h1>Resumen de la Orden</h1>
+    <h1>Resumen del pedido</h1>
 
-    <!-- Mostrar resumen de la orden (puedes personalizar según tus necesidades) -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio unitario</th>
-                <th>Precio total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $product)
-                <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->pivot->amount }}</td>
-                    <td>${{ $product->price }}</td>
-                    <td>${{ $product->pivot->amount * $product->price }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <ul class="list-group">
+        @php
+            $totalPrice = 0;
+        @endphp
 
-    <!-- Mostrar el total -->
-    <div class="total">
-        <p>Total: ${{ $total }}</p>
+        @foreach ($products as $product)
+            @php
+                $basePrice = 0;
+                $afterTaxes = 0;
+                if ($product->discount > 0) {
+                    $basePrice = $product->price * ((100 - $product->discount) / 100);
+                    $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                } else {
+                    $basePrice = $product->price;
+                    $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                }
+                $totalPrice += $afterTaxes * $product->pivot->amount;
+            @endphp
+
+            <li class="list-group-item d-flex justify-content-between align-items-center singleItem">
+
+                <div class="d-flex gap-2">
+                    <div class="imgMiniature">
+                        @if ($product->images->isNotEmpty())
+                            <img class="img-fluid" src="{{ asset($product->images->first()->url) }}"
+                                alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
+                        @endif
+                    </div>
+
+                    <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+                </div>
+
+                <span class="">
+                    Precio base: {{ number_format($basePrice, 2) }}€
+                </span>
+
+                <span class="">
+                    {{ $product->tax->taxName . ' ' . $product->tax->amount }}%
+                </span>
+
+                <span class="">
+                    Precio tras impuestos:
+                    {{ number_format($afterTaxes, 2) }}€
+                </span>
+
+
+                <span class="">
+                    Precio total:
+                    {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
+                </span>
+
+            </li>
+        @endforeach
+    </ul>
+
+    <!-- Mostrar precio total del carrito -->
+    <div class="mt-3">
+        <h4>Precio total del pedido: {{ number_format($totalPrice, 2) }}€</h4>
     </div>
 
     <!-- Botones de confirmación y rechazo -->
     <form method="post" action="{{ route('confirmOrder') }}">
         @csrf
-        <button type="submit">Confirmar Orden</button>
+        <button type="submit">Confirmar Pedido</button>
     </form>
 
     <form method="post" action="{{ route('rejectOrder') }}">
         @csrf
-        <button type="submit">Rechazar Orden</button>
+        <button type="submit">Rechazar Pedido</button>
     </form>
 @endsection

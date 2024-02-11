@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
         $image6->product_id=3;
         $image6->url="images/xokas.jpg";
         $image7->product_id=4;
-        $image7->url="images/patrocinado.png";
+        $image7->url="images/patrocinador.png";
 
         $tax->taxName="IVA";
         $tax->amount=10;

@@ -6,6 +6,7 @@ use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use App\Models\Invoice;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,12 @@ class CartController extends Controller
         if ($cart->products->contains($product)) {
             $existingAmount = $cart->products()->where('product_id', $product->id)->first()->pivot->amount;
             $newAmount = $existingAmount + $amount;
+    
+            
+            if ($product->stock < $newAmount) {
+                return redirect()->back()->with('error', 'No hay suficiente stock disponible');
+            }
+    
             $cart->products()->updateExistingPivot($product, ['amount' => $newAmount]);
         } else {
             $cart->products()->attach($product, ['amount' => $amount]);
@@ -59,7 +66,7 @@ class CartController extends Controller
 
         $existingAmount = $cart->products()->where('product_id', $product->id)->first()->pivot->amount;
 
-        if ($existingAmount > 1 ) {
+        if ($existingAmount > 1) {
             $newAmount = $existingAmount - 1;
             $cart->products()->updateExistingPivot($product, ['amount' => $newAmount]);
         } else {
