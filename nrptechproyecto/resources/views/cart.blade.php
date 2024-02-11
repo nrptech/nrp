@@ -1,119 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.layout')
 
-<head>
-    <title>Carrito</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+@section('title', 'Carrito')
 
-    <!-- Bootstrap CSS v5.3.2 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+@section('content')
+    <h1 class="mb-4">Carrito de Compras</h1>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
+    @if (empty($products))
+        <p class="alert alert-info">El carrito está vacío</p>
+    @else
+        <ul class="list-group">
+            @php
+                $totalPrice = 0; // Inicializa el precio total
 
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-    </script>
-</head>
+            @endphp
 
-<!-- ... (código anterior) ... -->
-
-<body>
-    @include('header')
-
-    <main class="container mt-4">
-        <h1 class="mb-4">Carrito de Compras</h1>
-
-        @if (empty($products))
-            <p class="alert alert-info">El carrito está vacío</p>
-        @else
-            <ul class="list-group">
+            @foreach ($products as $product)
                 @php
-                    $totalPrice = 0; // Inicializa el precio total
-
+                    $basePrice = 0;
+                    $afterTaxes = 0;
+                    if ($product->discount > 0) {
+                        $basePrice = $product->price * ((100 - $product->discount) / 100);
+                        $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                    } else {
+                        $basePrice = $product->price;
+                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                    }
+                    $totalPrice += $afterTaxes * $product->pivot->amount;
                 @endphp
 
-                @foreach ($products as $product)
-                    @php
-                        $basePrice = 0;
-                        $afterTaxes = 0;
-                        if ($product->discount > 0) {
-                            $basePrice = $product->price * ((100 - $product->discount) / 100);
-                            $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
-                        } else {
-                            $basePrice = $product->price;
-                            $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
-                        }
-                        $totalPrice += $afterTaxes * $product->pivot->amount;
-                    @endphp
+                <li class="list-group-item d-flex justify-content-between align-items-center">
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
 
-                        <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+                    <div class="d-flex align-items-center">
+                        <!-- Restar cantidad -->
+                        <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
+                            @csrf
+                            <input type="hidden" name="amount" value="1">
+                            <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
+                        </form>
 
-                        <div class="d-flex align-items-center">
-                            <!-- Restar cantidad -->
-                            <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
-                                @csrf
-                                <input type="hidden" name="amount" value="1">
-                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
-                            </form>
+                        <!-- Mostrar cantidad -->
+                        <span class="badge bg-primary rounded-circle me-2"></span>
 
-                            <!-- Mostrar cantidad -->
-                            <span class="badge bg-primary rounded-circle me-2"></span>
+                        <!-- Sumar cantidad -->
+                        <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
+                            @csrf
+                            <input type="hidden" name="amount" value="1">
+                            <button type="submit" class="btn btn-success btn-sm rounded-pill">+</button>
+                        </form>
+                    </div>
 
-                            <!-- Sumar cantidad -->
-                            <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
-                                @csrf
-                                <input type="hidden" name="amount" value="1">
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">+</button>
-                            </form>
-                        </div>
+                    <span class="">
+                        Precio base: {{ number_format($basePrice, 2) }}€
+                    </span>
 
-                        <span class="">
-                            Precio base: {{ number_format($basePrice, 2) }}€
-                        </span>
+                    <span class="">
+                        {{ $product->tax->taxName . ' ' . $product->tax->amount }}%
+                    </span>
 
-                        <span class="">
-                            {{ $product->tax->taxName . ' ' . $product->tax->amount }}%
-                        </span>
-
-                        <span class="">
-                            Precio tras impuestos:
-                            {{ number_format($afterTaxes, 2) }}€
-                        </span>
+                    <span class="">
+                        Precio tras impuestos:
+                        {{ number_format($afterTaxes, 2) }}€
+                    </span>
 
 
-                        <span class="">
-                            Precio total:
-                            {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
-                        </span>
+                    <span class="">
+                        Precio total:
+                        {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
+                    </span>
 
-                    </li>
-                @endforeach
-            </ul>
+                </li>
+            @endforeach
+        </ul>
 
-            <!-- Mostrar precio total del carrito -->
-            <div class="mt-3">
-                <h4>Precio total del carrito: {{ number_format($totalPrice, 2) }}€</h4>
-            </div>
+        <!-- Mostrar precio total del carrito -->
+        <div class="mt-3">
+            <h4>Precio total del carrito: {{ number_format($totalPrice, 2) }}€</h4>
+        </div>
 
-            <!-- Botón de compra -->
-            <div class="mt-3">
-                <a href="{{ route('order.show') }}" class="btn btn-primary">Proceder a la Orden</a>
-            </div>
+        <!-- Botón de compra -->
+        <div class="mt-3">
+            <a href="{{ route('order.show') }}" class="btn btn-primary">Proceder a la Orden</a>
+        </div>
 
-        @endif
+    @endif
 
-    </main>
 
-    <footer class="mt-4">
-        <!-- Agrega contenido del pie de página si es necesario -->
-    </footer>
-</body>
-
-</html>
+@endsection

@@ -34,6 +34,7 @@ Route::middleware(['auth'])->get('/products/index', [ProductController::class, '
 
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
+Route::get('/header', [CartController::class, 'showCart']);
 
 Route::middleware(["auth"])->get('/cart', [CartController::class, 'showCart'])->name('cart');
 

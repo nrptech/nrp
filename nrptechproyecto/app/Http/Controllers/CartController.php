@@ -18,7 +18,7 @@ class CartController extends Controller
         $cart = $user->cart;
 
         if (!$cart) {
-            return view('cart', ['products' => []]); // No hay carrito, retornar vista con una lista vacía
+            return view('cart', ['products' => []]);
         }
 
         $productsInCart = $cart->products;

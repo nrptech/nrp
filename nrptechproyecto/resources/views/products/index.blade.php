@@ -1,35 +1,12 @@
-<?php
-use App\Models\Product;
-?>
+@extends('layouts.layout')
 
-<!DOCTYPE html>
-<html lang="es">
+@section('title', 'Productos')
 
-<head>
-    <title>Productos</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('assets/Products.css') }}">
-
-    <!-- Bootstrap JS y Popper.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-    </script>
-
+@section('links')
     <script defer src="{{ asset('js/productIndex.js') }}"></script>
+@endsection
 
-</head>
-
-<body>
-    @include('header')
-
+@section('content')
     <div class="container mt-4">
         <div class="row">
             @foreach ($products as $product)
@@ -55,11 +32,12 @@ use App\Models\Product;
                             </div>
                             @if ($product->discount > 0)
                                 <h4 class="badge text-warning">¡Estamos de oferta!</h4>
-                                <p>Rebaja del {{$product->discount}}%</p>
+                                <p>Rebaja del {{ $product->discount }}%</p>
                                 <p class="card-text">Precio original:<span class="text-decoration-line-through text-danger">
-                                    {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€</span></p>
-                                    <p class="card-text"><strong>Precio rebajado:</strong><span class="text-success">
-                                        {{ number_format(($product->price * ((100-$product->discount)/100) ) * (1 + $product->tax->amount / 100), 2) }}€</span>
+                                        {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€</span>
+                                </p>
+                                <p class="card-text"><strong>Precio rebajado:</strong><span class="text-success">
+                                        {{ number_format($product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100), 2) }}€</span>
                                 <p class="card-text"><strong>Descripción:</strong> {{ $product->description }}</p>
                                 <a href="{{ route('products.show', $product) }}" class="btn btn-primary">Ver
                                     producto</a>
@@ -78,6 +56,4 @@ use App\Models\Product;
         </div>
     </div>
 
-</body>
-
-</html>
+@endsection

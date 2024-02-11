@@ -20,7 +20,6 @@
 </head>
 
 <body>
-    @include('header')
 
     <h2>Product List</h2>
 
