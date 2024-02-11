@@ -25,10 +25,13 @@ let currentImg = 0;
 // }
 
 function showImages() {
+    console.log("guga "+ productContainer.length)
     for (let i = 1; i <= productContainer.length; i++) {
+        console.log("guga"+ i)
         document.querySelector('#img' + i + "-0").removeAttribute("hidden", "");
     }
 
 }
 
 showImages();
+

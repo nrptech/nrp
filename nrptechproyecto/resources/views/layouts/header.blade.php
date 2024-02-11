@@ -19,24 +19,28 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
 
+    <link rel="stylesheet" href="{{ asset('styles/header.css') }}">
+
+
+
     @yield('links')
 
 </head>
 
-<body>
+<body class="@yield('bodyClasses')">
 
-    <header class="p-3 mb-3 border-bottom d-flex align-items-center w-100">
+    <header class="p-3 mb-3 border-bottom d-flex align-items-center w-100 bg-lightBlue">
         @role('admin')
             <a href="{{ route('users.index') }}" class="btn btn-warning">Administrador</a>
         @endrole
-        <section class="d-flex justify-content-around align-items-center w-100">
+        <section class="d-flex justify-content-around align-items-center w-100 navItems">
 
-            <div class="d-flex align-items-center gap-5">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                    <img src="{{ asset('images/nrplogo.png') }}" alt="NrpLogo" width="50" height="auto" />
-                </a>
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none mainLogo">
+                <img src="{{ asset('images/nrplogo.png') }}" alt="NrpLogo" width="50" height="auto" />
+            </a>
 
-                <div class="dropdown text-start">
+            <div class="d-flex align-items-center categoriasSearch">
+                <div class="dropdown text-start categoriesDropdown">
 
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle badge bg-primary"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"> Categorias
@@ -52,10 +56,13 @@
 
                     </ul>
                 </div>
+
+                <form class="">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+
             </div>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form>
+
             <div class="d-flex align-items-center gap-5">
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
@@ -90,41 +97,41 @@
                         @endif
                     </a>
                     <ul class="dropdown-menu text-smaller" aria-labelledby="dropdownUser1">
-                            @php
-                            $totalPrice =0;
-                            @endphp
-                            @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
-                                @foreach (Auth::user()->cart->products as $product)
-                                    @php
-                                        $basePrice = 0;
-                                        $afterTaxes = 0;
-                                        if ($product->discount > 0) {
-                                            $basePrice = $product->price * ((100 - $product->discount) / 100);
-                                            $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
-                                        } else {
-                                            $basePrice = $product->price;
-                                            $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
-                                        }
-                                        $totalPrice += $afterTaxes * $product->pivot->amount;
-                                    @endphp
+                        @php
+                            $totalPrice = 0;
+                        @endphp
+                        @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
+                            @foreach (Auth::user()->cart->products as $product)
+                                @php
+                                    $basePrice = 0;
+                                    $afterTaxes = 0;
+                                    if ($product->discount > 0) {
+                                        $basePrice = $product->price * ((100 - $product->discount) / 100);
+                                        $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                                    } else {
+                                        $basePrice = $product->price;
+                                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                                    }
+                                    $totalPrice += $afterTaxes * $product->pivot->amount;
+                                @endphp
 
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
 
-                                        <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+                                    <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
 
 
-                                        <span>
-                                            {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
-                                        </span>
+                                    <span>
+                                        {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
+                                    </span>
 
-                                    </li>
+                                </li>
 
-                                    <!-- Puedes mostrar otros detalles del item aquí -->
-                                @endforeach
-                            @else
-                                <li>No hay items en el carrito</li>
-                            @endif
-                        
+                                <!-- Puedes mostrar otros detalles del item aquí -->
+                            @endforeach
+                        @else
+                            <li>No hay items en el carrito</li>
+                        @endif
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>

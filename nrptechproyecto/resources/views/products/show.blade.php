@@ -4,11 +4,16 @@
 
 @section('links')
     <script defer src="{{ asset('js/productShow.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('styles/productView.css') }}">
+@endsection
+
+@section('bodyClasses')
+    bg-products
 @endsection
 
 @section('content')
     <article class="imagesAndPrice d-flex justify-content-between">
-        <section class="images w-50 mx-5 mt-5">
+        <section class="images mx-5 mt-5">
             <div class="mainImg bg-danger">
                 @if ($product->images->isNotEmpty())
                     <img src="{{ asset($product->images->first()->url) }}" alt="{{ $product->name }}"
@@ -28,7 +33,7 @@
                 </button>
             </div>
         </section>
-        <div class="nameAndPrice mx-5 mt-5 text-center bg-secondary d-flex flex-column justify-content-around w-25">
+        <section class="nameAndPrice mx-5 mt-5 text-center bg-secondary d-flex flex-column justify-content-around">
             <h3>{{ $product->name }}</h3>
 
             <h3>Disponibilidad:</h3>
@@ -54,7 +59,7 @@
                 <input hidden type="number" name="amount" value="1" min="1" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Añadir al carrito</button>
             </form>
-        </div>
+        </section>
     </article>
     <section class="specifications mx-5 mt-5">
         <div class="about">
