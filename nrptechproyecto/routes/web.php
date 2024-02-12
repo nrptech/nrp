@@ -7,6 +7,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -59,9 +60,8 @@ Route::get('/invoice', [OrderController::class, 'showInvoice'])->name('invoice.s
 Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
 Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
 Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
-Route::get('/users/profile', function () {
-    return view('users.profile');
-})->name('users.profile');
+Route::get('/users/profile', [ProfileController::class, 'edit'])->name('users.profile');
+
 
 
 Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
