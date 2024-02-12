@@ -1,0 +1,43 @@
+<?php 
+
+return [
+    "welcome" => "Welcome to the main page",
+    "overview" => "Overview",
+    "inventory" => "Inventory",
+    "cart" => "Cart",
+    "products" => "Products",
+    "logout" => "Logout",
+    "E-Mail Address" => "E-Mail Address",
+    "Password" => "Password",
+    "Remember Me" => "Remember Me",
+    "Login" => "Login",
+    "Forgot Your Password?" => "Forgot Your Password?",
+    "Register" => "Register",
+    "Name" => "Name",
+    "Confirm Password" => "Confirm Password",
+    "Reset Password" => "Reset Password",
+    "Reset Password Notification" => "Reset Password Notification",
+    "You are receiving this email because we received a password reset request for your account." => "You are receiving this email because we received a password reset request for your account.",
+    "This password reset link will expire in :count minutes." => "This password reset link will expire in :count minutes.",
+    "If you did not request a password reset, no further action is required." => "If you did not request a password reset, no further action is required.",
+    "Please confirm your password before continuing." => "Please confirm your password before continuing.",
+    "Regards" => "Regards",
+    "Whoops!" => "Whoops!",
+    "Hello!" => "Hello!",
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:actionURL](:actionURL)" => "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:actionURL](:actionURL)",
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:displayableActionUrl](:actionURL)" => "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:displayableActionUrl](:actionURL)",
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:" => "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:",
+    "Send Password Reset Link" => "Send Password Reset Link",
+    "Logout" => "Logout",
+    "Verify Email Address" => "Verify Email Address",
+    "Please click the button below to verify your email address." => "Please click the button below to verify your email address.",
+    "If you did not create an account, no further action is required." => "If you did not create an account, no further action is required.",
+    "Verify Your Email Address" => "Verify Your Email Address",
+    "A fresh verification link has been sent to your email address." => "A fresh verification link has been sent to your email address.",
+    "Before proceeding, please check your email for a verification link." => "Before proceeding, please check your email for a verification link.",
+    "If you did not receive the email" => "If you did not receive the email",
+    "click here to request another" => "click here to request another",
+    "All rights reserved." => "All rights reserved."
+];
+
+?>
