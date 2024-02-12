@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -35,38 +36,36 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'description' => 'required',
             'discount' => 'numeric',
+            'tax_id' => 'numeric',
+            'color' => 'string',
             'stock' => 'numeric',
             'specs' => 'string',
             'features' => 'string',
-            'tax_id' => 'numeric',
-            'color' => 'string',
         ]);
 
-        $data = $request->except('_token');
+        $productData = $request->except('_token', 'image');
 
-        Product::create($data);
+        $product = Product::create($productData);
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Product created successfully.');
-    }
+        if ($request->hasFile('image')) {
+            $file = $request->file("image");
+            $path = "images/";
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $uploadSucces = $request->file("image")->move($path, $filename);
+            $product->images()->create(['url' => $path . $filename]);
+        }
 
-    public function show(Product $product)
-    {
-        return view('productos.show', compact('product'));
+        return redirect()->route('productos.index')->with('success', 'Product created successfully.');
     }
 
     public function edit(Product $producto)
     {
-        // Check if the product exists
         if (!$producto) {
-            // Handle the case where the product is not found, you may redirect or display an error message
-            // For example, redirecting back to the index page with a message
             return redirect()->route('productos.index')->with('error', 'Product not found');
         }
 
         return view('productos.edit', compact('producto'));
     }
-
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -79,10 +78,24 @@ class ProductController extends Controller
             'features' => 'string',
             'tax_id' => 'numeric',
             'color' => 'string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
         ]);
 
-        $data = $request->all();
+        // Update product information
+        $data = $request->except('image');
         $product->update($data);
+
+        // Delete the old image
+        $product->images()->delete();
+
+        // Upload and create a new image
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = "images/";
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $file->move($path, $filename);
+            $product->images()->create(['url' => $path . $filename]);
+        }
 
         return redirect()->route('productos.index')
             ->with('success', 'Product updated successfully');
@@ -90,9 +103,23 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        // Delete associated images
+        $product->images()->delete();
+
+        // Delete the product
         $product->delete();
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Product deleted successfully');
+        return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function showProducts()
+    {
+        $products = Product::all();
+        return view('products/index', ['products' => $products]);
+    }
+
+    public function show(Product $product)
+    {
+        return view('products.show', compact('product'));
     }
 }

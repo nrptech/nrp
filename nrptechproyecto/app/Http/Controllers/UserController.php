@@ -39,35 +39,26 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
-            'roles' => 'required',
-        ]);
+{
+    $this->validate($request, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|confirmed',
+        'roles' => 'required',
+    ]);
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+    $input = $request->all();
+    $input['password'] = bcrypt($input['password']);
 
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+    $user = User::create($input);
 
-        return redirect()->route('users.index')
-            ->with('success', 'User created successfully');
-    }
+    // Use the correct role names and set the guard_name
+    $user->assignRole($request->input('roles'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::find($id);
-        return response()->view('users.show', compact('user'));
-    }
+    return redirect()->route('users.index')
+        ->with('success', 'User created successfully');
+}
+    
 
     /**
      * Show the form for editing the specified resource.

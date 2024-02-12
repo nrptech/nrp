@@ -49,10 +49,4 @@ class Product extends Model
         return $this->belongsToMany(Wishlist::class);
     }
 
-    public function showProducts()
-    {
-        $products = Product::all();
-        return view('products', ['products' => $products]);
-    }
-
 }

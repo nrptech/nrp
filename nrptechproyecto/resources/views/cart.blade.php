@@ -1,100 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.layout')
 
-<head>
-    <title>Carrito</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+@section('title', 'Carrito')
 
-    <!-- Bootstrap CSS v5.3.2 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+@section('links')
+    <script defer src="{{ asset('js/cart.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+@endsection
+@section('content')
+    <h1 class="mb-4">Carrito de Compras</h1>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
+    @if (empty($products))
+        <p class="alert alert-info">El carrito está vacío</p>
+    @else
+        <ul class="list-group">
+            @php
+                $totalPrice = 0;
 
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-    </script>
-</head>
+            @endphp
 
-<!-- ... (código anterior) ... -->
-
-<body>
-    @include('header')
-
-    <main class="container mt-4">
-        <h1 class="mb-4">Carrito de Compras</h1>
-
-        @if (empty($products))
-            <p class="alert alert-info">El carrito está vacío</p>
-        @else
-            <ul class="list-group">
+            @foreach ($products as $product)
                 @php
-                    $totalPrice = 0; // Inicializa el precio total
+                    $basePrice = 0;
+                    $afterTaxes = 0;
+                    if ($product->discount > 0) {
+                        $basePrice = $product->price * ((100 - $product->discount) / 100);
+                        $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                    } else {
+                        $basePrice = $product->price;
+                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                    }
+                    $totalPrice += $afterTaxes * $product->pivot->amount;
                 @endphp
 
-                @foreach ($products as $product)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <!-- Restar cantidad -->
-                            <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
-                                @csrf
-                                <input type="hidden" name="amount" value="1">
-                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
-                            </form>
-
-                            <!-- Mostrar cantidad -->
-                            <span class="badge bg-primary rounded-circle me-2">{{ $product->pivot->amount }}</span>
-
-                            <!-- Sumar cantidad -->
-                            <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
-                                @csrf
-                                <input type="hidden" name="amount" value="1">
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">+</button>
-                            </form>
+                <li class="list-group-item d-flex justify-content-between align-items-center singleItem">
+                    <div class="d-flex gap-2">
+                        <div class="imgMiniature">
+                            @if ($product->images->isNotEmpty())
+                                <img class="img-fluid" src="{{ asset($product->images->first()->url) }}"
+                                    alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
+                            @endif
                         </div>
 
-                        <!-- Mostrar nombre del producto -->
-                        <span>{{ $product->name }}</span>
+                        <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
+                    </div>
 
-                        <!-- Mostrar precio por unidad -->
-                        <span class="badge bg-success rounded-pill me-2">
-                            Precio por unidad: ${{ number_format($product->price, 2) }}
-                        </span>
 
-                        <!-- Mostrar precio por cantidad -->
-                        <span class="badge bg-dark rounded-pill me-2">
-                            Precio por cantidad: ${{ number_format($product->price * $product->pivot->amount, 2) }}
-                        </span>
+                    <div class="d-flex gap-2 align-items-center">
 
-                    </li>
+                        <button onclick="show(this)" class="btn btn-danger py-0 deletBtn">Eliminar</button>
+                        <div hidden>
+                            <div class="d-flex">
+                                <button onclick="hide(this)">
+                                    X
+                                </button>
+                                <form action="{{ route('cart.substracAmount', $product) }}" method="post" class="me-2">
+                                    @csrf
+                                    <input class="rounded-5 px-2" type="number" name="amount" value="1"
+                                        min="1" max="{{ $product->pivot->amount }}">
+                                    <button type="submit" class="btn btn-danger btn-sm rounded-pill">-</button>
+                                </form>
+                            </div>
+                        </div>
 
-                    @php
-                        $totalPrice += $product->price * $product->pivot->amount; // Suma al precio total
-                    @endphp
-                @endforeach
-            </ul>
 
-            <!-- Mostrar precio total del carrito -->
-            <div class="mt-3">
-                <h4>Precio total del carrito: ${{ number_format($totalPrice, 2) }}</h4>
-            </div>
+                        @if ($product->pivot->amount >= $product->stock)
+                            <button onclick="show(this)" class="btn btn-success py-0 addBtn disabled">Añadir</button>
+                        @else
+                            <button onclick="show(this)" class="btn btn-success py-0 addBtn">Añadir</button>
+                        @endif
 
-            <!-- Botón de compra -->
-            <div class="mt-3">
-                <a href="{{ route('order.show') }}" class="btn btn-primary">Proceder a la Orden</a>
-            </div>
+                        <div hidden>
+                            <div class="d-flex">
+                                <button onclick="hide(this)">
+                                    X
+                                </button>
+                                <form action="{{ route('cart.add', $product) }}" method="post" class="me-2">
+                                    @csrf
+                                    <input class="rounded-5 px-2 W-25" type="number" name="amount" value="1"
+                                        min="1" max="{{ $product->stock - $product->pivot->amount }}">
+                                    <button type="submit" class="btn btn-success btn-sm">+</button>
+                                </form>
+                            </div>
+                        </div>
 
-        @endif
 
-    </main>
 
-    <footer class="mt-4">
-        <!-- Agrega contenido del pie de página si es necesario -->
-    </footer>
-</body>
+                    </div>
 
-</html>
+                    <span class="">
+                        Precio base: {{ number_format($basePrice, 2) }}€
+                    </span>
+
+                    <span class="">
+                        {{ $product->tax->taxName . ' ' . $product->tax->amount }}%
+                    </span>
+
+                    <span class="">
+                        Precio tras impuestos:
+                        {{ number_format($afterTaxes, 2) }}€
+                    </span>
+
+
+                    <span class="">
+                        Precio total:
+                        {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
+                    </span>
+
+                </li>
+            @endforeach
+        </ul>
+
+        <!-- Mostrar precio total del carrito -->
+        <div class="mt-3">
+            <h4>Precio total del carrito: {{ number_format($totalPrice, 2) }}€</h4>
+        </div>
+
+        <!-- Botón de compra -->
+        <div class="mt-3">
+            <a href="{{ route('order.show') }}" class="btn btn-primary">Proceder a la Orden</a>
+        </div>
+
+    @endif
+
+
+@endsection

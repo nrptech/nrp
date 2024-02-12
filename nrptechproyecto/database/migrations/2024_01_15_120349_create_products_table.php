@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->string('description', 255);
+            $table->text('description');
             $table->integer('discount');
             $table->unsignedBigInteger('tax_id');
             $table->string('color', 45)->default('')->nullable();
             $table->integer('stock');
-            $table->string('specs', 255)->default('')->nullable();
-            $table->string('features', 255)->default('')->nullable();
+            $table->text('specs')->default('')->nullable();
+            $table->text('features')->default('')->nullable();
             $table->timestamps();
         });
     }
