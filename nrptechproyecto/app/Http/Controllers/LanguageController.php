@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function switchLanguage($language)
+    public function switchLanguage(Request $request, $language)
     {
         // Validate that the requested language is supported
         $supportedLanguages = ['es', 'en'];
