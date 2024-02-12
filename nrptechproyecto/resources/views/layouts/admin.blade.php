@@ -28,7 +28,7 @@
             <a class="btn btn-primary" href="{{ route('productos.index') }}"> Gestionar Productos</a>
             <a class="btn btn-success" href="{{ route('admin') }}"> Administrador principal</a>
             <a class="btn btn-primary" href="{{ route('categories.index') }}">Gestionar categorias</a>
-            <a href="{{ url('/home') }}" class="btn btn-primary">Vista de usuario</a>
+            <a href="{{ url('/home') }}" class="btn btn-warning">Vista de usuario</a>
         </nav>
     </header>
     
