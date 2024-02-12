@@ -29,25 +29,19 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Email</th>
             <th>Roles</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($data as $key => $user)
+        @foreach ($data as $user)
             <tr>
-                <td>{{ ++$i }}</td>
+                <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    @if (!empty($user->getRoleNames()))
-                        @foreach ($user->getRoleNames() as $v)
-                            <label class="badge badge-success">{{ $v }}</label>
-                        @endforeach
-                    @else
-                        <span>No roles assigned</span>
-                    @endif
+                    <label class="badge badge-success text-success">{{ $user->role->name }}</label>
                 </td>
                 <td>
                     <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>

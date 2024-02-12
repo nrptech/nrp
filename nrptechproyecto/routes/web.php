@@ -69,6 +69,7 @@ Route::put('/categories/{category}', [CategoryController::class, 'update'])->nam
 Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
