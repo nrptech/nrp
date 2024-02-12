@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Tax;
@@ -29,9 +30,11 @@ class DatabaseSeeder extends Seeder
         // $this->call(PermissionsTableSeeder::class);
         // $this->call(RolesPermissionsSeeder::class);
 
+        
         $role1= Role::create(["name" => "admin"]);
         $role2= Role::create(["name" => "usuario"]);
 
+        $category = new Category();
         $image = new Image();
         $image2 = new Image();
         $image3 = new Image();
@@ -122,7 +125,8 @@ class DatabaseSeeder extends Seeder
         $user->surname="Admin Admin";
         $user->role_id=1;
         
-        
+        $category->name="Pajero";
+
         $user->assignRole($role1);
         $tax->save();
         $product->save();
@@ -138,6 +142,7 @@ class DatabaseSeeder extends Seeder
         $image5->save();
         $image6->save();
         $image7->save();
+        $category->save();
 
         \App\Models\User::factory(10)->create();
         

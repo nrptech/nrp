@@ -31,7 +31,8 @@
 
     <header class="p-3 mb-3 border-bottom d-flex align-items-center w-100 bg-lightBlue">
         @role('admin')
-            <a href="{{ route('users.index') }}" class="btn btn-warning">Administrador</a>
+        <a href="{{ route('admin') }}" class="btn btn-warning">Administrador</a>
+
         @endrole
         <section class="d-flex justify-content-around align-items-center w-100 navItems">
 
@@ -54,6 +55,14 @@
                             <hr class="dropdown-divider">
                         </li>
 
+                        {{-- @foreach ($categories as $category)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ $category->name }}
+                            </li>
+
+                            <!-- Puedes mostrar otros detalles del item aquí -->
+                        @endforeach --}}
+
                     </ul>
                 </div>
 
@@ -71,7 +80,8 @@
                             class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="{{ route('users.profile') }}">Editar Perfil</a></li>
+                        <li><a class="dropdown-item" href="#">Ajustes</a></li>
+                        <li><a class="dropdown-item" href="#">Wishlist</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

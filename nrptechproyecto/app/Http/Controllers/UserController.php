@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
+
 class UserController extends Controller
 {
     /**
@@ -39,26 +40,26 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-{
-    $this->validate($request, [
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|confirmed',
-        'roles' => 'required',
-    ]);
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+            'roles' => 'required',
+        ]);
 
-    $input = $request->all();
-    $input['password'] = bcrypt($input['password']);
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
 
-    $user = User::create($input);
+        $user = User::create($input);
 
-    // Use the correct role names and set the guard_name
-    $user->assignRole($request->input('roles'));
+        // Use the correct role names and set the guard_name
+        $user->assignRole($request->input('roles'));
 
-    return redirect()->route('users.index')
-        ->with('success', 'User created successfully');
-}
-    
+        return redirect()->route('users.index')
+            ->with('success', 'User created successfully');
+    }
+
 
     /**
      * Show the form for editing the specified resource.
