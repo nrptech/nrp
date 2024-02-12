@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <title>Home</title>
@@ -26,7 +26,7 @@
 
     <main>
         <p>Hola planeta</p>
-        
+
         @role('admin')
             <p>Esta pal admin</p>
             <!-- Button visible only to admin -->
@@ -40,7 +40,7 @@
 
     <footer>
     </footer>
-
 </body>
+@include('footer')
 
 </html>
