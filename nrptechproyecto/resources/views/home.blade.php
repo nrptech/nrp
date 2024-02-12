@@ -25,7 +25,7 @@
     @include('header')
 
     <main>
-        <p>Hola planeta</p>
+        <h1> @lang('messages.welcome')</h1>
         
         @role('admin')
             <p>Esta pal admin</p>

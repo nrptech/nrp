@@ -45,7 +45,7 @@ Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmoun
 // Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
-
+Route::post('/messages/store', [MessagesController::class, 'store'])->name('messages.store');
 Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 Route::post('/order/confirm', [CartController::class, 'confirmOrder'])->name('confirmOrder');
 Route::post('/order/reject', [CartController::class, 'rejectOrder'])->name('rejectOrder');
