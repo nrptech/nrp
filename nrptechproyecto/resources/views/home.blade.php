@@ -34,8 +34,8 @@
         @endrole
 
         @role('user')
-            <p>Esta pa los usuarios</p>
         @endrole
+        <a href="{{ route('users.profile') }}" class="btn btn-primary">Editar perfil</a>
     </main>
 
     <footer>
