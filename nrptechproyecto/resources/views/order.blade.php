@@ -76,6 +76,9 @@
         <p>No tienes métodos de pago guardados.</p>
         <form method="post" action="{{ route('savePay') }}">
             @csrf
+            <label for="name">Nombre de la tarjeta:</label>
+            <input type="text" id="name" name="name" required max="100">
+
             <label for="card_holder">Titular de la tarjeta:</label>
             <input type="text" id="card_holder" name="card_holder" required max="100">
 
@@ -93,15 +96,18 @@
             <div hidden>
                 <form method="post" action="{{ route('savePay') }}">
                     @csrf
+                    <label for="name">Nombre de la tarjeta:</label>
+                    <input type="text" id="name" name="name" required max="100">
+        
                     <label for="card_holder">Titular de la tarjeta:</label>
                     <input type="text" id="card_holder" name="card_holder" required max="100">
-
+        
                     <label for="card_number">Numero de la tarjeta:</label>
                     <input type="number" id="card_number" name="card_number" required>
-
+        
                     <label for="cvv">CVV:</label>
                     <input type="number" id="cvv" name="cvv" required>
-
+        
                     <button type="submit">Guardar Método de Pago</button>
                 </form>
             </div>
@@ -112,7 +118,7 @@
             @csrf
             <select name="payment_method">
                 @foreach (Auth::user()->payMethods as $paymentMethod)
-                    <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->card_number }}</option>
+                    <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->name }}</option>
                 @endforeach
             </select>
             <button type="submit">Confirmar Pedido</button>

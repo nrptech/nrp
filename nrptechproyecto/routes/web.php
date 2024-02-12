@@ -35,7 +35,7 @@ Route::middleware(['auth'])->get('/products/index', [ProductController::class, '
 
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
-Route::post('/order', [OrderController::class, 'savePayMethod'])->name('savePay');
+Route::post('/order', [UserController::class, 'savePayMethod'])->name('savePay');
 
 Route::get('/header', [CartController::class, 'showCart']);
 
@@ -52,6 +52,11 @@ Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmoun
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
 Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
+Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
+Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
+
+Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
+Route::put('/users/{user}/delete-pay-method', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
 
 Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 
@@ -63,7 +68,7 @@ Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoi
 Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
 Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
 Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
-Route::put('/productos/{product}/add-category', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
+
 Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
 
 Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
@@ -77,4 +82,3 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.dashboard');
     })->name('admin');
 });
-

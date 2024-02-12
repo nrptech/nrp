@@ -32,28 +32,14 @@
         </div>
     @endif
 
-
+    <h4 class="text-warning"> <strong>{{ $producto->name }}</strong></h4>
     <form method="POST" action="{{ route('productos.updateCategories', $producto->id) }}" enctype="multipart/form-data">
 
         @method('PUT')
         @csrf
 
-        <div class="mb-3">
 
-            <p>{{ $producto->name }}</p>
-
-            @if (count($assignedCategories) > 0)
-                <div>
-                    <h1>Eliminar categorias</h1>
-                    <label for="category" class="form-label">Categoría del Producto</label>
-                    <select class="form-select" id="category" name="category">
-                        @foreach ($assignedCategories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            @endif
-
+        <div>
             <div>
                 <div>
                     <h1>Añadir categorias</h1>
@@ -69,7 +55,32 @@
             </div>
             <input type="hidden" name="product_id" value="{{ $producto->id }}">
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-success">Añadir</button>
             </div>
+        </div>
+
     </form>
+
+    <form method="POST" action="{{ route('productos.deleteCategory', $producto->id) }}" enctype="multipart/form-data">
+        @method('PUT')
+        {{ csrf_field() }}
+    
+        @if (count($assignedCategories) > 0)
+            <div>
+                <div>
+                    <h1>Eliminar categorías</h1>
+                    <label for="category" class="form-label">Categoría del Producto</label>
+                    <select class="form-select" id="category" name="category">
+                        @foreach ($assignedCategories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        @endif
+    </form>
+    
 @endsection
