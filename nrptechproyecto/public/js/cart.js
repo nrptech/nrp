@@ -11,3 +11,7 @@ function hide(element){
     container.setAttribute("hidden", "");
     container.previousElementSibling.removeAttribute("hidden")
 }
+
+function addPayMethod(element){
+    element.nextElementSibling.toggleAttribute("hidden")
+}

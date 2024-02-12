@@ -34,8 +34,8 @@
                 <div class="d-flex gap-2">
                     <div class="imgMiniature">
                         @if ($product->images->isNotEmpty())
-                            <img class="img-fluid" src="{{ asset($product->images->first()->url) }}"
-                                alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
+                            <img class="img-fluid" src="{{ asset($product->images->first()->url) }}" alt="{{ $product->name }}"
+                                class="w-100" id="img{{ $product->id }}-0">
                         @endif
                     </div>
 
@@ -71,10 +71,53 @@
     </div>
 
     <!-- Botones de confirmación y rechazo -->
-    <form method="post" action="{{ route('confirmOrder') }}">
-        @csrf
-        <button type="submit">Confirmar Pedido</button>
-    </form>
+    @if (Auth::user()->payMethods->isEmpty())
+        <button type="submit" disabled>Confirmar Pedido</button>
+        <p>No tienes métodos de pago guardados.</p>
+        <form method="post" action="{{ route('savePay') }}">
+            @csrf
+            <label for="card_holder">Titular de la tarjeta:</label>
+            <input type="text" id="card_holder" name="card_holder" required max="100">
+
+            <label for="card_number">Numero de la tarjeta:</label>
+            <input type="number" id="card_number" name="card_number" required>
+
+            <label for="cvv">CVV:</label>
+            <input type="number" id="cvv" name="cvv" required>
+
+            <button type="submit">Guardar Método de Pago</button>
+        </form>
+    @else
+        <div>
+            <button onclick="addPayMethod(this)">Añadir un nuevo método de pago</button>
+            <div hidden>
+                <form method="post" action="{{ route('savePay') }}">
+                    @csrf
+                    <label for="card_holder">Titular de la tarjeta:</label>
+                    <input type="text" id="card_holder" name="card_holder" required max="100">
+
+                    <label for="card_number">Numero de la tarjeta:</label>
+                    <input type="number" id="card_number" name="card_number" required>
+
+                    <label for="cvv">CVV:</label>
+                    <input type="number" id="cvv" name="cvv" required>
+
+                    <button type="submit">Guardar Método de Pago</button>
+                </form>
+            </div>
+        </div>
+
+
+        <form method="post" action="{{ route('confirmOrder') }}">
+            @csrf
+            <select name="payment_method">
+                @foreach (Auth::user()->payMethods as $paymentMethod)
+                    <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->card_number }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Confirmar Pedido</button>
+        </form>
+    @endif
 
     <form method="post" action="{{ route('rejectOrder') }}">
         @csrf
