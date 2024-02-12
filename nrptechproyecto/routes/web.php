@@ -11,7 +11,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LanguageController;
 
-Route::middleware(['checkLocale'])->group(function () {
+Route::middleware(['CheckLocale'])->group(function () {
     Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 });
 // Home route
@@ -26,7 +26,7 @@ Auth::routes();
 Route::get('/home', [LanguageController::class, 'header']);
 
 // Authenticated routes
-Route::middleware(['auth', 'checkLocale'])->group(function () {
+Route::middleware(['auth', 'CheckLocale'])->group(function () {
     // Home
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
