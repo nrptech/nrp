@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
@@ -50,6 +51,8 @@ Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmoun
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
+Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
+
 Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 
 Route::post('/order/confirm', [CartController::class, 'confirmOrder'])->name('confirmOrder');
@@ -59,14 +62,14 @@ Route::get('/invoice', [OrderController::class, 'showInvoice'])->name('invoice.s
 Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
 Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
 Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
-
 Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
+Route::put('/productos/{product}/add-category', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
+Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
 
 Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductController::class);
     Route::resource('users', UserController::class);
-    Route::resource('category', ProductController::class);
+    Route::resource('categories', CategoryController::class);
 });

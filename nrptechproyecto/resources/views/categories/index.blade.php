@@ -31,11 +31,9 @@
                 <h2>Users Management</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+                <a class="btn btn-success" href="{{ route('categories.create') }}"> Create New Category</a>
                 <a class="btn btn-primary" href="{{ route('productos.index') }}"> Go to Productos</a>
-                <a class="btn btn-primary" href="{{ route('categories.index') }}"> Go to Categories</a>
                 <a href="{{ url('/') }}" class="btn btn-primary">Back to Home</a>
-                
             </div>
         </div>
     </div>
@@ -48,39 +46,28 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
+            <th>Id</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th width="280px">Action</th>
         </tr>
-        @foreach ($data as $key => $user)
+        @foreach ($categories as $category)
             <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
+                <td>{{ $category->id }}</td>
+                <td>{{ $category->name }}</td>
                 <td>
-                    @if(!empty($user->getRoleNames()))
-                        @foreach($user->getRoleNames() as $v)
-                            <label class="badge badge-success">{{ $v }}</label>
-                        @endforeach
-                    @else
-                        <span>No roles assigned</span>
-                    @endif
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                    <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
+                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary">Edit</a>
+                    <form method="POST" action="{{ route('categories.destroy', $category->id) }}"
+                        style="display:inline">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
+            
         @endforeach
     </table>
 
-    {!! $data->render() !!}
+
 @endsection
 </body>
 </html>

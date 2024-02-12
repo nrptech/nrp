@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-   
+
     protected $table = 'products';
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-       'name', 'price', 'description', 'discount', 'tax_id', 'color', 'stock', 'specs', 'features',
+        'name', 'price', 'description', 'discount', 'tax_id', 'color', 'stock', 'specs', 'features',
     ];
 
     public function carts()
@@ -26,7 +26,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'product_has_categories');
     }
 
     public function images()
@@ -41,12 +41,11 @@ class Product extends Model
 
     public function tax()
     {
-        return $this->belongsTo(Tax::class, 'tax_id'  , 'id');
+        return $this->belongsTo(Tax::class, 'tax_id', 'id');
     }
 
     public function wishlists()
     {
         return $this->belongsToMany(Wishlist::class);
     }
-
 }

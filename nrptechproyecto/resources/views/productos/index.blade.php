@@ -36,6 +36,7 @@
                 <th>Features</th>
                 <th>Tax ID</th>
                 <th>Color</th>
+                <th>Categorias</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -53,7 +54,13 @@
                     <td>{{ $product->tax_id }}</td>
                     <td>{{ $product->color }}</td>
                     <td>
+                        @foreach ($product->categories as $category)
+                            <p>{{ $category->name }}</p>
+                        @endforeach
+                    </td>
+                    <td>
                         <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('productos.addCategory', $product->id) }}" class="btn btn-primary">Edit categories</a>
                         <form method="POST" action="{{ route('productos.destroy', $product->id) }}"
                             style="display:inline">
                             @method('DELETE')
@@ -65,7 +72,7 @@
             @endforeach
         </tbody>
     </table>
-
+    
     <a href="{{ route('productos.create') }}" class="btn btn-success">Add New Product</a>
     <a class="btn btn-primary" href="{{ route('users.index') }}"> Go to users</a>
     <a href="{{ url('/') }}" class="btn btn-primary">Back to Home</a>

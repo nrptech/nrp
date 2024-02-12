@@ -9,7 +9,6 @@
 
 <body>
     @extends('layouts.admin')
-    @include('header')
 
 
     @section('contenido')

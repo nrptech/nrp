@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Image;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -61,11 +62,16 @@ class ProductController extends Controller
     public function edit(Product $producto)
     {
         if (!$producto) {
-            return redirect()->route('productos.index')->with('error', 'Product not found');
+            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
         }
 
-        return view('productos.edit', compact('producto'));
+        $allCategories = Category::all();
+
+        $assignedCategories = $producto->categories;
+
+        return view('productos.edit', compact('producto', 'assignedCategories', 'allCategories'));
     }
+
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -103,7 +109,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        // Delete associated images
+        $product->categories()->detach();
         $product->images()->delete();
 
         // Delete the product
@@ -121,5 +127,52 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return view('products.show', compact('product'));
+    }
+
+    public function addCategory(Product $producto)
+    {
+        if (!$producto) {
+            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
+        }
+
+        $allCategories = Category::all();
+
+        $assignedCategories = $producto->categories;
+
+        return view('productos.addCategory', compact('producto', 'assignedCategories', 'allCategories'));
+    }
+
+    public function assingCategoryToAProduct($productoId, $categoriaId)
+    {
+        $producto = Product::find($productoId);
+        $categoria = Category::find($categoriaId);
+
+        if (!$producto || !$categoria) {
+            return redirect()->back()->with('error', 'Producto o categoría no encontrados');
+        }
+
+        $producto->categories()->attach($categoria);
+
+        return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
+    }
+
+    public function updateCategories(Request $request)
+    {
+        $productId = $request->input('product_id');
+    
+        $producto = Product::find($productId);
+        if (!$producto) {
+            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
+        }
+    
+        $categoryId = $request->input('category');
+        
+        if ($producto->categories()->where('categories.id', $categoryId)->exists()) {
+            return redirect()->back()->with('error', 'La categoría ya está asignada al producto');
+        }
+    
+        $producto->categories()->attach($categoryId);
+    
+        return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
     }
 }
