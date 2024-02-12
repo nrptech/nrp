@@ -1,51 +1,58 @@
-.footer {
+body {
+    display: grid;
+    min-height: 100vh; /* Al menos el 100% del viewport height */
+    grid-template-rows: auto 1fr auto;
+}
+  
+  .main-content {
+    flex-grow: 1; /* Esto hará que el contenido principal ocupe el espacio restante */
+  }
+  
+  .footer {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-}
-
-.footer h3 {
+    margin-top: auto; /* Empuja el footer hacia la parte inferior */
+  }
+  
+  .footer h3 {
     width: 100%;
-}
-
-.footer ul {
+    cursor: pointer;
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin: 0;
+  }
+  
+  .footer ul {
     list-style-type: none;
     padding: 0;
-}
-
-.footer ul li {
+    display: none; /* Oculta las listas por defecto en pantallas pequeñas */
+  }
+  
+  .footer ul li {
     margin-bottom: 5px;
-}
-
-
-@media screen and (min-width: 768px) {
-    .footer {
-        flex-wrap: nowrap;
-    }
-
+  }
+  
+  /* Media Query para pantallas medianas y grandes */
+  @media screen and (min-width: 768px) {
     .footer h3 {
-        width: 25%;
+      width: 25%;
     }
-
+  
     .footer ul {
-        width: 25%;
+      width: 25%;
+      display: block; /* Muestra las listas en pantallas más grandes */
     }
-}
-
-/* Media Query para vista móvil */
-@media screen and (max-width: 767px) {
-    .footer h3 {
-        cursor: pointer;
-        background-color: #f1f1f1;
-        padding: 10px;
-        margin: 0;
+  }
+  
+  /* Media Query para vista móvil */
+  @media screen and (max-width: 767px) {
+    .footer h3:hover {
+      background-color: #ddd; /* Cambia el color de fondo al pasar el ratón sobre el h3 */
     }
-
-    .footer ul {
-        display: none;
-    }
-
+  
     .footer ul.show {
-        display: block;
+      display: block;
     }
-}
+  }
+  

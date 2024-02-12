@@ -20,7 +20,7 @@
     </script>
 
     <link rel="stylesheet" href="{{ asset('styles/header.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
 
 
     @yield('links')
