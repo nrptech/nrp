@@ -31,7 +31,8 @@
 
     <header class="p-3 mb-3 border-bottom d-flex align-items-center w-100 bg-lightBlue">
         @role('admin')
-            <a href="{{ route('users.index') }}" class="btn btn-warning">Administrador</a>
+        <a href="{{ route('admin') }}" class="btn btn-warning">Administrador</a>
+
         @endrole
         <section class="d-flex justify-content-around align-items-center w-100 navItems">
 

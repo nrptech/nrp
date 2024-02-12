@@ -72,4 +72,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('productos', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
+    Route::get('/admin', function () {
+        return view('admin.dashboard');
+    })->name('admin');
 });
+
