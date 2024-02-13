@@ -56,7 +56,10 @@ Route::put('/productos/{product}/update-categories', [ProductController::class, 
 Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
 
 Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
-Route::put('/users/{user}/delete-pay-method', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
+Route::put('/users/{user}/delete', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
+
+Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
+Route::get('/users/{user}/delete', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
 
 Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 

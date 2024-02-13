@@ -34,6 +34,7 @@
             <th>Email</th>
             <th>Roles</th>
             <th>Metodos de pago</th>
+            <th>Direcciones</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($data as $user)
@@ -50,29 +51,43 @@
                             <p>{{ $payMethod->name }}</p>
                         </div>
                     @endforeach
-
+                </td>
+                <td>
+                    @foreach ($user->addresses as $address)
+                        <div>
+                            <p>{{ $address->name }}</p>
+                        </div>
+                    @endforeach
                 </td>
                 <td>
                     <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>
-                    <a href="{{ route('users.removePayMethod', $user->id) }}" class="btn btn-primary">Manage
+                    <a href="{{ route('users.removePayMethod', $user->id) }}" class="btn btn-primary">Delete
                         pay methods</a>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{$user->id}}">
+                    <a href="{{ route('users.removeAddresses', $user->id) }}" class="btn btn-primary">Delete Addresses</a>
+
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#confirmDeleteModal{{ $user->id }}">
                         Delete
                     </button>
 
-                    <div class="modal fade" id="confirmDeleteModal{{$user->id}}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{$user->id}}" aria-hidden="true">
+                    <div class="modal fade" id="confirmDeleteModal{{ $user->id }}" tabindex="-1"
+                        aria-labelledby="confirmDeleteModalLabel{{ $user->id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel{{$user->id}}">Confirmar eliminación</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel{{ $user->id }}">Confirmar
+                                        eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     ¿Estás seguro que deseas eliminar al usuario <strong>{{ $user->name }}</strong>?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}"
+                                        style="display:inline">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-danger">Eliminar</button>

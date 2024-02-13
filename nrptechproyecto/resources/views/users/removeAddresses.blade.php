@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin dashboard')
+@section('title', 'Eliminar direcciones')
 
 @section('links')
     <link rel="stylesheet" href="../../css/app.css">
@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <h1>Eliminar método de pago</h1>
+    <h1>Eliminar direcciones</h1>
     <div class="pull-right">
         <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
     </div>
@@ -25,31 +25,31 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('users.deletePayMethods', $user->id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('users.deleteAddress', $user->id) }}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
 
         <div class="mb-3">
             <p>{{ $user->name }}</p>
 
-            @if (count($assignedPayMethods) > 0)
+            @if (count($assignedAddresses) > 0)
                 <div>
-                    <label for="payMethod" class="form-label">Métodos de pago</label>
-                    <select class="form-select" id="payMethod" name="payMethod">
-                        @foreach ($assignedPayMethods as $payMethod)
-                            <option value="{{ $payMethod->id }}">{{ $payMethod->name }}</option>
+                    <label for="address" class="form-label">Métodos de pago</label>
+                    <select class="form-select" id="address" name="address">
+                        @foreach ($assignedAddresses as $address)
+                            <option value="{{ $address->id }}">{{ $address->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
 
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                <input type="hidden" name="user_id" value="{{ $address->id }}">
                 <div class="text-center">
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal">Eliminar</button>
                 </div>
-                @else 
-                <h4>El usuario no tiene ningún metodo de pago asignado.</h4>
+            @else
+                <h4>El usuario no tiene ninguna dirección asignada.</h4>
             @endif
         </div>
     </form>

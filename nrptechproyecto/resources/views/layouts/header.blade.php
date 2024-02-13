@@ -72,33 +72,6 @@
 
             </div>
 
-            <div class="d-flex align-items-center gap-5">
-                <div class="dropdown text-end">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('images/nrplogo.png') }}" alt="mdo" width="32" height="32"
-                            class="rounded-circle">
-                    </a>
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                        <li><a class="dropdown-item" href="#">Wishlist</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-
                 <div class="dropdown text-end">
                     <a href="{{ route('cart.show') }}" class="d-block link-dark text-decoration-none dropdown-toggle"
                         id="dropdownCart" data-bs-toggle="dropdown" aria-expanded="false">
@@ -152,6 +125,33 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="d-flex align-items-center gap-5">
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ asset('images/nrplogo.png') }}" alt="mdo" width="32" height="32"
+                            class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">Ajustes</a></li>
+                        <li><a class="dropdown-item" href="#">Wishlist</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
 
         </section>
     </header>

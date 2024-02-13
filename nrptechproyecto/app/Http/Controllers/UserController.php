@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PayMethod;
@@ -130,6 +131,7 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
+    
     public function savePayMethod(Request $request)
     {
 
@@ -174,6 +176,59 @@ class UserController extends Controller
         $payMethodId->delete();
 
         return redirect()->back()->with('status', 'Método de pago eliminado correctamente');
+
+    }
+
+    public function saveAddress(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|string',
+            'province' => 'required|string',
+            'city' => 'required|string',
+            'street' => 'required|string',
+            'number' => 'required|string',
+            'pc' => 'required|digits:5',
+            'country' => 'required|string',
+        ]);
+
+        $address = [
+            'user_id' => auth()->id(),
+            'name' => $request->input('name'),
+            'province' => $request->input('province'),
+            'city' => $request->input('city'),
+            'street' => $request->input('street'),
+            'number' => $request->input('number'),
+            'pc' => $request->input('pc'),
+            'country' => $request->input('country'),
+        ];
+
+        Address::create($address);
+
+        return redirect()->back()->with('success', 'Dirección guardada exitosamente.');
+    }
+
+    public function removeAddresses(User $user){
+        if (!$user) {
+            return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
+        }
+
+        $assignedAddresses = $user->addresses;
+
+        return view('users.removeAddresses', compact('user', 'assignedAddresses'));
+    }
+
+    public function deleteAddress(Request $request){
+        $addressId = $request->input('address');
+        $addressId = Address::find($addressId);
+
+        if (!$addressId) {
+            return redirect()->back()->with('error', 'Dirección no encontrada');
+        }
+
+        $addressId->delete();
+
+        return redirect()->back()->with('status', 'Dirección eliminada correctamente');
 
     }
 }
