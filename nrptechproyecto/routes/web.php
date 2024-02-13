@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update');
     Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmount'])->name('cart.substracAmount');
+    Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
 
     // Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
 
