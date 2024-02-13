@@ -56,6 +56,9 @@
                                             <p class="mb-0 me-2">¿No tienes cuenta?</p>
                                             <a href="{{route("register")}}"><button type="button" class="btn btn-outline-danger">Registrate</button></a>
                                         </div>
+                                        <div class="text-center">
+    <a href="{{ route('password.request') }}" class="btn btn-link">¿Olvidaste tu contraseña?</a>
+</div>
 
                                     </form>
 

@@ -11,8 +11,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LanguageController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +25,10 @@ use App\Http\Controllers\LanguageController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/(dashboard)', function () {
+    return view('home');
+})->middleware(['auth', 'verified'])->name('home');
 
 Auth::routes();
 
@@ -50,8 +52,6 @@ Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update')
 
 Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmount'])->name('cart.substracAmount');
 
-// Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
-
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
 Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
@@ -63,7 +63,6 @@ Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'
 
 Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
 Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
-
 
 Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 
@@ -92,8 +91,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.dashboard');
     })->name('admin');
 });
+
 use App\Http\Middleware\LanguageLocale;
 
 Route::middleware([LanguageLocale::class])->group(function () {
     Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 });
+
+// Register Route for verification notice
+Route::get('/verify', function () {
+    return view('auth.verify');
+})->name('verification.notice');
+
+Route::get('/forgot-password', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('/forgot-password', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('/reset-password/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('/reset-password', 'ResetPasswordController@reset')->name('password.update');
