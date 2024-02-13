@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PayMethod;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
+
 class UserController extends Controller
 {
     /**
@@ -39,26 +42,26 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-{
-    $this->validate($request, [
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|confirmed',
-        'roles' => 'required',
-    ]);
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+            'roles' => 'required',
+        ]);
 
-    $input = $request->all();
-    $input['password'] = bcrypt($input['password']);
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
 
-    $user = User::create($input);
+        $user = User::create($input);
 
-    // Use the correct role names and set the guard_name
-    $user->assignRole($request->input('roles'));
+        // Use the correct role names and set the guard_name
+        $user->assignRole($request->input('roles'));
 
-    return redirect()->route('users.index')
-        ->with('success', 'User created successfully');
-}
-    
+        return redirect()->route('users.index')
+            ->with('success', 'User created successfully');
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -127,5 +130,108 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function savePayMethod(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required',
+            'card_holder' => 'required|string',
+            'card_number' => 'required|regex:/^\d{16}$/',
+            'cvv' => 'required|digits:3',
+        ]);
+
+        $payMethodData = [
+            'user_id' => auth()->id(),
+            'name' => $request->input('name'),
+            'card_holder' => $request->input('card_holder'),
+            'card_number' => $request->input('card_number'),
+            'cvv' => $request->input('cvv'),
+        ];
+
+        PayMethod::create($payMethodData);
+
+        return redirect()->back()->with('success', 'Método de pago guardado exitosamente.');
+    }
+
+    public function removePayMethod(User $user)
+    {
+        if (!$user) {
+            return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
+        }
+
+        $assignedPayMethods = $user->payMethods;
+
+        return view('users.removePayMethod', compact('user', 'assignedPayMethods'));
+    }
+
+    public function deletePayMethod(Request $request)
+    {
+        $payMethodId = $request->input('payMethod');
+        $payMethodId = PayMethod::find($payMethodId);
+
+        if (!$payMethodId) {
+            return redirect()->back()->with('error', 'Método de pago no encontrado');
+        }
+
+        $payMethodId->delete();
+
+        return redirect()->back()->with('status', 'Método de pago eliminado correctamente');
+    }
+
+    public function saveAddress(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|string',
+            'province' => 'required|string',
+            'city' => 'required|string',
+            'street' => 'required|string',
+            'number' => 'required|string',
+            'pc' => 'required|digits:5',
+            'country' => 'required|string',
+        ]);
+
+        $address = [
+            'user_id' => auth()->id(),
+            'name' => $request->input('name'),
+            'province' => $request->input('province'),
+            'city' => $request->input('city'),
+            'street' => $request->input('street'),
+            'number' => $request->input('number'),
+            'pc' => $request->input('pc'),
+            'country' => $request->input('country'),
+        ];
+
+        Address::create($address);
+
+        return redirect()->back()->with('success', 'Dirección guardada exitosamente.');
+    }
+
+    public function removeAddresses(User $user)
+    {
+        if (!$user) {
+            return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
+        }
+
+        $assignedAddresses = $user->addresses;
+
+        return view('users.removeAddresses', compact('user', 'assignedAddresses'));
+    }
+
+    public function deleteAddress(Request $request)
+    {
+        $addressId = $request->input('address');
+        $addressId = Address::find($addressId);
+
+
+        if (!$addressId) {
+            return redirect()->back()->with('error', 'Dirección no encontrada');
+        }
+
+        $addressId->delete();
+
+        return redirect()->back()->with('status', 'Dirección eliminada correctamente');
     }
 }

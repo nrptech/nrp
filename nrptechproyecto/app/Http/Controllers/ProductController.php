@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Image;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -52,7 +53,7 @@ class ProductController extends Controller
             $path = "images/";
             $filename = time() . "-" . $file->getClientOriginalName();
             $uploadSucces = $request->file("image")->move($path, $filename);
-            $product->images()->create(['url' => $path.$filename]);
+            $product->images()->create(['url' => $path . $filename]);
         }
 
         return redirect()->route('productos.index')->with('success', 'Product created successfully.');
@@ -61,54 +62,126 @@ class ProductController extends Controller
     public function edit(Product $producto)
     {
         if (!$producto) {
-            return redirect()->route('productos.index')->with('error', 'Product not found');
+            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
         }
 
-        return view('productos.edit', compact('producto'));
-    }
-public function update(Request $request, Product $product)
-{
-    $request->validate([
-        'name' => 'required',
-        'price' => 'required|numeric',
-        'description' => 'required',
-        'discount' => 'numeric',
-        'stock' => 'numeric',
-        'specs' => 'string',
-        'features' => 'string',
-        'tax_id' => 'numeric',
-        'color' => 'string',
-        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
-    ]);
+        $allCategories = Category::all();
 
-    // Update product information
-    $data = $request->except('image');
-    $product->update($data);
+        $assignedCategories = $producto->categories;
 
-    // Delete the old image
-    $product->images()->delete();
-
-    // Upload and create a new image
-    if ($request->hasFile('image')) {
-        $file = $request->file('image');
-        $path = "images/";
-        $filename = time() . "-" . $file->getClientOriginalName();
-        $file->move($path, $filename);
-        $product->images()->create(['url' => $path . $filename]);
+        return view('productos.edit', compact('producto', 'assignedCategories', 'allCategories'));
     }
 
-    return redirect()->route('productos.index')
-        ->with('success', 'Product updated successfully');
-}
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'discount' => 'numeric',
+            'stock' => 'numeric',
+            'specs' => 'string',
+            'features' => 'string',
+            'tax_id' => 'numeric',
+            'color' => 'string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
+        ]);
+
+        // Update product information
+        $data = $request->except('image');
+        $product->update($data);
+
+        // Delete the old image
+        $product->images()->delete();
+
+        // Upload and create a new image
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = "images/";
+            $filename = time() . "-" . $file->getClientOriginalName();
+            $file->move($path, $filename);
+            $product->images()->create(['url' => $path . $filename]);
+        }
+
+        return redirect()->route('productos.index')
+            ->with('success', 'Product updated successfully');
+    }
 
     public function destroy(Product $product)
     {
-        // Delete associated images
+        $product->categories()->detach();
         $product->images()->delete();
 
         // Delete the product
         $product->delete();
 
         return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function showProducts()
+    {
+        $products = Product::all();
+        return view('products/index', ['products' => $products]);
+    }
+
+    public function show(Product $product)
+    {
+        return view('products.show', compact('product'));
+    }
+
+    public function addCategory(Product $producto)
+    {
+        if (!$producto) {
+            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
+        }
+
+        $allCategories = Category::all();
+
+        $assignedCategories = $producto->categories;
+
+        return view('productos.addCategory', compact('producto', 'assignedCategories', 'allCategories'));
+    }
+
+    public function assingCategoryToAProduct($productoId, $categoriaId)
+    {
+        $producto = Product::find($productoId);
+        $categoria = Category::find($categoriaId);
+
+        if (!$producto || !$categoria) {
+            return redirect()->back()->with('error', 'Producto o categoría no encontrados');
+        }
+
+        $producto->categories()->attach($categoria);
+
+        return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
+    }
+
+    public function updateCategories(Request $request)
+    {
+        $productId = $request->input('product_id');
+
+        $producto = Product::find($productId);
+        if (!$producto) {
+            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
+        }
+
+        $categoryId = $request->input('category');
+
+        if ($producto->categories()->where('categories.id', $categoryId)->exists()) {
+            return redirect()->back()->with('error', 'La categoría ya está asignada al producto');
+        }
+
+        $producto->categories()->attach($categoryId);
+
+        return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
+    }
+
+    public function deleteCategory(Request $request, Product $product)
+    {
+        $categoriaId = $request->input('category');
+
+        $product->categories()->detach($categoriaId);
+
+        return redirect()->back()->with('status', 'Categoría eliminada correctamente del producto');
     }
 }

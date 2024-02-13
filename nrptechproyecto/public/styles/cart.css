@@ -1,0 +1,31 @@
+.singleItem{
+
+}
+
+.imgMiniature{
+    width: 40px;
+}
+
+.imgMiniature img{
+    border-radius: 20px;
+}
+
+/* Telefono */
+@media (max-width: 576px) {
+
+    .singleItem{
+        flex-direction: column;
+    }
+}
+
+/* Tablets */
+@media (min-width: 577px) and (max-width: 991px) {
+    .singleItem{
+        flex-direction: column;
+    }
+}
+
+/* Monitor */
+@media (min-width: 992px) {
+
+}

@@ -1,0 +1,29 @@
+.bg-lightBlue{
+    background-color: #F2F8FF !important;
+}
+
+@media (max-width: 576px) {
+    header{
+        flex-direction: column;
+    }
+    .navItems{
+        flex-direction: column;
+    }
+   
+}
+
+/* Media query para tablets */
+@media (min-width: 577px) and (max-width: 991px) {
+    header{
+
+    }
+
+}
+
+/* Media query para pantallas grandes */
+@media (min-width: 992px) {
+    header{
+
+    }
+
+}

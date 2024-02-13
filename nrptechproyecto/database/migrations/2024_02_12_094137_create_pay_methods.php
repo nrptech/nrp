@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('pay_methods', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('name', 45);
-            $table->string('province', 45);
-            $table->string('city', 45);
-            $table->string('street', 60);
-            $table->integer('number');
-            $table->integer('pc');
-            $table->string('country', 45);
+            $table->unsignedBigInteger('user_id'); 
+            $table->string("name", 25);
+            $table->string("card_holder", 100);
+            $table->string("card_number", 16);
+            $table->integer('cvv');
             $table->timestamps();
-
+            
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -32,6 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('addresses');
+        Schema::table('pay_methods', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::dropIfExists('pay_methods');
     }
 };
