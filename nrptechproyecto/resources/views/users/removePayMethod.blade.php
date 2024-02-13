@@ -25,7 +25,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('users.deletePayMethods', $user->id) }}" enctype="multipart/form-data">
+    <form id="deletePayMethodForm" method="POST" action="{{ route('users.deletePayMethods', $user->id) }}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
 
