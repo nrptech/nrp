@@ -2,8 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\LanguageLocale;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use App\Http\Middleware\CheckLocale;
 
 class Kernel extends HttpKernel
 {
@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        CheckLocale::class,
+        LanguageLocale::class,
     ];
 
     /**
@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            CheckLocale::class,
+            LanguageLocale::class,
         ],
 
         'api' => [

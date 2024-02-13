@@ -77,7 +77,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.dashboard');
     })->name('admin');
 });
-Route::middleware(['CheckLocale'])->group(function () {
+use App\Http\Middleware\LanguageLocale;
+
+Route::middleware([LanguageLocale::class])->group(function () {
     Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 });
-

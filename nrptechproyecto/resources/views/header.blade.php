@@ -17,21 +17,23 @@
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
             </form>
+         
             <!-- Language Switcher -->
-           
 <div>
     <form action="{{ route('switch.language', 'en') }}" method="get" style="display:inline-block;">
         @csrf
-        <button type="submit" class="btn btn-link">English</button>
+        <button type="submit" class="btn btn-link" {{ Auth::user()->language == 'en' ? 'disabled' : '' }}>English</button>
     </form>
 
     <span>|</span>
 
     <form action="{{ route('switch.language', 'es') }}" method="get" style="display:inline-block;">
         @csrf
-        <button type="submit" class="btn btn-link">Español</button>
+        <button type="submit" class="btn btn-link" {{ Auth::user()->language == 'es' ? 'disabled' : '' }}>Español</button>
     </form>
 </div>
+
+
 
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"

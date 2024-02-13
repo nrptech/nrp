@@ -2,28 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class LanguageController extends Controller
 {
-    public function switchLanguage(Request $request, $language)
+    public function switchLanguage(Request $request)
     {
-        // Validate that the requested language is supported
-        $supportedLanguages = ['es', 'en'];
-        if (!in_array($language, $supportedLanguages)) {
-            abort(400, 'Invalid language');
-        }
+        $user = Auth::user();
 
-        // Set the application locale to the requested language
-        App::setLocale($language);
 
-        // Store the language preference in the session
-        Session::put('locale', $language);
+        $user->language = $request->language;
+        $user->save();
 
-        // Redirect back to the previous page or any specific page
+
         return redirect()->back();
     }
+
+
 }
