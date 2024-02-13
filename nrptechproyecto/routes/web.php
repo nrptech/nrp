@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products/index', [ProductController::class, 'showProducts'])->name("products.index");
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
+    Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
+
+    
     Route::post('/order/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay');
     Route::post('/order/saveAddress', [UserController::class, 'saveAddress'])->name('saveAddress');
 
