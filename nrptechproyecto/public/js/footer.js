@@ -7,7 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
     header.addEventListener("click", function () {
       // Muestra u oculta la lista asociada al h3 clickeado
       let list = this.nextElementSibling;
-      list.style.display = list.style.display === "none" ? "block" : "none";
+      let computedStyle = window.getComputedStyle(list);
+
+      if (computedStyle.display === "none") {
+        list.style.display = "block";
+      } else {
+        list.style.display = "none";
+      }
     });
 
     // Agrega la propiedad cursor:pointer al h3 para que se muestre la manita
