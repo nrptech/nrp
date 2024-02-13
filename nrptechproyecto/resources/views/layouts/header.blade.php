@@ -20,9 +20,6 @@
     </script>
 
     <link rel="stylesheet" href="{{ asset('styles/header.css') }}">
-
-
-
     @yield('links')
 
 </head>
