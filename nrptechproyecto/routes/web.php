@@ -10,6 +10,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LanguageController;
+use App\Http\Middleware\LanguageLocale;
 
 
 
@@ -86,4 +87,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
 
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
+});
+
+
+Route::middleware([LanguageLocale::class])->group(function () {
+    Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 });
