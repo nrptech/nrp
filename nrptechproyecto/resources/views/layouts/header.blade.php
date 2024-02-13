@@ -161,7 +161,7 @@
                                 <button type="submit" class="dropdown-item">@lang('messages.settings')</button>
                             </form>
                         </li>
-                        <li><a class="dropdown-item" href="">@lang('messages.Wishlist')</a></li>
+                        <li><a class="dropdown-item" href="/home">@lang('messages.Wishlist')</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

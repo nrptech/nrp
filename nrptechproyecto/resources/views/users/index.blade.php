@@ -31,6 +31,7 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Surname</th>
             <th>Email</th>
             <th>Roles</th>
             <th>Metodos de pago</th>
@@ -41,6 +42,7 @@
             <tr>
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
+                <td>{{ $user->surname }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
                     <label class="badge badge-success text-success">{{ $user->role->name }}</label>

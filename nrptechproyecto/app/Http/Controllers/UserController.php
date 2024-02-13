@@ -89,6 +89,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'surname' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'sometimes|confirmed',
             'roles' => 'required',
@@ -107,8 +108,35 @@ class UserController extends Controller
 
         $user->syncRoles($request->input('roles'));
 
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
+        return redirect()->back()->with('success', 'User updated successfully');
+    }
+
+    public function profileUpdate(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'surname' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|confirmed|min:6',
+        ]);
+    
+        // Obtener el usuario a actualizar
+        $user = User::findOrFail($id);
+    
+        // Actualizar los datos del usuario
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        
+        // Actualizar la contraseña si se proporcionó una nueva
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+    
+        // Guardar los cambios en la base de datos
+        $user->save();
+    
+        // Redirigir de vuelta a la página de perfil con un mensaje de éxito
+        return redirect()->back()->with('success', 'Profile updated successfully');
     }
 
     /**
@@ -125,7 +153,19 @@ class UserController extends Controller
         $user = User::find($userId);
 
         if ($user) {
-            return view('profile.index', ['user' => $userId]);
+            return view('profile.index', ['user' => $user]);
+        } else {
+            return redirect()->back()->with('error', 'Usuario no encontrado');
+        }
+    }
+
+    public function editProfile(Request $request){
+        $userId = $request->input('user_id');
+
+        $user = User::find($userId);
+
+        if ($user) {
+            return view('profile.edit', ['user' => $user]);
         } else {
             return redirect()->back()->with('error', 'Usuario no encontrado');
         }
@@ -248,4 +288,6 @@ class UserController extends Controller
 
         return redirect()->back()->with('status', 'Dirección eliminada correctamente');
     }
+
+
 }

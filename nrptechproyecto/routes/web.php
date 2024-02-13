@@ -44,8 +44,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay');
     Route::post('/order/saveAddress', [UserController::class, 'saveAddress'])->name('saveAddress');
 
-
-
     Route::middleware(["auth"])->get('/cart', [CartController::class, 'showCart'])->name('cart');
 
     Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
@@ -66,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
     Route::post('/profile/{user}', [UserController::class, 'showProfile'])->name('profile.index');
+    Route::get('/profile/{user}/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::patch('/profile/{user}/update', [UserController::class, 'profileUpdate'])->name('profile.update');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
