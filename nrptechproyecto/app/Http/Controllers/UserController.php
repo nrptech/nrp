@@ -117,6 +117,20 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
+
+    public function showProfile(Request $request)
+    {
+        $userId = $request->input('user_id');
+
+        $user = User::find($userId);
+
+        if ($user) {
+            return view('profile.index', ['user' => $userId]);
+        } else {
+            return redirect()->back()->with('error', 'Usuario no encontrado');
+        }
+    }
+
     public function destroy($id)
     {
         $user = User::find($id);

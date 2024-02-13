@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Models\Product;
@@ -64,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
+    Route::post('/profile/{user}', [UserController::class, 'showProfile'])->name('profile.index');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
