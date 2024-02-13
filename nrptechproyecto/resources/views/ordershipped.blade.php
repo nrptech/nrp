@@ -1,11 +1,29 @@
-@extends('layouts.layout')
+@component('mail::message')
 
-@section('title', 'Home')
+# Confirmación de Pedido
 
-@section('content')
+¡Hola {{ $order->user->name }}!
 
-    <h1 class="mb-4">¡Gracias por su Compra!</h1>
+Gracias por realizar tu pedido con nosotros. Aquí tienes los detalles de tu compra:
 
-    <p class="alert alert-success">Su compra se ha realizado con éxito. Agradecemos su preferencia.</p>
+**Número de Pedido:** {{ $order->id }}
+**Fecha del Pedido:** {{ $order->created_at->format('d/m/Y H:i:s') }}
 
-@endsection
+**Productos en tu Pedido:**
+@foreach($order->products as $product)
+- **{{ $product->name }}**
+  - Cantidad: {{ $product->pivot->quantity }}
+  - Precio Unitario: {{ $product->price }}
+@endforeach
+
+**Total del Pedido:** {{ $order->invoice->total }}
+
+**Dirección de Envío:**
+{{ $order->shipping_address }}
+
+Agradecemos tu confianza en nuestros productos. Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.
+
+¡Gracias!,
+El equipo de [Tu Empresa]
+
+@endcomponent
