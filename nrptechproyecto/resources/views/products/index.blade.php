@@ -14,6 +14,16 @@
 @section('content')
 
     <article class="allProductsViewIndex d-flex row justify-content-center mx-5">
+        <form action="{{ route('products.filter') }}" method="post">
+            @csrf
+            <select name="category" id="category" class="form-select">
+                <option value="">Ver todo</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
         @foreach ($products as $product)
             <section class="productContainer">
                 <div class="productImages d-flex align-content-center bg-lightBlue w-100 position-relative">
@@ -43,12 +53,18 @@
                                 class="text-decoration-line-through text-muted">
                                 {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€</span>
                         </p>
-                        <p class="card-text"><strong>Descripción:</strong> {{ $product->description }}</p>
                     @else
                         <p class="card-text"><strong>Precio:</strong>
                             {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€</p>
-                        <p class="card-text"><strong>Descripción:</strong> {{ $product->description }}</p>
                     @endif
+
+                    <p class="card-text m-0"><strong>Descripción:</strong> {{ $product->description }}</p>
+                    <div class="d-flex justify-content-center">
+                        @foreach ($product->categories as $category)
+                            <p class="badge bg-info my-1">{{ $category->name }}</p>
+                        @endforeach
+                    </div>
+
                     <div class="d-flex justify-content-around">
                         <a href="{{ route('products.show', $product) }}" class="btn btn-primary px-1 py-0">Ver producto</a>
                         <form action="{{ route('cart.add', $product) }}" method="post">

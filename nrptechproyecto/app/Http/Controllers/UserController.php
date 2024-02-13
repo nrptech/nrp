@@ -89,6 +89,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'surname' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'sometimes|confirmed',
             'roles' => 'required',
@@ -107,8 +108,32 @@ class UserController extends Controller
 
         $user->syncRoles($request->input('roles'));
 
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
+        return redirect()->back()->with('success', 'User updated successfully');
+    }
+
+    public function profileUpdate(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'surname' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|confirmed|min:6',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->name = $request->input('name');
+        $user->surname = $request->input('surname');
+        $user->email = $request->input('email');
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        return redirect()->route('profile.index', ['user' => $user->name])
+            ->with('success', 'Datos cambiados exitosamente');
     }
 
     /**
@@ -117,6 +142,27 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
+
+    public function showProfile()
+    {
+        $user = auth()->user(); // Obtener el usuario autenticado
+
+        return view('profile.index', ['user' => $user]);
+    }
+
+    public function editProfile(Request $request)
+    {
+        $userId = $request->input('user_id');
+
+        $user = User::find($userId);
+
+        if ($user) {
+            return view('profile.edit', ['user' => $user]);
+        } else {
+            return redirect()->back()->with('error', 'Usuario no encontrado');
+        }
+    }
+
     public function destroy($id)
     {
         $user = User::find($id);

@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\LanguageLocale;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +31,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/(dashboard)', function () {
+    return view('home');
+})->middleware(['auth', 'verified'])->name('home');
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -46,8 +48,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/order/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay');
     Route::post('/order/saveAddress', [UserController::class, 'saveAddress'])->name('saveAddress');
-
-
 
     Route::middleware(["auth"])->get('/cart', [CartController::class, 'showCart'])->name('cart');
 
@@ -66,6 +66,17 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
 
+Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+
+Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
+Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
+Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
+
+Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
+Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
+
+Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
+Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
     Route::prefix('order')->group(function () {
@@ -79,6 +90,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
+    Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.index');
+    Route::get('/profile/{user}/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::patch('/profile/{user}/update', [UserController::class, 'profileUpdate'])->name('profile.update');
+
+    Route::delete('/profile/deletePayMethod', [UserController::class, 'deletePayMethod'])->name('profile.deletePayMethod');
+    Route::delete('/profile/deleteAddress', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
+
+    Route::post('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -108,3 +127,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware([LanguageLocale::class])->group(function () {
     Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 });
+
+// Register Route for verification notice
+Route::get('/verify', function () {
+    return view('auth.verify');
+})->name('verification.notice');
+
+Route::get('/forgot-password', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('/forgot-password', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('/reset-password/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('/reset-password', 'ResetPasswordController@reset')->name('password.update');
