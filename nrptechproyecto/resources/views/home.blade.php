@@ -3,5 +3,5 @@
 @section("title", "Home")
 
 @section("content")
-    <h1>Bienvenido a casa</h1>
+    <h1>@lang("messages.welcome")</h1>
 @endsection

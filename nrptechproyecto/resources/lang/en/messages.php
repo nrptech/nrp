@@ -1,12 +1,21 @@
 <?php 
 
 return [
-    "welcome" => "Welcome to the main page",
+    "welcome" => "Welcome home",
     "overview" => "Overview",
     "inventory" => "Inventory",
     "cart" => "Cart",
-    "products" => "Products",
+    "products" => "All the products",
     "logout" => "Logout",
+    "Wishlist"=>"Wishlist",
+    "settings" => "Settings",
+    "Search"=> "Search...",
+    "adm"=> "Admin",
+    "langEn"=>"English",
+    "langEsp"=>"Spanish",
+    "category" => "Categories",
+    "emptyCart" => "The cart is empty",
+    "goCart"=> "Go to the cart",
     "E-Mail Address" => "E-Mail Address",
     "Password" => "Password",
     "Remember Me" => "Remember Me",

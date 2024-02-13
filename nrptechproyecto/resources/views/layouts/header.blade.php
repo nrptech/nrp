@@ -31,7 +31,7 @@
 
     <header class="p-3 mb-3 border-bottom d-flex align-items-center w-100 bg-lightBlue">
         @role('admin')
-        <a href="{{ route('admin') }}" class="btn btn-warning">Administrador</a>
+        <a href="{{ route('admin') }}" class="btn btn-warning">@lang("messages.adm")</a>
 
         @endrole
         <section class="d-flex justify-content-around align-items-center w-100 navItems">
@@ -44,13 +44,12 @@
                 <div class="dropdown text-start categoriesDropdown">
 
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle badge bg-primary"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"> Categorias
+                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"> @lang("messages.category")
                     </a>
 
 
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a href="{{ route('products.index') }}" class="nav-link px-2 link-dark">Todos los
-                                productos</a></li>
+                        <li><a href="{{ route('products.index') }}" class="nav-link px-2 link-dark">@lang("messages.products")</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -67,7 +66,7 @@
                 </div>
 
                 <form class="">
-                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                    <input type="search" class="form-control" placeholder=@lang("messages.Search") aria-label="Search">
                 </form>
 
             </div>
@@ -75,7 +74,7 @@
                 <div class="dropdown text-end">
                     <a href="{{ route('cart.show') }}" class="d-block link-dark text-decoration-none dropdown-toggle"
                         id="dropdownCart" data-bs-toggle="dropdown" aria-expanded="false">
-                        Carrito @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
+                        @lang("messages.cart") @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
                             <span class="badge bg-danger">{{ Auth::user()->cart->products->count() }}</span>
                         @endif
                     </a>
@@ -112,7 +111,7 @@
                                 <!-- Puedes mostrar otros detalles del item aquí -->
                             @endforeach
                         @else
-                            <li>No hay items en el carrito</li>
+                            <li>@lang("messages.emptyCart")</li>
                         @endif
 
                         <li>
@@ -120,11 +119,25 @@
                         </li>
 
 
-                        <li><a href="{{ url('/cart') }}" class="dropdown-item px-2 link-dark">Ir al carrito</a></li>
+                        <li><a href="{{ url('/cart') }}" class="dropdown-item px-2 link-dark">@lang("messages.goCart")</a></li>
 
                     </ul>
                 </div>
             </div>
+            <!-- Language Switcher -->
+<div>
+    <form action="{{ route('switch.language', 'en') }}" method="get" style="display:inline-block;">
+        @csrf
+        <button type="submit" class="btn btn-link" {{ Auth::user()->language == 'en' ? 'disabled' : '' }}>@lang("messages.langEn")</button>
+    </form>
+
+    <span>|</span>
+
+    <form action="{{ route('switch.language', 'es') }}" method="get" style="display:inline-block;">
+        @csrf
+        <button type="submit" class="btn btn-link" {{ Auth::user()->language == 'es' ? 'disabled' : '' }}>@lang("messages.langEsp")</button>
+    </form>
+</div>
 
             <div class="d-flex align-items-center gap-5">
                 <div class="dropdown text-end">
@@ -134,8 +147,8 @@
                             class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                        <li><a class="dropdown-item" href="#">Wishlist</a></li>
+                        <li><a class="dropdown-item" href="#">@lang("messages.settings")</a></li>
+                        <li><a class="dropdown-item" href="#">@lang("messages.Wishlist")</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -143,7 +156,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                @lang("messages.logout")
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
