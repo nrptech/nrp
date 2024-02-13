@@ -25,43 +25,35 @@ class WishlistController extends Controller
     }
 
     public function addToWishlist(Request $request, $product_Id)
-    {
-        // Obtener el usuario autenticado
-        $user = auth()->user();
+{
+    // Obtener el usuario autenticado
+    $user = auth()->user();
 
-        // Buscar la Wishlist del usuario o crear una nueva si no existe
-        $wishlist = $user->wishlist ?? Wishlist::create(['user_id' => $user->id]);
+    // Buscar la Wishlist del usuario o crear una nueva si no existe
+    $wishlist = $user->wishlist ?? Wishlist::create(['user_id' => $user->id]);
 
-        $addProduct = new WishlistHasProducts();
+    // Añadir el producto a la Wishlist
+    $wishlist->products()->attach($product_Id); 
 
-        $addProduct->wishlist_id = $wishlist->id;
+    return redirect()->route('wishlist.index')->with('success', 'Producto añadido a la Wishlist');
+}
 
-        $addProduct->product_id = $product_Id;
+public function removeFromWishlist(Request $request, $productId)
+{
+    // Obtener el usuario autenticado
+    $user = auth()->user();
 
-        $addProduct->save();
+    // Obtener la Wishlist del usuario
+    $wishlist = $user->wishlist;
 
-        // Añadir el producto a la Wishlist
-        // $wishlist->products()->attach($product_Id);
+    if ($wishlist) {
+        // Quitar el producto de la Wishlist
+        $wishlist->products()->detach($productId);
 
-        return redirect()->route('wishlist.index')->with('success', 'Producto añadido a la Wishlist');
+        return redirect()->route('wishlist.index')->with('success', 'Producto eliminado de la Wishlist');
     }
 
-    public function removeFromWishlist(Request $request, $productId)
-    {
-        // Obtener el usuario autenticado
-        $user = auth()->user();
-
-        // Obtener la Wishlist del usuario
-        $wishlist = $user->wishlist;
-
-        if ($wishlist) {
-            // Quitar el producto de la Wishlist
-            $wishlist->products()->detach($productId);
-
-            return redirect()->route('wishlist.index')->with('success', 'Producto eliminado de la Wishlist');
-        }
-
-        return redirect()->route('wishlist.index')->with('error', 'No se pudo encontrar la Wishlist del usuario');
-    }
+    return redirect()->route('wishlist.index')->with('error', 'No se pudo encontrar la Wishlist del usuario');
+}
     
 }

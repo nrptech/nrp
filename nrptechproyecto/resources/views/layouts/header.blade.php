@@ -140,7 +140,7 @@
                             <a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a>
 
                         </li>
-                        <li><a class="dropdown-item" href="/home">@lang('messages.Wishlist')</a></li>
+                        <li><a class="dropdown-item" href="{{ route('wishlist.index') }}">@lang('messages.Wishlist')</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
