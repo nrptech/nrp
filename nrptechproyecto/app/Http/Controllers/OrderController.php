@@ -30,4 +30,24 @@ class OrderController extends Controller
 
         return view('order.show', compact('paymentMethods'));
     }
+
+    public function savePayMethod(Request $request){
+
+        $request->validate([
+            'card_holder' => 'required|string',
+            'card_number' => 'required|regex:/^\d{16}$/',
+            'cvv' => 'required|digits:3',
+        ]);
+
+        $payMethodData = [
+            'user_id' => auth()->id(),
+            'card_holder' => $request->input('card_holder'),
+            'card_number' => $request->input('card_number'),
+            'cvv' => $request->input('cvv'),
+        ];
+    
+        PayMethod::create($payMethodData);
+
+        return redirect()->back()->with('success', 'Método de pago guardado exitosamente.');
+    }
 }
