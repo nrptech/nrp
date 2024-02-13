@@ -4,7 +4,7 @@ body {
   grid-template-rows: auto 1fr auto;
   margin: 0;
 }
-/*a*/
+
 .main-content {
   flex-grow: 1;
 }

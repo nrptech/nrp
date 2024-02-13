@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -62,6 +63,7 @@ Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
 Route::get('/invoice', [OrderController::class, 'showInvoice'])->name('invoice.show');
 Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
 Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
 Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
 Route::put('/productos/{product}/add-category', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
