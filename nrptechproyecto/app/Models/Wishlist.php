@@ -18,6 +18,6 @@ class Wishlist extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'wishlist_has_products', 'wishlist_id', 'product_id');
+        return $this->belongsToMany(Product::class);
     }
 }
