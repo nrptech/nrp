@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Wishlist;
+use App\Models\Product;
 
 class WishlistController extends Controller
 {
     public function index()
     {
-        // Obtener la lista de deseos actual del usuario
+        // Obtener la lista actual
         $wishlist = auth()->user()->wishlist;
 
-        // Verificar si el usuario tiene una lista de deseos
+        // Verificar si el usuario tiene una
         if (!$wishlist) {
-            // Si no tiene una lista de deseos, puedes manejarlo de alguna manera
             $wishlistItems = [];
         } else {
-            // Obtener todos los productos asociados a la lista de deseos actual del usuario
+            // Obtener todos los productos asociados a la lista 
             $wishlistItems = $wishlist->products;
         }
 

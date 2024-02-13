@@ -50,16 +50,19 @@
                         <p class="card-text"><strong>Descripción:</strong> {{ $product->description }}</p>
                     @endif
                     <div class="d-flex justify-content-around">
-                        <a href="{{ route('products.show', $product) }}" class="btn btn-primary px-1 py-0">Ver
-                            producto</a>
+                        <a href="{{ route('products.show', $product) }}" class="btn btn-primary px-1 py-0">Ver producto</a>
                         <form action="{{ route('cart.add', $product) }}" method="post">
                             @csrf
                             <input hidden type="number" name="amount" value="1" min="1"
                                 class="form-control mb-2">
                             <button type="submit" class="btn btn-success px-1 py-0">Añadir al carrito</button>
                         </form>
-                    </div>
 
+                        <form action="{{ route('wishlist.add', $product) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-info px-1 py-0">Añadir a la wishlist</button>
+                        </form>
+                    </div>
                 </div>
             </section>
         @endforeach

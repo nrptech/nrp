@@ -69,6 +69,8 @@ Route::put('/productos/{product}', [ProductController::class, 'update'])->name('
 Route::put('/productos/{product}/add-category', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
 Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
 
+Route::post('/wishlist/add/{product}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+
 Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
