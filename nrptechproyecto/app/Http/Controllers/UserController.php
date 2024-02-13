@@ -131,7 +131,7 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
-    
+
     public function savePayMethod(Request $request)
     {
 
@@ -155,7 +155,8 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Método de pago guardado exitosamente.');
     }
 
-    public function removePayMethod(User $user){
+    public function removePayMethod(User $user)
+    {
         if (!$user) {
             return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
         }
@@ -165,7 +166,8 @@ class UserController extends Controller
         return view('users.removePayMethod', compact('user', 'assignedPayMethods'));
     }
 
-    public function deletePayMethod(Request $request){
+    public function deletePayMethod(Request $request)
+    {
         $payMethodId = $request->input('payMethod');
         $payMethodId = PayMethod::find($payMethodId);
 
@@ -176,7 +178,6 @@ class UserController extends Controller
         $payMethodId->delete();
 
         return redirect()->back()->with('status', 'Método de pago eliminado correctamente');
-
     }
 
     public function saveAddress(Request $request)
@@ -208,7 +209,8 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Dirección guardada exitosamente.');
     }
 
-    public function removeAddresses(User $user){
+    public function removeAddresses(User $user)
+    {
         if (!$user) {
             return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
         }
@@ -218,9 +220,11 @@ class UserController extends Controller
         return view('users.removeAddresses', compact('user', 'assignedAddresses'));
     }
 
-    public function deleteAddress(Request $request){
+    public function deleteAddress(Request $request)
+    {
         $addressId = $request->input('address');
         $addressId = Address::find($addressId);
+
 
         if (!$addressId) {
             return redirect()->back()->with('error', 'Dirección no encontrada');
@@ -229,6 +233,5 @@ class UserController extends Controller
         $addressId->delete();
 
         return redirect()->back()->with('status', 'Dirección eliminada correctamente');
-
     }
 }

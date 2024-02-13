@@ -25,24 +25,24 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('users.deleteAddress', $user->id) }}" enctype="multipart/form-data">
+    <form id="deleteAddressForm" method="POST" action="{{ route('users.deleteAddress', $user->id) }}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
-
+    
         <div class="mb-3">
             <p>{{ $user->name }}</p>
-
+    
             @if (count($assignedAddresses) > 0)
                 <div>
-                    <label for="address" class="form-label">Métodos de pago</label>
+                    <label for="address" class="form-label">Direcciones</label>
                     <select class="form-select" id="address" name="address">
                         @foreach ($assignedAddresses as $address)
                             <option value="{{ $address->id }}">{{ $address->name }}</option>
                         @endforeach
                     </select>
                 </div>
-
-
+    
+    
                 <input type="hidden" name="user_id" value="{{ $address->id }}">
                 <div class="text-center">
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -53,7 +53,7 @@
             @endif
         </div>
     </form>
-
+    
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -63,13 +63,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar el método de pago del usuario <strong>{{ $user->name }}</strong>?
+                    ¿Estás seguro de que deseas eliminar la dirección del usuario <strong>{{ $user->name }}</strong>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" form="deletePayMethodForm" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" form="deleteAddressForm" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
+    
 @endsection

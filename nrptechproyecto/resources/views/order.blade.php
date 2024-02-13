@@ -65,12 +65,10 @@
         @endforeach
     </ul>
 
-    <!-- Mostrar precio total del carrito -->
     <div class="mt-3">
         <h4>Precio total del pedido: {{ number_format($totalPrice, 2) }}€</h4>
     </div>
 
-    <!-- Botones de confirmación y rechazo -->
     @if (Auth::user()->payMethods->isEmpty())
         <button type="submit" disabled>Confirmar Pedido</button>
         <p>No tienes métodos de pago guardados.</p>
@@ -124,6 +122,79 @@
             <button type="submit">Confirmar Pedido</button>
         </form>
     @endif
+
+    @if (Auth::user()->addresses->isEmpty())
+    <button type="submit" disabled>Confirmar Pedido</button>
+    <p>No tienes direcciones guardadas.</p>
+    <form method="post" action="{{ route('saveAddress') }}">
+        @csrf
+
+        <label for="name">Nombre de la dirección:</label>
+        <input type="text" id="name" name="name" required>
+    
+        <label for="province">Provincia:</label>
+        <input type="text" id="province" name="province" required>
+    
+        <label for="city">Ciudad:</label>
+        <input type="text" id="city" name="city" required>
+    
+        <label for="street">Calle:</label>
+        <input type="text" id="street" name="street" required>
+    
+        <label for="number">Número:</label>
+        <input type="text" id="number" name="number" required>
+    
+        <label for="pc">Código postal:</label>
+        <input type="text" id="pc" name="pc" required>
+    
+        <label for="country">País:</label>
+        <input type="text" id="country" name="country" required>
+    
+        <button type="submit">Guardar Dirección</button>
+    </form>
+@else
+    <div>
+        <button onclick="addPayMethod(this)">Añadir un nuevo método de pago</button>
+        <div hidden>
+            <form method="post" action="{{ route('saveAddress') }}">
+                @csrf
+                <label for="name">Nombre de la dirección:</label>
+                <input type="text" id="name" name="name" required>
+            
+                <label for="province">Provincia:</label>
+                <input type="text" id="province" name="province" required>
+            
+                <label for="city">Ciudad:</label>
+                <input type="text" id="city" name="city" required>
+            
+                <label for="street">Calle:</label>
+                <input type="text" id="street" name="street" required>
+            
+                <label for="number">Número:</label>
+                <input type="text" id="number" name="number" required>
+            
+                <label for="pc">Código postal:</label>
+                <input type="text" id="pc" name="pc" required>
+            
+                <label for="country">País:</label>
+                <input type="text" id="country" name="country" required>
+            
+                <button type="submit">Guardar Dirección</button>
+            </form>
+        </div>
+    </div>
+
+
+    <form method="post" action="{{ route('confirmOrder') }}">
+        @csrf
+        <select name="payment_method">
+            @foreach (Auth::user()->addresses as $address)
+                <option value="{{ $address->id }}">{{ $address->name }}</option>
+            @endforeach
+        </select>
+        <button type="submit">Confirmar Pedido</button>
+    </form>
+@endif
 
     <form method="post" action="{{ route('rejectOrder') }}">
         @csrf

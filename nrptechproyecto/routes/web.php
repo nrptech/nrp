@@ -35,7 +35,9 @@ Route::middleware(['auth'])->get('/products/index', [ProductController::class, '
 
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
-Route::post('/order', [UserController::class, 'savePayMethod'])->name('savePay');
+Route::post('/order/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay');
+
+Route::post('/order/saveAddress', [UserController::class, 'saveAddress'])->name('saveAddress');
 
 Route::get('/header', [CartController::class, 'showCart']);
 
@@ -56,10 +58,11 @@ Route::put('/productos/{product}/update-categories', [ProductController::class, 
 Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
 
 Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
-Route::put('/users/{user}/delete', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
+Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
 
 Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
-Route::get('/users/{user}/delete', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
+Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
+
 
 Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 
