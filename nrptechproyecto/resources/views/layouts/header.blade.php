@@ -121,7 +121,7 @@
                 </ul>
             </div>
             </div>
-            
+
             @if (request()->is('home'))
                 <!-- Language Switcher -->
                 <div>
@@ -155,11 +155,8 @@
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li>
-                            <form method="POST" action="{{ route('profile.index', ['user' => Auth::user()->name]) }}">
-                                @csrf
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                <button type="submit" class="dropdown-item">@lang('messages.settings')</button>
-                            </form>
+                            <a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a>
+
                         </li>
                         <li><a class="dropdown-item" href="/home">@lang('messages.Wishlist')</a></li>
                         <li>

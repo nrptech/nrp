@@ -63,9 +63,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
-    Route::post('/profile/{user}', [UserController::class, 'showProfile'])->name('profile.index');
+    Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.index');
     Route::get('/profile/{user}/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::patch('/profile/{user}/update', [UserController::class, 'profileUpdate'])->name('profile.update');
+
+    Route::delete('/profile/deletePayMethod', [UserController::class, 'deletePayMethod'])->name('profile.deletePayMethod');
+    Route::delete('/profile/deleteAddress', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

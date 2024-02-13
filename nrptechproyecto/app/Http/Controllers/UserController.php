@@ -119,20 +119,21 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|confirmed|min:6',
         ]);
-    
+
         $user = User::findOrFail($id);
-    
+
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
         $user->email = $request->input('email');
-        
+
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
         }
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully');
+        return redirect()->route('profile.index', ['user' => $user->name])
+            ->with('success', 'Datos cambiados exitosamente');
     }
 
     /**
@@ -142,20 +143,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
 
-    public function showProfile(Request $request)
+    public function showProfile()
     {
-        $userId = $request->input('user_id');
+        $user = auth()->user(); // Obtener el usuario autenticado
 
-        $user = User::find($userId);
-
-        if ($user) {
-            return view('profile.index', ['user' => $user]);
-        } else {
-            return redirect()->back()->with('error', 'Usuario no encontrado');
-        }
+        return view('profile.index', ['user' => $user]);
     }
 
-    public function editProfile(Request $request){
+    public function editProfile(Request $request)
+    {
         $userId = $request->input('user_id');
 
         $user = User::find($userId);
@@ -284,6 +280,4 @@ class UserController extends Controller
 
         return redirect()->back()->with('status', 'Dirección eliminada correctamente');
     }
-
-
 }
