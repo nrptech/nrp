@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Models\Product;
@@ -27,6 +28,7 @@ use App\Http\Middleware\LanguageLocale;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -52,13 +54,23 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart', [CartController::class, 'updateCart'])->name('cart.update');
     Route::post('/substrac-amount/{product}', [CartController::class, 'substracAmount'])->name('cart.substracAmount');
-    Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+
+    Route::prefix('wishlist')->group(function () {
+        Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+        Route::post('/add/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+        Route::post('/remove/{productId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+
+        Route::post('/remove/{productId}', 'WishlistController@removeFromWishlist')->name('wishlist.remove');
+    });
+
 
     // Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
 
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 
-    Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
+    Route::prefix('order')->group(function () {
+        Route::post('/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay'); // Sin cambios necesarios aquí
+    });
 
     Route::post('/order/confirm', [CartController::class, 'confirmOrder'])->name('confirmOrder');
     Route::post('/order/reject', [CartController::class, 'rejectOrder'])->name('rejectOrder');

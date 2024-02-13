@@ -2,63 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Wishlist;
-use App\Models\Product;
-use App\Models\User;
+// use App\Models\Product;
+use App\Models\WishlistHasProducts;
 
 class WishlistController extends Controller
 {
     public function index()
-{
-    // Obtener la lista actual
-    $wishlist = auth()->user()->wishlist;
+    {
+        // Obtener el usuario autenticado
+        $user = auth()->user()->id;
 
-    // Verificar si el usuario tiene una, si no, crea una nueva
-    if (!$wishlist) {
-        $wishlist = auth()->user()->wishlist()->create();
+        // Obtener la Wishlist del usuario
+        $wishlistProducts = Wishlist::where('user_id',$user)->get();
+
+        // Obtener todos los productos (o los que necesites mostrar en la vista)
+        // $allProducts = Product::all(); // Puedes ajustar esto según tus necesidades
+
+        return view('wishlist.index', compact('wishlistProducts'));
     }
 
-    // Obtener todos los productos asociados a la lista
-    $wishlistItems = $wishlist->products;
-
-    return view('wishlist.index', compact('wishlistItems'));
-}
-
-    public function addToWishlist(Request $request)
+    public function addToWishlist(Request $request, $product_Id)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
+        // Obtener el usuario autenticado
+        $user = auth()->user();
 
-        // Obtener la lista de deseos actual del usuario
-        $wishlist = auth()->user()->wishlist;
+        // Buscar la Wishlist del usuario o crear una nueva si no existe
+        $wishlist = $user->wishlist ?? Wishlist::create(['user_id' => $user->id]);
 
-        // Verificar si el usuario tiene una lista de deseos
-        if (!$wishlist) {
-            // Si no tiene una lista de deseos, crea una nueva
-            $wishlist = auth()->user()->wishlist()->create();
+        $addProduct = new WishlistHasProducts();
+
+        $addProduct->wishlist_id = $wishlist->id;
+
+        $addProduct->product_id = $product_Id;
+
+        $addProduct->save();
+
+        // Añadir el producto a la Wishlist
+        // $wishlist->products()->attach($product_Id);
+
+        return redirect()->route('wishlist.index')->with('success', 'Producto añadido a la Wishlist');
+    }
+
+    public function removeFromWishlist(Request $request, $productId)
+    {
+        // Obtener el usuario autenticado
+        $user = auth()->user();
+
+        // Obtener la Wishlist del usuario
+        $wishlist = $user->wishlist;
+
+        if ($wishlist) {
+            // Quitar el producto de la Wishlist
+            $wishlist->products()->detach($productId);
+
+            return redirect()->route('wishlist.index')->with('success', 'Producto eliminado de la Wishlist');
         }
 
-        // Verificar si el producto ya está en la lista de deseos
-        if ($wishlist->products->contains($request->input('product_id'))) {
-            return redirect()->route('wishlist.index')->with('error', 'El producto ya está en la lista de deseos');
-        }
-
-        // Agregar el producto a la lista de deseos
-        $wishlist->products()->attach($request->input('product_id'));
-
-        return redirect()->route('wishlist.index')->with('success', 'Producto añadido a la lista de deseos');
+        return redirect()->route('wishlist.index')->with('error', 'No se pudo encontrar la Wishlist del usuario');
     }
-
-    public function removeFromWishlist($product_id)
-    {
-        // Obtener la lista de deseos actual del usuario
-        $wishlist = auth()->user()->wishlist;
-
-        // Eliminar el producto de la lista de deseos
-        $wishlist->products()->detach($product_id);
-
-        return redirect()->route('wishlist.index')->with('success', 'Producto eliminado de la lista de deseos');
-    }
+    
 }

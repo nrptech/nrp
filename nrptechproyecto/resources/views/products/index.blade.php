@@ -60,8 +60,9 @@
 
                         <form action="{{ route('wishlist.add', $product) }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-info px-1 py-0">Añadir a la wishlist</button>
+                            <button type="submit" class="btn btn-info px-1 py-0">Añadir a Wishlist</button>
                         </form>
+                        
                     </div>
                 </div>
             </section>
