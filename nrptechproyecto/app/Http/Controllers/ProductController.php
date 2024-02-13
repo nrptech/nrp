@@ -159,20 +159,29 @@ class ProductController extends Controller
     public function updateCategories(Request $request)
     {
         $productId = $request->input('product_id');
-    
+
         $producto = Product::find($productId);
         if (!$producto) {
             return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
         }
-    
+
         $categoryId = $request->input('category');
-        
+
         if ($producto->categories()->where('categories.id', $categoryId)->exists()) {
             return redirect()->back()->with('error', 'La categoría ya está asignada al producto');
         }
-    
+
         $producto->categories()->attach($categoryId);
-    
+
         return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
+    }
+
+    public function deleteCategory(Request $request, Product $product)
+    {
+        $categoriaId = $request->input('category');
+
+        $product->categories()->detach($categoriaId);
+
+        return redirect()->back()->with('status', 'Categoría eliminada correctamente del producto');
     }
 }

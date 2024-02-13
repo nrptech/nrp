@@ -143,8 +143,6 @@ class DatabaseSeeder extends Seeder
         $image6->save();
         $image7->save();
         $category->save();
-
-        \App\Models\User::factory(10)->create();
         
     }
 }

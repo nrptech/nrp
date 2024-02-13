@@ -10,24 +10,24 @@
 
 @section('content')
 
-    <h2>Product List</h2>
-    <a href="{{ route('productos.create') }}" class="btn btn-success">Add New Product</a>
+    <h2>Lista de Productos</h2>
+    <a href="{{ route('productos.create') }}" class="btn btn-success">Agregar Nuevo Producto</a>
 
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Discount</th>
-                <th>Stock</th>
-                <th>Specs</th>
-                <th>Features</th>
-                <th>Tax ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Descuento</th>
+                <th>Existencia</th>
+                <th>Especificaciones</th>
+                <th>Características</th>
+                <th>ID de Impuesto</th>
                 <th>Color</th>
-                <th>Categorias</th>
-                <th>Actions</th>
+                <th>Categorías</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -49,14 +49,38 @@
                         @endforeach
                     </td>
                     <td>
-                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
-                        <a href="{{ route('productos.addCategory', $product->id) }}" class="btn btn-primary">Edit
-                            categories</a>
-                        <form method="POST" action="{{ route('productos.destroy', $product->id) }}" style="display:inline">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ route('productos.addCategory', $product->id) }}" class="btn btn-primary">Editar
+                            Categorías</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal{{ $product->id }}">Eliminar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmDeleteModal{{ $product->id }}" tabindex="-1"
+                            aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de que deseas eliminar el producto
+                                        <strong>{{ $product->name }}</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <form method="POST" action="{{ route('productos.destroy', $product->id) }}"
+                                            style="display:inline">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pay_methods', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); 
+            $table->string("name", 25);
             $table->string("card_holder", 100);
             $table->string("card_number", 16);
             $table->integer('cvv');
