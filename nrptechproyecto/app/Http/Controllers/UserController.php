@@ -120,22 +120,18 @@ class UserController extends Controller
             'password' => 'nullable|confirmed|min:6',
         ]);
     
-        // Obtener el usuario a actualizar
         $user = User::findOrFail($id);
     
-        // Actualizar los datos del usuario
         $user->name = $request->input('name');
+        $user->surname = $request->input('surname');
         $user->email = $request->input('email');
         
-        // Actualizar la contraseña si se proporcionó una nueva
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
         }
-    
-        // Guardar los cambios en la base de datos
+
         $user->save();
-    
-        // Redirigir de vuelta a la página de perfil con un mensaje de éxito
+
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
 
