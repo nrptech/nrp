@@ -109,13 +109,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
 });
 
-    Route::resource('categories', CategoryController::class);
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin');
-});
-
-use App\Http\Middleware\LanguageLocale;
 
 Route::middleware([LanguageLocale::class])->group(function () {
     Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
