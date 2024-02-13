@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 
-    
+
     Route::post('/order/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay');
     Route::post('/order/saveAddress', [UserController::class, 'saveAddress'])->name('saveAddress');
 
@@ -67,18 +67,19 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::post('/cart/remove/{product}', 'CartController@removeFromCart')->name('cart.remove');
 
-Route::get('/checkout', 'CheckoutController@index')->name('checkout');
-
-Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
-Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
-Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
-
-Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
-Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
-
-Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
-Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+
+    Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
+    Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
+    Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
+
+    Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
+    Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
+
+    Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
+    Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
+    Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+    Route::get('ordershipped/{order}', [CartController::class, 'ordershipped']);
 
     Route::prefix('order')->group(function () {
         Route::post('/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay'); // Sin cambios necesarios aquí
