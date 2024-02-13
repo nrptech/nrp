@@ -1,7 +1,7 @@
 <?php
-
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\LanguageController;
 
 
 
@@ -65,7 +66,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
