@@ -20,9 +20,6 @@
     </script>
 
     <link rel="stylesheet" href="{{ asset('styles/header.css') }}">
-
-
-
     @yield('links')
 
 </head>
@@ -31,113 +28,102 @@
 
     <header class="p-3 mb-3 border-bottom d-flex align-items-center w-100 bg-lightBlue">
         @role('admin')
-        <a href="{{ route('admin') }}" class="btn btn-warning">@lang("messages.adm")</a>
-
+            <a href="{{ route('admin') }}" class="btn btn-warning">@lang('messages.adm')</a>
         @endrole
+
         <section class="d-flex justify-content-around align-items-center w-100 navItems">
 
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none mainLogo">
                 <img src="{{ asset('images/nrplogo.png') }}" alt="NrpLogo" width="50" height="auto" />
             </a>
 
+            <a href="{{ route('products.index') }}" class="btn btn-primary">@lang('messages.products')</a></li>
+
             <div class="d-flex align-items-center categoriasSearch">
-                <div class="dropdown text-start categoriesDropdown">
-
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle badge bg-primary"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"> @lang("messages.category")
-                    </a>
-
-
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a href="{{ route('products.index') }}" class="nav-link px-2 link-dark">@lang("messages.products")</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        {{-- @foreach ($categories as $category)
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                {{ $category->name }}
-                            </li>
-
-                            <!-- Puedes mostrar otros detalles del item aquí -->
-                        @endforeach --}}
-
-                    </ul>
-                </div>
 
                 <form class="">
-                    <input type="search" class="form-control" placeholder=@lang("messages.Search") aria-label="Search">
+                    <input type="search" class="form-control" placeholder=@lang('messages.Search') aria-label="Search">
                 </form>
 
             </div>
 
-                <div class="dropdown text-end">
-                    <a href="{{ route('cart.show') }}" class="d-block link-dark text-decoration-none dropdown-toggle"
-                        id="dropdownCart" data-bs-toggle="dropdown" aria-expanded="false">
-                        @lang("messages.cart") @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
-                            <span class="badge bg-danger">{{ Auth::user()->cart->products->count() }}</span>
-                        @endif
-                    </a>
-                    <ul class="dropdown-menu text-smaller" aria-labelledby="dropdownUser1">
-                        @php
-                            $totalPrice = 0;
-                        @endphp
-                        @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
-                            @foreach (Auth::user()->cart->products as $product)
-                                @php
-                                    $basePrice = 0;
-                                    $afterTaxes = 0;
-                                    if ($product->discount > 0) {
-                                        $basePrice = $product->price * ((100 - $product->discount) / 100);
-                                        $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
-                                    } else {
-                                        $basePrice = $product->price;
-                                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
-                                    }
-                                    $totalPrice += $afterTaxes * $product->pivot->amount;
-                                @endphp
+            <div class="dropdown text-end">
+                <a href="{{ route('cart.show') }}" class="d-block link-dark text-decoration-none dropdown-toggle"
+                    id="dropdownCart" data-bs-toggle="dropdown" aria-expanded="false">
+                    @lang('messages.cart') @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
+                        <span class="badge bg-danger">{{ Auth::user()->cart->products->count() }}</span>
+                    @endif
+                </a>
+                <ul class="dropdown-menu text-smaller" aria-labelledby="dropdownUser1">
+                    @php
+                        $totalPrice = 0;
+                    @endphp
+                    @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
+                        @foreach (Auth::user()->cart->products as $product)
+                            @php
+                                $basePrice = 0;
+                                $afterTaxes = 0;
+                                if ($product->discount > 0) {
+                                    $basePrice = $product->price * ((100 - $product->discount) / 100);
+                                    $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                                } else {
+                                    $basePrice = $product->price;
+                                    $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                                }
+                                $totalPrice += $afterTaxes * $product->pivot->amount;
+                            @endphp
 
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
 
-                                    <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
-
-
-                                    <span>
-                                        {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
-                                    </span>
-
-                                </li>
-
-                                <!-- Puedes mostrar otros detalles del item aquí -->
-                            @endforeach
-                        @else
-                            <li>@lang("messages.emptyCart")</li>
-                        @endif
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                                <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
 
 
-                        <li><a href="{{ url('/cart') }}" class="dropdown-item px-2 link-dark">@lang("messages.goCart")</a></li>
+                                <span>
+                                    {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
+                                </span>
 
-                    </ul>
-                </div>
+                            </li>
+
+                            <!-- Puedes mostrar otros detalles del item aquí -->
+                        @endforeach
+                    @else
+                        <li>@lang('messages.emptyCart')</li>
+                    @endif
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+
+                    <li><a href="{{ url('/cart') }}" class="dropdown-item px-2 link-dark">@lang('messages.goCart')</a></li>
+
+                </ul>
             </div>
-            <!-- Language Switcher -->
-<div>
-    <form action="{{ route('switch.language', 'en') }}" method="get" style="display:inline-block;">
-        @csrf
-        <button type="submit" class="btn btn-link" {{ Auth::user()->language == 'en' ? 'disabled' : '' }}>@lang("messages.langEn")</button>
-    </form>
+            </div>
 
-    <span>|</span>
+            @if (request()->is('home'))
+                <!-- Language Switcher -->
+                <div>
+                    <form action="{{ route('switch.language', 'en') }}" method="get" style="display:inline-block;">
+                        @csrf
+                        <button type="submit" class="btn btn-link"
+                            {{ Auth::user()->language == 'en' ? 'disabled' : '' }}>
+                            @lang('messages.langEn')
+                        </button>
+                    </form>
 
-    <form action="{{ route('switch.language', 'es') }}" method="get" style="display:inline-block;">
-        @csrf
-        <button type="submit" class="btn btn-link" {{ Auth::user()->language == 'es' ? 'disabled' : '' }}>@lang("messages.langEsp")</button>
-    </form>
-</div>
+                    <span>|</span>
+
+                    <form action="{{ route('switch.language', 'es') }}" method="get" style="display:inline-block;">
+                        @csrf
+                        <button type="submit" class="btn btn-link"
+                            {{ Auth::user()->language == 'es' ? 'disabled' : '' }}>
+                            @lang('messages.langEsp')
+                        </button>
+                    </form>
+                </div>
+            @endif
+
 
             <div class="d-flex align-items-center gap-5">
                 <div class="dropdown text-end">
@@ -147,8 +133,11 @@
                             class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">@lang("messages.settings")</a></li>
-                        <li><a class="dropdown-item" href="#">@lang("messages.Wishlist")</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a>
+
+                        </li>
+                        <li><a class="dropdown-item" href="/home">@lang('messages.Wishlist')</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -156,7 +145,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                @lang("messages.logout")
+                                @lang('messages.logout')
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

@@ -45,6 +45,14 @@
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
+                    <strong>Surname:</strong>
+                    <input type="text" name="surname" placeholder="Surname" class="form-control"
+                        value="{{ old('surname', $user->name) }}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
                     <strong>Email:</strong>
                     <input type="text" name="email" placeholder="Email" class="form-control"
                         value="{{ old('email', $user->email) }}">

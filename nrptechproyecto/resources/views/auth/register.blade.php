@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
-    <link rel="stylesheet" href="{{ asset('assets/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/Login.css') }}">
 </head>
 
 <body>
@@ -29,51 +29,44 @@
                                             style="width: 185px;" alt="logo">
                                     </div>
 
-                                    <form action="{{route("register")}}" method="post">
-                                        @csrf
-                                        <p>Iniciar sesión:</p>
+                                    <form action="{{ route('register') }}" method="post">
+        @csrf
+        <p>Iniciar sesión:</p>
 
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Nombre</label>
-                                            <input type="text" name="name" id="form2Example11" class="form-control"
-                                                placeholder="Ingresar nombre" />
-                                        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form2Example11">Nombre</label>
+            <input type="text" name="name" id="form2Example11" class="form-control" placeholder="Ingresar nombre" required />
+        </div>
 
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Apellidos</label>
-                                            <input type="text" name="surname" id="form2Example11" class="form-control"
-                                                placeholder="Ingresar apellidos" />
-                                        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form2Example11">Apellidos</label>
+            <input type="text" name="surname" id="form2Example11" class="form-control" placeholder="Ingresar apellidos" required />
+        </div>
 
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Email</label>
-                                            <input type="email" name="email" id="form2Example11" class="form-control"
-                                                placeholder="Correo electrónico" />
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form2Example11">Email</label>
+            <input type="email" name="email" id="form2Example11" class="form-control" placeholder="Correo electrónico" required autocomplete="off" />
+        </div>
 
-                                        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form2Example22">Contraseña</label>
+            <input type="password" name="password" id="form2Example22" class="form-control" required />
+        </div>
 
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example22">Contraseña</label>
-                                            <input type="password" name="password" id="form2Example22" class="form-control" />
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form2Example22">Confirmar contraseña</label>
+            <input type="password" name="password_confirmation" id="form2Example22" class="form-control" required />
+        </div>
 
-                                        </div>
-                                        
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example22">Confirmar contraseña</label>
-                                            <input type="password" name="password_confirmation" id="form2Example22" class="form-control" />
+        <div class="text-center pt-1 mb-5 pb-1">
+            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Registrarse</button>
+        </div>
 
-                                        </div>
-
-                                        <div class="text-center pt-1 mb-5 pb-1">
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Registrarse</button>
-                                          </div>
-
-                                        <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <p class="mb-0 me-2">¿Ya tienes cuenta?</p>
-                                            <a href="{{route("login")}}"><button type="button" class="btn btn-outline-danger">Iniciar sesión</button></a>
-                                        </div>
-
-                                    </form>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2">¿Ya tienes cuenta?</p>
+            <a href="{{ route('login') }}"><button type="button" class="btn btn-outline-danger">Iniciar sesión</button></a>
+        </div>
+    </form>
 
                                 </div>
                             </div>

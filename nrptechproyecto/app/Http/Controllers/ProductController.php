@@ -121,7 +121,8 @@ class ProductController extends Controller
     public function showProducts()
     {
         $products = Product::all();
-        return view('products/index', ['products' => $products]);
+        $categories = Category::all();
+        return view('products/index', ['products' => $products], ['categories' => $categories]);
     }
 
     public function show(Product $product)
@@ -183,5 +184,21 @@ class ProductController extends Controller
         $product->categories()->detach($categoriaId);
 
         return redirect()->back()->with('status', 'Categoría eliminada correctamente del producto');
+    }
+
+    public function filter(Request $request)
+    {
+        $categoryId = $request->input('category');
+
+        if ($categoryId) {
+            $category = Category::findOrFail($categoryId);
+            $products = $category->products;
+        } else {
+            $products = Product::all();
+        }
+
+        $categories = Category::all();
+        
+        return view('products/index', ['products' => $products], ['categories' => $categories]);
     }
 }
