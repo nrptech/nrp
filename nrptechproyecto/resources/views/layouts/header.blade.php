@@ -37,30 +37,9 @@
                 <img src="{{ asset('images/nrplogo.png') }}" alt="NrpLogo" width="50" height="auto" />
             </a>
 
+            <a href="{{ route('products.index') }}" class="btn btn-primary">@lang('messages.products')</a></li>
+
             <div class="d-flex align-items-center categoriasSearch">
-                <div class="dropdown text-start categoriesDropdown">
-
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle badge bg-primary"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"> @lang('messages.category')
-                    </a>
-
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a href="{{ route('products.index') }}"
-                                class="nav-link px-2 link-dark">@lang('messages.products')</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        {{-- @foreach ($categories as $category)
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                {{ $category->name }}
-                            </li>
-
-                            <!-- Puedes mostrar otros detalles del item aquí -->
-                        @endforeach --}}
-
-                    </ul>
-                </div>
 
                 <form class="">
                     <input type="search" class="form-control" placeholder=@lang('messages.Search') aria-label="Search">
