@@ -8,7 +8,7 @@ return [
     "products" => "All the products",
     "logout" => "Logout",
     "Wishlist"=>"Wishlist",
-    "settings" => "Settings",
+    "settings" => "My profile",
     "Search"=> "Search...",
     "adm"=> "Admin",
     "langEn"=>"English",
