@@ -178,17 +178,19 @@ class CartController extends Controller
         foreach ($cart->products as $product) {
             $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
         }
-
-        $order = [
+        $order->load(['products', 'invoice']);
+        $orderData = [
             'order_id' => $order->id,
             'total' => $invoice->total,
-            'order' => $order, // Agrega la variable $order al arreglo $order
+            'order' => $order,
+            'invoice' => $invoice,
         ];
+
         // Enviar el correo electrónico con el seguimiento
-        Mail::to($user->email)->send(new OrderShipped(['order' => $order]));
+        Mail::to($user->email)->send(new OrderShipped(['order' => $orderData]));
 
         // Redirigir a la vista de agradecimiento
-        return view('agradecimiento', compact('order'));
+        return view('agradecimiento', compact('orderData'));
     }
 
     public function ordershipped(Order $order)
@@ -196,6 +198,8 @@ class CartController extends Controller
         $order->load(['products', 'invoice']); // Pre-carga las relaciones
         return view('ordershipped', compact('order'));
     }
+
+
 
 
 
