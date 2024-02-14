@@ -1,47 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-        crossorigin="anonymous"
-    />
-    <script defer
-        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"
-    ></script>
+@extends('layouts.admin')
 
-    <script defer
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"
-    ></script>
+@section('title', 'Panel de productos')
+
+@section('links')
     <link rel="stylesheet" href="../../css/app.css">
     <script defer src="../../js/app.js"></script>
     <script defer src="../../js/bootstrap.js"></script>
-</head>
-<body>
-    <h2>Product List</h2>
+@endsection
+
+@section('content')
+
+    <h2>Lista de Productos</h2>
+    <a href="{{ route('productos.create') }}" class="btn btn-success">Agregar Nuevo Producto</a>
 
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Discount</th>
-                <th>Stock</th>
-                <th>Specs</th>
-                <th>Features</th>
-                <th>Tax ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Descuento</th>
+                <th>Existencia</th>
+                <th>Especificaciones</th>
+                <th>Características</th>
+                <th>ID de Impuesto</th>
                 <th>Color</th>
-                <th>Actions</th>
+                <th>Categorías</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -58,21 +44,48 @@
                     <td>{{ $product->tax_id }}</td>
                     <td>{{ $product->color }}</td>
                     <td>
-                        <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info">Show</a>
-                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Edit</a>
-                        <form method="POST" action="{{ route('productos.destroy', $product->id) }}" style="display:inline">
-    @method('DELETE')
-    @csrf
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
+                        @foreach ($product->categories as $category)
+                            <p>{{ $category->name }}</p>
+                        @endforeach
+                    </td>
+                    <td>
+                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ route('productos.addCategory', $product->id) }}" class="btn btn-primary">Editar
+                            Categorías</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal{{ $product->id }}">Eliminar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmDeleteModal{{ $product->id }}" tabindex="-1"
+                            aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de que deseas eliminar el producto
+                                        <strong>{{ $product->name }}</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <form method="POST" action="{{ route('productos.destroy', $product->id) }}"
+                                            style="display:inline">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <a href="{{ route('productos.create') }}" class="btn btn-success">Add New Product</a>
-    <a class="btn btn-primary" href="{{ route('users.index') }}"> Go to users</a>
-    <a href="{{ url('/') }}" class="btn btn-primary">Back to Home</a>
-</body>
-</html>
+
+@endsection
