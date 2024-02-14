@@ -5,7 +5,7 @@ return [
     "overview" => "Overview",
     "inventory" => "Inventory",
     "cart" => "Cart",
-    "products" => "All the products",
+    "products" => "Explore products",
     "logout" => "Logout",
     "Wishlist"=>"Wishlist",
     "settings" => "My profile",

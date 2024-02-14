@@ -20,6 +20,9 @@
     </script>
 
     <link rel="stylesheet" href="{{ asset('styles/header.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
+
+
     @yield('links')
 
 </head>
@@ -37,30 +40,9 @@
                 <img src="{{ asset('images/nrplogo.png') }}" alt="NrpLogo" width="50" height="auto" />
             </a>
 
+            <a href="{{ route('products.index') }}" class="btn btn-primary">@lang('messages.products')</a></li>
+
             <div class="d-flex align-items-center categoriasSearch">
-                <div class="dropdown text-start categoriesDropdown">
-
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle badge bg-primary"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"> @lang('messages.category')
-                    </a>
-
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a href="{{ route('products.index') }}"
-                                class="nav-link px-2 link-dark">@lang('messages.products')</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        {{-- @foreach ($categories as $category)
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                {{ $category->name }}
-                            </li>
-
-                            <!-- Puedes mostrar otros detalles del item aquí -->
-                        @endforeach --}}
-
-                    </ul>
-                </div>
 
                 <form class="">
                     <input type="search" class="form-control" placeholder=@lang('messages.Search') aria-label="Search">
@@ -121,7 +103,7 @@
                 </ul>
             </div>
             </div>
-            
+
             @if (request()->is('home'))
                 <!-- Language Switcher -->
                 <div>
@@ -155,13 +137,10 @@
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li>
-                            <form method="POST" action="{{ route('profile.index', ['user' => Auth::user()->name]) }}">
-                                @csrf
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                <button type="submit" class="dropdown-item">@lang('messages.settings')</button>
-                            </form>
+                            <a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a>
+
                         </li>
-                        <li><a class="dropdown-item" href="/home">@lang('messages.Wishlist')</a></li>
+                        <li><a class="dropdown-item" href="{{ route('wishlist.index') }}">@lang('messages.Wishlist')</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

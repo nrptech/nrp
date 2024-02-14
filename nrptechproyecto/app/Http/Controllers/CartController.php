@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Invoice;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,12 +42,12 @@ class CartController extends Controller
         if ($cart->products->contains($product)) {
             $existingAmount = $cart->products()->where('product_id', $product->id)->first()->pivot->amount;
             $newAmount = $existingAmount + $amount;
-    
-            
+
+
             if ($product->stock < $newAmount) {
                 return redirect()->back()->with('error', 'No hay suficiente stock disponible');
             }
-    
+
             $cart->products()->updateExistingPivot($product, ['amount' => $newAmount]);
         } else {
             $cart->products()->attach($product, ['amount' => $amount]);
@@ -155,14 +156,14 @@ class CartController extends Controller
         }
 
         // Crear un nuevo pedido asociado al usuario
-        $order = $user->orders()->create();
+        $order = $user->orders()->create(['state' => 'pending']);
 
         // Lógica para crear un nuevo invoice
         $invoice = new Invoice([
             'total' => $cart->products->sum(function ($product) {
                 return $product->pivot->amount * $product->price;
             }),
-            'date' => now(), // Puedes ajustar la fecha según tus necesidades
+            'date' => now(),
         ]);
 
         // Asociar el Invoice con el Order
@@ -173,18 +174,32 @@ class CartController extends Controller
         $cart->products()->detach();
         $cart->delete();
 
-        // Enviar el correo electrónico con el seguimiento
+        // Adjuntar productos del carrito al pedido mediante la tabla intermedia
+        foreach ($cart->products as $product) {
+            $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
+        }
+        $order->load(['products', 'invoice']);
         $orderData = [
             'order_id' => $order->id,
             'total' => $invoice->total,
-            // Agrega cualquier otra información que desees enviar en el correo
+            'order' => $order,
+            'invoice' => $invoice,
         ];
 
-        Mail::to($user->email)->send(new OrderShipped($orderData));
+        // Enviar el correo electrónico con el seguimiento
+        Mail::to($user->email)->send(new OrderShipped(['order' => $orderData]));
 
         // Redirigir a la vista de agradecimiento
-        return view('agradecimiento');
+        return view('agradecimiento', compact('orderData'));
     }
+
+    public function ordershipped(Order $order)
+    {
+        $order->load(['products', 'invoice']); // Pre-carga las relaciones
+        return view('ordershipped', compact('order'));
+    }
+
+
 
 
 
