@@ -107,14 +107,20 @@ class ProductController extends Controller
             ->with('success', 'Product updated successfully');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
+        $productId = $request->input('product_id');
+        $product = Product::find($productId); 
+    
+        if (!$product) {
+            return redirect()->route('productos.index')->with('error', 'Product not found');
+        }
+    
+        // Si el producto existe, procede con la eliminación
         $product->categories()->detach();
         $product->images()->delete();
-
-        // Delete the product
         $product->delete();
-
+    
         return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
     }
 

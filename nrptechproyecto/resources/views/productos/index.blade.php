@@ -75,6 +75,7 @@
                                             style="display:inline">
                                             @method('DELETE')
                                             @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <button type="submit" class="btn btn-danger">Eliminar</button>
                                         </form>
                                     </div>
