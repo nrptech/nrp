@@ -137,7 +137,7 @@
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li>
-                            <a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a>
+                            <a class="dropdown-item" href="{{ route('profile.index') }}">@lang("messages.profile")</a>
 
                         </li>
                         <li><a class="dropdown-item" href="{{ route('wishlist.index') }}">@lang('messages.Wishlist')</a></li>

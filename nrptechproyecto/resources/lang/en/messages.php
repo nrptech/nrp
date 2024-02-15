@@ -6,6 +6,7 @@ return [
     "inventory" => "Inventory",
     "cart" => "Cart",
     "products" => "Explore products",
+    "profile" => "Profile", 
     "logout" => "Logout",
     "Wishlist"=>"Wishlist",
     "settings" => "My profile",
