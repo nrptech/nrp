@@ -117,7 +117,7 @@ class ProductController extends Controller
         // Delete the product
         $product->delete();
 
-        return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
+        return redirect()->route('productos.index')->with('success', 'Tengo que poner aún para que se oculten');
     }
 
     public function showProducts()

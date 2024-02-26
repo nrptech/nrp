@@ -4,6 +4,7 @@
 
 @section('links')
     <script defer src="{{ asset('js/edit.js') }}"></script>
+    <script defer src="{{ asset('js/apply.js') }}"></script>
 @endsection
 
 @section('content')
@@ -26,7 +27,7 @@
             <th>Gestionar</th>
         </tr>
         @foreach ($coupons as $coupon)
-            <tr id="view{{ $coupon->id }}">
+            <tr id="view{{ $coupon->id }}" class="view">
                 <td>{{ $coupon->id }}</td>
                 <td>{{ $coupon->name }}</td>
                 <td>{{ $coupon->expiration }}</td>
@@ -35,6 +36,7 @@
                 <td>{{ $coupon->active ? 'Activo' : 'Inactivo' }}</td>
                 <td>
                     <button onclick="edit({{ $coupon->id }})" class="btn btn-primary">Edit</button>
+                    <button onclick="apply({{ $coupon->id }})" class="btn btn-success">Aplicar</button>
                     <form method="POST" action="{{ route('coupons.destroy', $coupon->id) }}" style="display:inline">
                         @method('DELETE')
                         @csrf
@@ -65,10 +67,10 @@
                             </div>
                         </div>
                     </form>
-
                 </td>
             </tr>
-            <tr hidden id="edit{{ $coupon->id }}">
+
+            <tr hidden id="edit{{ $coupon->id }}" class="edit">
                 <td>{{ $coupon->id }}</td>
                 <form method="POST" action="{{ route('coupons.update', $coupon->id) }}">
                     @method('PATCH')
@@ -85,8 +87,56 @@
                 </td>
             </tr>
         @endforeach
-
     </table>
+    <section hidden id="apply">
+        <div class="d-flex w-100 justify-content-around my-3">
+            <div>
+                <button onclick="showForm(this)" class="btn btn-primary">Asignar usuarios</button>
+                <div hidden id="assingToUsers">
+                    <form action="" method="post">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="coupon_id" id="coupon_id" value="">
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="showForm(this)" class="btn btn-primary">Asignar productos</button>
+                <div hidden id="assingProducts">
+                    <form action="" method="post">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="coupon_id" id="coupon_id" value="">
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="showForm(this)" class="btn btn-primary">Asignar categorias</button>
+                <div hidden id="assingCategories">
+                    <form action="{{ route("assignToCategories") }}" method="post">
+                        @csrf
+                        
+                        <input type="" name="coupon_id" id="coupon_id">
+                        @foreach ($categories as $category)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="categories[]"
+                                value="{{ $category->id }}" id="category{{ $category->id }}">
+                            <label class="form-check-label" for="category{{ $category->id }}">
+                                {{ $category->name }}
+                            </label>
+                        </div>
+                        @endforeach
+                        <button class="btn btn-success">Asignar</button>
+                    </form>                    
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
 
     @if ($coupons->lastPage() > 1)
         <nav>
@@ -126,7 +176,8 @@
                     <div class="d-flex align-items-center gap-3 my-3">
                         <div>
                             <label for="name" class="form-label me-2">Nombre del cupón:</label>
-                            <input class="form-control me-2" type="text" name="name" placeholder="Nombre del cupón">
+                            <input class="form-control me-2" type="text" name="name"
+                                placeholder="Nombre del cupón">
                         </div>
                         <div>
                             <label for="expiration" class="form-label me-2">Fecha de vencimiento:</label>

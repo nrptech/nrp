@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use App\Models\Category;
 
 class CouponController extends Controller
 {
     public function index(Request $request)
     {
         $coupons = Coupon::orderBy('id', 'ASC')->paginate(5);
+        $categories = Category::all();
 
-        return view('admin.coupons.index', compact('coupons'));
+        return view('admin.coupons.index', compact('coupons', 'categories'));
     }
 
     public function destroy(Coupon $coupon)
@@ -52,14 +54,30 @@ class CouponController extends Controller
             'discount' => 'required|numeric',
         ]);
 
-        
-
         $input = $request->all();
-        
+
         $input['active'] = $request->has('active');
 
         Coupon::create($input);
 
         return redirect()->back()->with('success', 'Cupón creado con éxito');
+    }
+
+    public function assignToCategories(Request $request)
+    {
+
+        $coupon = Coupon::findOrFail($request->coupon_id);
+        $coupon->categories()->sync($request->input('categories', []));
+
+        return redirect()->back()->with('success', 'Cupón asignado a categorías correctamente');
+    }
+
+
+    public function assignToUsers()
+    {
+    }
+
+    public function assignToProducts()
+    {
     }
 }

@@ -11,10 +11,10 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Users Management</h2>
+                <h2>Gestión de usuarios</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+                <a class="btn btn-success" href="{{ route('users.create') }}"> Crear un nuevo usuario</a>
             </div>
         </div>
     </div>
@@ -29,13 +29,13 @@
     <table class="table table-bordered">
         <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Surname</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
             <th>Email</th>
             <th>Roles</th>
             <th>Metodos de pago</th>
             <th>Direcciones</th>
-            <th width="280px">Action</th>
+            <th width="280px">Acciones</th>
         </tr>
         @foreach ($users as $user)
             <tr id="view{{ $user->id }}">
@@ -61,11 +61,11 @@
                     @endforeach
                 </td>
                 <td>
-                    <button onclick="edit({{ $user->id }})" class="btn btn-primary">Edit</button>
+                    <button onclick="edit({{ $user->id }})" class="btn btn-primary">Editar</button>
 
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal{{ $user->id }}">
-                        Delete
+                        Eliminar
                     </button>
 
                     <div class="modal fade" id="confirmDeleteModal{{ $user->id }}" tabindex="-1"
@@ -113,7 +113,7 @@
                             @endforeach
                         </select>
                     </td>
-                    <button id="userButton" type="submit" hidden></button>
+                    <button id="userButton{{$user}}" type="submit" hidden></button>
                 </form>
                 <td>
                     @if (count($user->payMethods) > 0)
@@ -154,12 +154,12 @@
                 </td>
 
                 <td>
-                    <label class="btn btn-primary" for="userButton">Save</label>
+                    <label class="btn btn-primary" for="userButton{{$user}}">Guardar</label>
 
 
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal{{ $user->id }}">
-                        Delete
+                        Eliminar
                     </button>
 
                     <div class="modal fade" id="confirmDeleteModal{{ $user->id }}" tabindex="-1"

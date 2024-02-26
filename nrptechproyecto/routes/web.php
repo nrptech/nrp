@@ -107,12 +107,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('coupons', CouponController::class);
 
-    Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
-    Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
-
-    Route::put('/users/{user}/update', [UserController::class, 'update'])->name('users.update');
-
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::post("/coupons/assignToCategories", [CouponController::class, "assignToCategories"])->name("assignToCategories");
 });
 
 

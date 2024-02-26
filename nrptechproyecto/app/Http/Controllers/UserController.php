@@ -90,6 +90,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->role_id = Role::findByName($request->input('role'))->id;
         $user->update($input);
+
         
 
         $user->syncRoles($request->input('role'));
