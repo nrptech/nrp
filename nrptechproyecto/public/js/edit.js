@@ -2,9 +2,9 @@
 
 let currentUserEditing = null;
 
-function editUser(userId) {
-    let toEdit = "edit" + userId;
-    let toShow = "view" + userId;
+function edit(elementId) {
+    let toEdit = "edit" + elementId;
+    let toShow = "view" + elementId;
     console.log(toEdit);
 
     if (currentUserEditing) {
@@ -24,5 +24,5 @@ function editUser(userId) {
     elementToEdit.removeAttribute("hidden");
     elementToShow.setAttribute("hidden", "hidden");
 
-    currentUserEditing = userId;
+    currentUserEditing = elementId;
 }

@@ -16,7 +16,12 @@ class TaxesTableSeeder extends Seeder
         
         Tax::create([
             'taxName' => 'IVA',
-            'amount' => 10,
+            'amount' => 21,
+        ]);
+
+        Tax::create([
+            'taxName' => 'Prueba',
+            'amount' => 5,
         ]);
 
     }

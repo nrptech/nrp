@@ -3,7 +3,7 @@
 @section('title', 'Panel de usuarios')
 
 @section('links')
-
+    <script defer src="{{ asset('js/edit.js') }}"></script>
 @endsection
 
 @section('content')
@@ -61,7 +61,7 @@
                     @endforeach
                 </td>
                 <td>
-                    <button onclick="editUser({{ $user->id }})" class="btn btn-primary">Edit</button>
+                    <button onclick="edit({{ $user->id }})" class="btn btn-primary">Edit</button>
 
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal{{ $user->id }}">
@@ -118,12 +118,13 @@
                 <td>
                     @if (count($user->payMethods) > 0)
                         @foreach ($user->payMethods as $payMethod)
-                            <form id="deletePayMethodForm"  method="POST"
+                            <form id="deletePayMethodForm" method="POST"
                                 action="{{ route('users.deletePayMethods', $user->id) }}" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
 
-                                <input name="payMethod" type="hidden" value="{{ $payMethod->id }}">{{ $payMethod->name }}</input>
+                                <input name="payMethod" type="hidden"
+                                    value="{{ $payMethod->id }}">{{ $payMethod->name }}</input>
 
                                 <button class="btn btn-danger">Eliminar</button>
 
@@ -137,7 +138,8 @@
                 <td>
                     @if (count($user->addresses) > 0)
                         @foreach ($user->addresses as $address)
-                            <form id="deleteAddressesForm" method="POST" action="{{ route('users.deleteAddress', $user->id) }}" enctype="multipart/form-data">
+                            <form id="deleteAddressesForm" method="POST"
+                                action="{{ route('users.deleteAddress', $user->id) }}" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
 
@@ -159,7 +161,7 @@
                         data-bs-target="#confirmDeleteModal{{ $user->id }}">
                         Delete
                     </button>
-                    
+
                     <div class="modal fade" id="confirmDeleteModal{{ $user->id }}" tabindex="-1"
                         aria-labelledby="confirmDeleteModalLabel{{ $user->id }}" aria-hidden="true">
                         <div class="modal-dialog">

@@ -109,9 +109,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
     Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
-    Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
-    Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
-    Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
 
     Route::put('/users/{user}/update', [UserController::class, 'update'])->name('users.update');
 
