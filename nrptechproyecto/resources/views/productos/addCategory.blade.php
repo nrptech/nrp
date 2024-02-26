@@ -3,9 +3,7 @@
 @section('title', 'Admin dashboard')
 
 @section('links')
-    <link rel="stylesheet" href="../../css/app.css">
-    <script defer src="../../js/app.js"></script>
-    <script defer src="../../js/bootstrap.js"></script>
+
 @endsection
 
 @section('content')

@@ -3,9 +3,7 @@
 @section('title', 'Panel de productos')
 
 @section('links')
-    <link rel="stylesheet" href="../../css/app.css">
-    <script defer src="../../js/app.js"></script>
-    <script defer src="../../js/bootstrap.js"></script>
+
 @endsection
 
 @section('content')
@@ -17,6 +15,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Imágen</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Descripción</th>
@@ -34,6 +33,12 @@
             @foreach ($productos as $product)
                 <tr>
                     <td>{{ $product->id }}</td>
+                    <td class="imgMiniature">
+                        @if ($product->images->isNotEmpty())
+                            <img class="img-fluid" src="{{ asset($product->images->first()->url) }}" alt="{{ $product->name }}"
+                                class="w-100" id="img{{ $product->id }}-0">
+                        @endif
+                    </td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->description }}</td>
