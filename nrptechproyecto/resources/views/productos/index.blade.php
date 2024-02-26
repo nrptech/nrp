@@ -12,6 +12,13 @@
     <h2>Lista de Productos</h2>
     <a href="{{ route('productos.create') }}" class="btn btn-success">Agregar Nuevo Producto</a>
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+
+
     <table class="table">
         <thead>
             <tr>
@@ -170,6 +177,33 @@
             @endforeach
         </tbody>
     </table>
+    @if ($productos->lastPage() > 1)
+    <nav>
+        <ul class="pagination justify-content-center">
+            {{-- Botón "anterior" --}}
+            <li class="page-item {{ $productos->onFirstPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $productos->previousPageUrl() }}" aria-label="Anterior">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {{-- Mostrar los enlaces de las páginas --}}
+            @for ($i = 1; $i <= $productos->lastPage(); $i++)
+                <li class="page-item {{ $productos->currentPage() == $i ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $productos->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Botón "siguiente" --}}
+            <li class="page-item {{ $productos->currentPage() == $productos->lastPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $productos->nextPageUrl() }}" aria-label="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+@endif
+
 
 
 @endsection

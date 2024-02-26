@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $productos = Product::all();
+        $productos = Product::orderBy('id', 'ASC')->paginate(5);
         $taxes = Tax::all();
         $allCategories = Category::all();
 

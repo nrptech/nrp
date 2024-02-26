@@ -192,4 +192,33 @@
             </tr>
         @endforeach
     </table>
+    
+    @if ($users->lastPage() > 1)
+    <nav>
+        <ul class="pagination justify-content-center">
+            {{-- Botón "anterior" --}}
+            <li class="page-item {{ $users->onFirstPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $users->previousPageUrl() }}" aria-label="Anterior">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {{-- Mostrar los enlaces de las páginas --}}
+            @for ($i = 1; $i <= $users->lastPage(); $i++)
+                <li class="page-item {{ $users->currentPage() == $i ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $users->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Botón "siguiente" --}}
+            <li class="page-item {{ $users->currentPage() == $users->lastPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $users->nextPageUrl() }}" aria-label="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+@endif
+
+
 @endsection
