@@ -2,14 +2,11 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LanguageController;
@@ -117,11 +114,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
 
     Route::put('/users/{user}/update', [UserController::class, 'update'])->name('users.update');
-    Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
-    Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
-
-    Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
-    Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
 
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
 });

@@ -155,7 +155,7 @@
                 </td>
 
                 <td>
-                    <label class="btn btn-primary" for="userButton">Edit</label>
+                    <label class="btn btn-primary" for="userButton">Save</label>
 
 
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
