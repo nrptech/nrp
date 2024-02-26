@@ -20,10 +20,10 @@ class CouponController extends Controller
         $coupon->users()->detach();
         $coupon->categories()->detach();
         $coupon->delete();
-    
+
         return redirect()->back()->with('success', 'Cupón borrado satisfactoriamente');
     }
-    
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -34,13 +34,32 @@ class CouponController extends Controller
         ]);
 
         $input = $request->all();
-        $input['active'] = $request->has('active'); 
+        $input['active'] = $request->has('active');
         $coupon = Coupon::find($id);
-        
+
         $coupon->update($input);
 
         return redirect()->back()
-            ->with('success', 'Categoría actualizada correctamente');
+            ->with('success', 'Cupón actualizado correctamente');
     }
 
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'expiration' => 'required|date',
+            'quantity' => 'required|integer',
+            'discount' => 'required|numeric',
+        ]);
+
+        
+
+        $input = $request->all();
+        
+        $input['active'] = $request->has('active');
+
+        Coupon::create($input);
+
+        return redirect()->back()->with('success', 'Cupón creado con éxito');
+    }
 }

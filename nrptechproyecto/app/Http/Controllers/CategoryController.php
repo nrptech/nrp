@@ -19,11 +19,6 @@ class CategoryController extends Controller
         return view('categories.index', compact('categories'));
     }
 
-    public function create()
-    {
-        return view('categories.create');
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -32,7 +27,7 @@ class CategoryController extends Controller
 
         $input = $request->all();
 
-        $category = Category::create($input);
+        Category::create($input);
 
         return redirect()->route('categories.index')
             ->with('success', 'Category created successfully');

@@ -1,14 +1,14 @@
-@extends("layouts.admin")
+@extends('layouts.admin')
 
-@section("title", "Cupones")
+@section('title', 'Cupones')
 
-@section("links")
-    <script defer src="{{asset("js/edit.js")}}"></script>
+@section('links')
+    <script defer src="{{ asset('js/edit.js') }}"></script>
 @endsection
 
-@section("content")
+@section('content')
     <h2>Cupones</h2>
-    
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -26,14 +26,13 @@
             <th>Gestionar</th>
         </tr>
         @foreach ($coupons as $coupon)
-           
             <tr id="view{{ $coupon->id }}">
                 <td>{{ $coupon->id }}</td>
                 <td>{{ $coupon->name }}</td>
                 <td>{{ $coupon->expiration }}</td>
                 <td>{{ $coupon->quantity }}</td>
                 <td>{{ $coupon->discount }}</td>
-                <td>{{($coupon->active ?  'Activo' : 'Inactivo')}}</td>
+                <td>{{ $coupon->active ? 'Activo' : 'Inactivo' }}</td>
                 <td>
                     <button onclick="edit({{ $coupon->id }})" class="btn btn-primary">Edit</button>
                     <form method="POST" action="{{ route('coupons.destroy', $coupon->id) }}" style="display:inline">
@@ -88,4 +87,70 @@
         @endforeach
 
     </table>
+
+    @if ($coupons->lastPage() > 1)
+        <nav>
+            <ul class="pagination justify-content-center">
+                {{-- Botón "anterior" --}}
+                <li class="page-item {{ $coupons->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $coupons->previousPageUrl() }}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                {{-- Mostrar los enlaces de las páginas --}}
+                @for ($i = 1; $i <= $coupons->lastPage(); $i++)
+                    <li class="page-item {{ $coupons->currentPage() == $i ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $coupons->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+
+                {{-- Botón "siguiente" --}}
+                <li class="page-item {{ $coupons->currentPage() == $coupons->lastPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $coupons->nextPageUrl() }}" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    @endif
+
+    <div class="d-flex justify-content-center flex-column align-items-center bg-secondary text-white text-center">
+        <div class="w-75 d-flex justify-content-center flex-column align-items-center">
+            <h4>Crear un nuevo cupón</h4>
+            <form action="{{ route('coupons.store') }}" method="POST"
+                class="w-100 d-flex justify-content-center flex-column align-items-center">
+                @csrf
+
+                <div class="form-group">
+                    <div class="d-flex align-items-center gap-3 my-3">
+                        <div>
+                            <label for="name" class="form-label me-2">Nombre del cupón:</label>
+                            <input class="form-control me-2" type="text" name="name" placeholder="Nombre del cupón">
+                        </div>
+                        <div>
+                            <label for="expiration" class="form-label me-2">Fecha de vencimiento:</label>
+                            <input class="form-control me-2" type="datetime-local" name="expiration">
+                        </div>
+
+                        <div>
+                            <label for="quantity" class="form-label me-2">Cantidad de veces que se puede aplicar:</label>
+                            <input class="form-control me-2" type="number" name="quantity" placeholder="100">
+                        </div>
+
+                        <div>
+                            <label for="discount" class="form-label me-2">Porcentaje de descuento que aplicará:</label>
+                            <input class="form-control me-2" type="number" name="discount" placeholder="30">
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <label for="activeCheckbox">Activo</label>
+                            <input class="form-check-input" type="checkbox" name="active" id="activeCheckbox" checked>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 @endsection
