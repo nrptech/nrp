@@ -26,7 +26,7 @@
         <nav class="d-flex justify-content-around p-4 bg-secondary">
             <a class="btn btn-primary" href="{{ route('users.index') }}"> Gestionar Usuarios</a>
             <a class="btn btn-primary" href="{{ route('productos.index') }}"> Gestionar Productos</a>
-            <a class="btn btn-success" href="{{ route('admin') }}"> Administrador principal</a>
+            <a class="btn btn-primary" href="{{ route('coupons.index') }}"> Gestionar cupones</a>
             <a class="btn btn-primary" href="{{ route('categories.index') }}">Gestionar categorias</a>
             <a href="{{ url('/home') }}" class="btn btn-warning">Vista de usuario</a>
         </nav>

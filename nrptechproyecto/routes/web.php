@@ -1,16 +1,18 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\LanguageLocale;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -103,9 +105,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('productos', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin');
+    Route::resource('coupons', CouponController::class);
 
     Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
     Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');

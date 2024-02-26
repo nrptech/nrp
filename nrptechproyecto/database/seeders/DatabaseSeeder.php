@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $user = new User();
         $user->name = "Admin";
         $user->email = "admin@admin.com";
-        $user->password = bcrypt('12345678');
+        $user->password = bcrypt('admin');
         $user->surname = "Admin Admin";
         $user->role_id = 1;
         $user->assignRole($role1);
@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ImagesTableSeeder::class);
         $this->call(AddressesTableSeeder::class);
         $this->call(PayMethodsTableSeeder::class);
+        $this->call(CouponsTableSeeder::class);
 
     }
 }

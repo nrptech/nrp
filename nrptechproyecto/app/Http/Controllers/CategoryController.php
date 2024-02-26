@@ -47,17 +47,6 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Categoria borrada satisfactoriamente');
     }
 
-    public function edit(Category $category)
-    {
-        if (!$category) {
-            return redirect()->route('categories.index')->with('error', 'Categoría no encontrado');
-        }
-        
-        $assignedProducts = $category->products;
-    
-        return view('categories.edit', compact('category', 'assignedProducts'));
-    }
-
     public function update(Request $request, $id)
     {
         $this->validate($request, [

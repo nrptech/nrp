@@ -18,4 +18,9 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class, 'product_has_categories');
     }
+
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
 }
