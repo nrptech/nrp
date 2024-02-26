@@ -13,10 +13,6 @@ class CategoryProductsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        CategoryProduct::create([
-            'idPivot' => 1,
-            'Categories_idCategorie' => 1,
-            'Products_idProduct' => 1,
-        ]);
+        
     }
 }

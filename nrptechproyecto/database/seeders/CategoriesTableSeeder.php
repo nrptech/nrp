@@ -14,8 +14,8 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'idCategorie' => 1,
-            'name' => 'CategoríaEjemplo',
+            'id' => 1,
+            'name' => 'Pajero',
         ]);
     }
 }

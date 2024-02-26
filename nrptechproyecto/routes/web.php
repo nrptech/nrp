@@ -116,6 +116,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
     Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
 
+    Route::put('/users/{user}/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
     Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
 

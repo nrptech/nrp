@@ -15,8 +15,9 @@ class AddressesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('addresses')->insert([
-            'idUser' => 2,
+        Address::create([
+            'user_id' => 1,
+            'name' => 'Casa',
             'province' => 'ProvinciaEjemplo',
             'city' => 'CiudadEjemplo',
             'street' => 'CalleEjemplo',
@@ -24,5 +25,17 @@ class AddressesTableSeeder extends Seeder
             'pc' => 12345,
             'country' => 'PaisEjemplo',
         ]);
+
+        Address::create([
+            'user_id' => 2,
+            'name' => 'Casa',
+            'province' => 'ProvinciaEjemplo',
+            'city' => 'CiudadEjemplo',
+            'street' => 'CalleEjemplo',
+            'number' => 123,
+            'pc' => 12345,
+            'country' => 'PaisEjemplo',
+        ]);
+
     }
 }
