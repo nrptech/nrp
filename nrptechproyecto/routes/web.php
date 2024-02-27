@@ -112,7 +112,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name("admin");
 
     Route::put('productos/{product}/hide', [ProductController::class, "hide"])->name('productos.hide');
-
 });
 
 

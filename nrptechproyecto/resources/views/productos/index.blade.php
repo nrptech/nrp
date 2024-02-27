@@ -114,6 +114,7 @@
                                     alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
                             @endif
                         </td>
+                        <td>{{ $product->visible ? 'Visible' : 'oculto' }}</td>
                         <td><input type="text" name="name" value="{{ $product->name }}" class="form-control"></td>
                         <td><input type="number" name="price" value="{{ $product->price }}" class="form-control"></td>
                         <td><input type="text" name="description" value="{{ $product->description }}"
