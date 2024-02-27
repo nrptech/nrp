@@ -111,6 +111,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.dashboard');
     })->name("admin");
 
+    Route::put('productos/{product}/hide', [ProductController::class, "hide"])->name('productos.hide');
+
 });
 
 

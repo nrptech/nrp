@@ -16,7 +16,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'description', 'coupon_id', 'tax_id', 'color', 'stock', 'specs', 'features',
+        'name', 'price', 'description', 'coupon_id', 'tax_id', 'color', 'stock', 'visible', 'specs', 'features',
     ];
 
     public function carts()

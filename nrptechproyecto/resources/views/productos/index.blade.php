@@ -24,6 +24,7 @@
             <tr>
                 <th>ID</th>
                 <th>Imágen</th>
+                <th>Visibilidad</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Descripción</th>
@@ -47,6 +48,7 @@
                                 alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
                         @endif
                     </td>
+                    <td>{{ $product->visible ? "Visible" : "oculto"}}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->description }}</td>
@@ -68,8 +70,14 @@
                     </td>
                     <td>
                         <button onclick="edit({{ $product->id }})" class="btn btn-primary">Editar</button>
+                        @if ($product->visible)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal{{ $product->id }}">Ocultar</button>
+                        @else
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal{{ $product->id }}">Eliminar</button>
+                                data-bs-target="#confirmDeleteModal{{ $product->id }}">Mostrar</button>
+                        @endif
+
                         <!-- Modal -->
                         <div class="modal fade" id="confirmDeleteModal{{ $product->id }}" tabindex="-1"
                             aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -81,17 +89,17 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        ¿Estás seguro de que deseas eliminar el producto
+                                        ¿Estás seguro de que deseas ocultar el producto
                                         <strong>{{ $product->name }}</strong>?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar</button>
-                                        <form method="POST" action="{{ route('productos.destroy', $product->id) }}"
+                                        <form method="POST" action="{{ route('productos.hide', $product->id) }}"
                                             style="display:inline">
-                                            @method('DELETE')
+                                            @method('PUT')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            <button type="submit" class="btn btn-danger">Ocultar</button>
                                         </form>
                                     </div>
                                 </div>

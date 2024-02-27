@@ -78,17 +78,17 @@ class ProductController extends Controller
             'color' => 'string',
             'categories' => 'array',
         ]);
-        
+
         $product = Product::FindOrFail($product_id);
-    
+
         $data = $request->except('image', 'coupon');
 
-        if($request["coupon_id"] == 0){
+        if ($request["coupon_id"] == 0) {
             $data["coupon_id"] = null;
         }
 
         $product->update($data);
-    
+
         $product->categories()->detach();
         if ($request->has('categories')) {
             foreach ($request->categories as $category_id) {
@@ -96,25 +96,18 @@ class ProductController extends Controller
                 $product->categories()->attach($category);
             }
         }
-    
+
         return redirect()->route('productos.index')
             ->with('success', 'Producto actualizadísimo correctamente');
     }
-    
-    public function addCoupon(){
-        
-    }
 
-    public function destroy(Product $product)
+    public function hide(Product $product)
     {
-        $product->categories()->detach();
-        $product->images()->delete();
+        $product->update(['visible' => !$product->visible]);
 
-        // Delete the product
-        $product->delete();
-
-        return redirect()->route('productos.index')->with('success', 'Tengo que poner aún para que se oculten');
+        return redirect()->route('productos.index')->with('success', 'El producto se ha ocultado correctamente.');
     }
+
 
     public function showProducts()
     {
