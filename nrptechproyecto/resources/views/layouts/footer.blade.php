@@ -1,6 +1,8 @@
+<main>
+    <!-- Your main content goes here -->
 </main>
 
-<footer class="main-footer bg-dark text-light">
+<footer class="main-footer bg-dark text-light mt-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
@@ -35,7 +37,7 @@
                 <h3>Métodos de pago</h3>
                 <ul class="payment-icons">
                     <li><i class="bi bi-credit-card"></i></li>
-                        <li><i class="bi bi-credit-card-2-front"></i></li>
+                    <li><i class="bi bi-credit-card-2-front"></i></li>
                     <!-- Agrega más iconos de bancos según sea necesario -->
                 </ul>
             </div>
@@ -45,9 +47,5 @@
 
 <!-- Agrega el script al final del cuerpo del documento -->
 <script src="{{ asset('js/footer.js') }}"></script>
-
-
-
 </body>
-
 </html>
