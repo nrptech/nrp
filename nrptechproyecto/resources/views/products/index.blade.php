@@ -28,22 +28,8 @@
             @if ($product->visible)
                 <section class="productContainer">
                     <div class="productImages d-flex align-content-center bg-lightBlue w-100 position-relative">
-                        @if (count($product->images) > 1)
-                            <button class="leftArrow position-absolute h-100 imgButton"
-                                onclick="changeImg({{ $product->id }}, -1)">
-                                < </button>
-                        @endif
-
-                        @foreach ($product->images as $key => $image)
-                            <img hidden src="{{ asset("$image->url") }}" alt="{{ $product->name }}" class="w-100"
-                                id="img{{ $product->id }}-{{ $key }}">
-                        @endforeach
-
-                        @if (count($product->images) > 1)
-                            <button class="rightArrow position-absolute h-100 imgButton"
-                                onclick="changeImg({{ $product->id }}, 1)">>
-                            </button>
-                        @endif
+                        <img src="{{ asset($product->images->first()->url) }}" alt="{{ $product->name }}" class="w-100"
+                            id="img{{ $product->id }}">
                     </div>
                     <div class="bg-white text-center d-flex flex-column descriptionContainer">
                         <h5>{{ $product->name }}</h5>

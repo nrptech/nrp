@@ -48,7 +48,7 @@
                                 alt="{{ $product->name }}" class="w-100" id="img{{ $product->id }}-0">
                         @endif
                     </td>
-                    <td>{{ $product->visible ? "Visible" : "oculto"}}</td>
+                    <td>{{ $product->visible ? 'Visible' : 'oculto' }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->description }}</td>
@@ -70,13 +70,9 @@
                     </td>
                     <td>
                         <button onclick="edit({{ $product->id }})" class="btn btn-primary">Editar</button>
-                        @if ($product->visible)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal{{ $product->id }}">Ocultar</button>
-                        @else
+
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal{{ $product->id }}">Mostrar</button>
-                        @endif
+                            data-bs-target="#confirmDeleteModal{{ $product->id }}">{{ $product->visible ? "Ocultar" : "Mostrar"}}</button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="confirmDeleteModal{{ $product->id }}" tabindex="-1"
@@ -84,12 +80,12 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar {{ $product->visible ? "ocultadita" : "mostradita"}}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        ¿Estás seguro de que deseas ocultar el producto
+                                        ¿Estás seguro de que deseas {{ $product->visible ? "ocultar" : "mostrar"}} el producto
                                         <strong>{{ $product->name }}</strong>?
                                     </div>
                                     <div class="modal-footer">
@@ -99,7 +95,7 @@
                                             style="display:inline">
                                             @method('PUT')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger">Ocultar</button>
+                                            <button type="submit" class="btn btn-danger">{{ $product->visible ? "Ocultar" : "Mostrar"}}</button>
                                         </form>
                                     </div>
                                 </div>
