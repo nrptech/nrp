@@ -46,7 +46,7 @@
                 </div>
                 <div class="bg-white text-center d-flex flex-column descriptionContainer">
                     <h5>{{ $product->name }}</h5>
-                    @if (optional($product->coupon)->discount > 0)
+                    @if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active)
                         <p class="card-text mb-0"><strong>Precio rebajado:</strong><span class="text-danger">
                                 {{ number_format($product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100), 2) }}€</span>
                         <p class="card-text m-0 text-muted">Precio original:<span

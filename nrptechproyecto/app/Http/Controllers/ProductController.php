@@ -81,7 +81,7 @@ class ProductController extends Controller
         
         $product = Product::FindOrFail($product_id);
     
-        $data = $request->except('image', 'category', 'coupon');
+        $data = $request->except('image', 'coupon');
 
         if($request["coupon_id"] == 0){
             $data["coupon_id"] = null;
@@ -98,7 +98,7 @@ class ProductController extends Controller
         }
     
         return redirect()->route('productos.index')
-            ->with('success', 'Product updated successfully');
+            ->with('success', 'Producto actualizadísimo correctamente');
     }
     
     public function addCoupon(){

@@ -110,9 +110,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
     })->name("admin");
-    
 
-    Route::post("/coupons/assignToCategories", [CouponController::class, "assignToCategories"])->name("assignToCategories");
 });
 
 

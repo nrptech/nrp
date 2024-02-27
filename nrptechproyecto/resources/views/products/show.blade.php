@@ -43,7 +43,7 @@
                 <p class="text-danger">Fuera de stock</p>
             @endif
 
-            @if (optional($product->coupon)->discount > 0)
+            @if(optional($product->coupon)->discount > 0 && optional($product->coupon)->active)
                 <h4 class="badge text-warning">¡Estamos de oferta!</h4>
                 <p>Rebaja del {{ optional($product->coupon)->discount }}%</p>
                 <p class="card-text">Precio original:<span class="text-decoration-line-through text-danger">
