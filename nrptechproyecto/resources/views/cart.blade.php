@@ -15,11 +15,13 @@
 @section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Carrito de Compras</h1>
-    @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+        
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         @if (empty($products))
             <p class="alert alert-info">El carrito está vacío</p>
         @else
@@ -28,19 +30,28 @@
                     $totalPrice = 0;
                 @endphp
 
-            @foreach ($products as $product)
-                @php
-                    $basePrice = 0;
-                    $afterTaxes = 0;
-                    if ($product->coupon->discount > 0) {
-                        $basePrice = $product->price * ((100 - $product->coupon->discount) / 100);
-                        $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
-                    } else {
-                        $basePrice = $product->price;
-                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
-                    }
-                    $totalPrice += $afterTaxes * $product->pivot->amount;
-                @endphp
+                @foreach ($products as $product)
+                    @php
+                        $basePrice = 0;
+                        $afterTaxes = 0;
+
+                        // Check if the product has a coupon
+                        if ($product->coupon) {
+                            if ($product->coupon->discount > 0) {
+                                $basePrice = $product->price * ((100 - $product->coupon->discount) / 100);
+                                $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
+                            } else {
+                                $basePrice = $product->price;
+                                $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                            }
+                        } else {
+                            // Handle the case where there is no coupon
+                            $basePrice = $product->price;
+                            $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                        }
+
+                        $totalPrice += $afterTaxes * $product->pivot->amount;
+                    @endphp
 
                     <li class="list-group-item d-flex justify-content-between align-items-center singleItem">
                         <div class="d-flex gap-2">
