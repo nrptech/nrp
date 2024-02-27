@@ -24,7 +24,6 @@
             <th>Cantidad de cupones</th>
             <th>% de descuento</th>
             <th>Estado</th>
-            <th>Usuarios</th>
             <th>Productos</th>
             <th>Categorias</th>
             <th>Gestionar</th>
@@ -37,11 +36,6 @@
                 <td>{{ $coupon->quantity }}</td>
                 <td>{{ $coupon->discount }}</td>
                 <td>{{ $coupon->active ? 'Activo' : 'Inactivo' }}</td>
-                <td>
-                    @foreach ($coupon->users as $user)
-                        {{ $user->name }}
-                    @endforeach
-                </td>
                 <td>
                     @foreach ($coupon->products as $product)
                         {{ $product->name }}
