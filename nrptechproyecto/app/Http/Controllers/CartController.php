@@ -155,10 +155,16 @@ class CartController extends Controller
             return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
         }
 
-        // Crear un nuevo pedido asociado al usuario
+        // Subtract the purchased quantity from the product stock
+        foreach ($cart->products as $product) {
+            $product->stock -= $product->pivot->amount;
+            $product->save();
+        }
+
+        // Create a new order associated with the user
         $order = $user->orders()->create(['state' => 'pending']);
 
-        // Lógica para crear un nuevo invoice
+        // Logic to create a new invoice
         $invoice = new Invoice([
             'total' => $cart->products->sum(function ($product) {
                 return $product->pivot->amount * $product->price;
@@ -166,15 +172,16 @@ class CartController extends Controller
             'date' => now(),
         ]);
 
-        // Asociar el Invoice con el Order
+        // Associate the Invoice with the Order
         $invoice->order()->associate($order);
         $invoice->save();
 
-        // Eliminar el carrito y desvincular todos los productos
+        // Detach all products from the cart
         $cart->products()->detach();
+        // Delete the cart
         $cart->delete();
 
-        // Adjuntar productos del carrito al pedido mediante la tabla intermedia
+        // Attach products from the cart to the order through the intermediate table
         foreach ($cart->products as $product) {
             $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
         }
@@ -186,10 +193,10 @@ class CartController extends Controller
             'invoice' => $invoice,
         ];
 
-        // Enviar el correo electrónico con el seguimiento
+        // Send the email with the tracking information
         Mail::to($user->email)->send(new OrderShipped(['order' => $orderData]));
 
-        // Redirigir a la vista de agradecimiento
+        // Redirect to the thank you view
         return view('agradecimiento', compact('orderData'));
     }
 

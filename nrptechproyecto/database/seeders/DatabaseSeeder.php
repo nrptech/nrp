@@ -38,6 +38,15 @@ class DatabaseSeeder extends Seeder
         $product4 = new Product();
         $product5 = new Product();
         $tax = new Tax();
+        $image = new Image();
+        $image2 = new Image();
+        $image3 = new Image();
+        $image4 = new Image();
+        $image5 = new Image();
+        $image6 = new Image();
+        $image7 = new Image();
+        $category = new Category();
+
 
         $image->product_id=1;
         $image->url="images/nrp.webp";
