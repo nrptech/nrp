@@ -155,9 +155,28 @@ class CartController extends Controller
             return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
         }
 
+        $productsWithInsufficientStock = [];
+
+        // Check if there is enough stock for each product
+        foreach ($cart->products as $product) {
+            $requestedAmount = $product->pivot->amount;
+
+            if ($product->stock < $requestedAmount) {
+                // Store the product with insufficient stock in an array
+                $productsWithInsufficientStock[] = $product->name;
+            }
+        }
+
+        if (!empty($productsWithInsufficientStock)) {
+            // Redirect back with an error message for products with insufficient stock
+            $error_message = 'No hay suficiente stock disponible para los siguientes productos: ' . implode(', ', $productsWithInsufficientStock);
+            return redirect()->route('cart.show')->with('error', $error_message);
+        }
+
         // Subtract the purchased quantity from the product stock
         foreach ($cart->products as $product) {
-            $product->stock -= $product->pivot->amount;
+            $requestedAmount = $product->pivot->amount;
+            $product->stock -= $requestedAmount;
             $product->save();
         }
 

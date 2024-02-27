@@ -8,7 +8,11 @@
 @endsection
 @section('content')
     <h1 class="mb-4">Carrito de Compras</h1>
-
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
     @if (empty($products))
         <p class="alert alert-info">El carrito está vacío</p>
     @else
