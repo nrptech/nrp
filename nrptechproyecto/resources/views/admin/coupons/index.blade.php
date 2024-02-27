@@ -24,6 +24,9 @@
             <th>Cantidad de cupones</th>
             <th>% de descuento</th>
             <th>Estado</th>
+            <th>Usuarios</th>
+            <th>Productos</th>
+            <th>Categorias</th>
             <th>Gestionar</th>
         </tr>
         @foreach ($coupons as $coupon)
@@ -34,6 +37,21 @@
                 <td>{{ $coupon->quantity }}</td>
                 <td>{{ $coupon->discount }}</td>
                 <td>{{ $coupon->active ? 'Activo' : 'Inactivo' }}</td>
+                <td>
+                    @foreach ($coupon->users as $user)
+                        {{ $user->name }}
+                    @endforeach
+                </td>
+                <td>
+                    @foreach ($coupon->products as $product)
+                        {{ $product->name }}
+                    @endforeach
+                </td>
+                <td>
+                    @foreach ($coupon->categories as $category)
+                        {{ $category->name }}
+                    @endforeach
+                </td>
                 <td>
                     <button onclick="edit({{ $coupon->id }})" class="btn btn-primary">Edit</button>
                     <button onclick="apply({{ $coupon->id }})" class="btn btn-success">Aplicar</button>
@@ -115,21 +133,21 @@
             <div>
                 <button onclick="showForm(this)" class="btn btn-primary">Asignar categorias</button>
                 <div hidden id="assingCategories">
-                    <form action="{{ route("assignToCategories") }}" method="post">
+                    <form action="{{ route('assignToCategories') }}" method="post">
                         @csrf
-                        
-                        <input type="" name="coupon_id" id="coupon_id">
+
+                        <input type="hidden" name="coupon_id" id="coupon_id">
                         @foreach ($categories as $category)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="categories[]"
-                                value="{{ $category->id }}" id="category{{ $category->id }}">
-                            <label class="form-check-label" for="category{{ $category->id }}">
-                                {{ $category->name }}
-                            </label>
-                        </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="categories[]"
+                                    value="{{ $category->id }}" id="category{{ $category->id }}">
+                                <label class="form-check-label" for="category{{ $category->id }}">
+                                    {{ $category->name }}
+                                </label>
+                            </div>
                         @endforeach
                         <button class="btn btn-success">Asignar</button>
-                    </form>                    
+                    </form>
                 </div>
             </div>
 

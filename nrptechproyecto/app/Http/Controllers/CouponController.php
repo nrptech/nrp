@@ -65,10 +65,11 @@ class CouponController extends Controller
 
     public function assignToCategories(Request $request)
     {
-
         $coupon = Coupon::findOrFail($request->coupon_id);
-        $coupon->categories()->sync($request->input('categories', []));
 
+        $coupon->categories()->detach();
+        $coupon->categories()->sync($request->input('categories', []));
+    
         return redirect()->back()->with('success', 'Cupón asignado a categorías correctamente');
     }
 
