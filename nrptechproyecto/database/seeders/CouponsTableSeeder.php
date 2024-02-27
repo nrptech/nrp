@@ -15,6 +15,7 @@ class CouponsTableSeeder extends Seeder
     {
         Coupon::create([
             'name' => 'BlackFriday',
+            'active' => false,
         ]);
 
         Coupon::create([

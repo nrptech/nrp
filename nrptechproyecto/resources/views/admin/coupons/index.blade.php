@@ -24,7 +24,6 @@
             <th>Cantidad de cupones</th>
             <th>% de descuento</th>
             <th>Estado</th>
-            <th>Usuarios</th>
             <th>Productos</th>
             <th>Categorias</th>
             <th>Gestionar</th>
@@ -38,23 +37,17 @@
                 <td>{{ $coupon->discount }}</td>
                 <td>{{ $coupon->active ? 'Activo' : 'Inactivo' }}</td>
                 <td>
-                    @foreach ($coupon->users as $user)
-                        {{ $user->name }}
-                    @endforeach
-                </td>
-                <td>
                     @foreach ($coupon->products as $product)
                         {{ $product->name }}
                     @endforeach
                 </td>
                 <td>
-                    @foreach ($coupon->categories as $category)
-                        {{ $category->name }}
+                    @foreach ($coupon->categories as $product)
+                        {{ $product->name }},
                     @endforeach
                 </td>
                 <td>
                     <button onclick="edit({{ $coupon->id }})" class="btn btn-primary">Edit</button>
-                    <button onclick="apply({{ $coupon->id }})" class="btn btn-success">Aplicar</button>
                     <form method="POST" action="{{ route('coupons.destroy', $coupon->id) }}" style="display:inline">
                         @method('DELETE')
                         @csrf
@@ -99,6 +92,36 @@
                     <td><input type="number" name="quantity" value="{{ $coupon->quantity }}"></td>
                     <td><input type="number" name="discount" value="{{ $coupon->discount }}"></td>
                     <td><input type="checkbox" name="active" {{ $coupon->active ? 'checked' : '' }}></td>
+
+                    <td>
+                        @php
+                            $selectedProducts = $coupon->products->pluck('id')->toArray();
+                        @endphp
+                        @foreach ($coupon->products as $product)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="products[]"
+                                    value="{{ $product->id }}" id="product{{ $product->id }}"
+                                    {{ in_array($product->id, $selectedProducts) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="product{{ $product->id }}">
+                                    {{ $product->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </td>
+
+                    <td>
+                        @foreach ($categories as $category)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="categories[]"
+                                    value="{{ $category->id }}" id="category{{ $category->id }}"
+                                    {{ $coupon->categories->contains($category->id) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="category{{ $category->id }}">
+                                    {{ $category->name }}
+                                </label>
+                            </div>
+                        @endforeach
+
+                    </td>
                     <td>
                         <button onclick="edit({{ $coupon->id }})" class="btn btn-primary">Save changes</button>
                 </form>
@@ -106,53 +129,6 @@
             </tr>
         @endforeach
     </table>
-    <section hidden id="apply">
-        <div class="d-flex w-100 justify-content-around my-3">
-            <div>
-                <button onclick="showForm(this)" class="btn btn-primary">Asignar usuarios</button>
-                <div hidden id="assingToUsers">
-                    <form action="" method="post">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="coupon_id" id="coupon_id" value="">
-                    </form>
-                </div>
-            </div>
-
-            <div>
-                <button onclick="showForm(this)" class="btn btn-primary">Asignar productos</button>
-                <div hidden id="assingProducts">
-                    <form action="" method="post">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="coupon_id" id="coupon_id" value="">
-                    </form>
-                </div>
-            </div>
-
-            <div>
-                <button onclick="showForm(this)" class="btn btn-primary">Asignar categorias</button>
-                <div hidden id="assingCategories">
-                    <form action="{{ route('assignToCategories') }}" method="post">
-                        @csrf
-
-                        <input type="hidden" name="coupon_id" id="coupon_id">
-                        @foreach ($categories as $category)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="categories[]"
-                                    value="{{ $category->id }}" id="category{{ $category->id }}">
-                                <label class="form-check-label" for="category{{ $category->id }}">
-                                    {{ $category->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                        <button class="btn btn-success">Asignar</button>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-    </section>
 
 
 
@@ -194,8 +170,7 @@
                     <div class="d-flex align-items-center gap-3 my-3">
                         <div>
                             <label for="name" class="form-label me-2">Nombre del cupón:</label>
-                            <input class="form-control me-2" type="text" name="name"
-                                placeholder="Nombre del cupón">
+                            <input class="form-control me-2" type="text" name="name" placeholder="Nombre del cupón">
                         </div>
                         <div>
                             <label for="expiration" class="form-label me-2">Fecha de vencimiento:</label>

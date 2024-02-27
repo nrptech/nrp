@@ -41,9 +41,9 @@
                     @else
                         <p class="text-danger">Out of Stock</p>
                     @endif
-                    @if ($product->discount > 0)
+                    @if(optional($product->coupon)->discount > 0 && optional($product->coupon)->active)
                         <h4 class="badge bg-warning text-dark">Special Offer!</h4>
-                        <p>Discount: {{ $product->discount }}%</p>
+                        <p>Discount: {{ optional($product->coupon)->discount }}%</p>
                         <p class="card-text text-white">Original Price:
                             <span class="text-decoration-line-through text-danger">
                                 {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€
@@ -52,7 +52,7 @@
                         <p class="card-text text-white">
                             <strong>Discounted Price:</strong>
                             <span class="text-success">
-                                {{ number_format($product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100), 2) }}€
+                                {{ number_format($product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100), 2) }}€
                             </span>
                         </p>
                     @else
