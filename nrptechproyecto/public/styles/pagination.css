@@ -1,0 +1,22 @@
+.custom-pagination {
+    display: inline-block;
+    margin-top: 20px; /* Ajusta el margen según sea necesario */
+}
+
+.custom-pagination .page-item {
+    display: inline;
+}
+
+.custom-pagination .page-link {
+    color: #333; /* Color de texto personalizado */
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    padding: 0.5rem 0.75rem; /* Ajusta el relleno según sea necesario */
+    margin: 0 2px; /* Ajusta el margen entre los enlaces */
+}
+
+.custom-pagination .page-link:hover {
+    color: #007bff; /* Color de texto personalizado en el hover */
+    text-decoration: none; /* Sin subrayado en el hover */
+    background-color: transparent; /* Fondo transparente en el hover */
+}

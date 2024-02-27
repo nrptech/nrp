@@ -1,0 +1,15 @@
+.imgMiniature{
+    width: 40px;
+}
+
+.imgMiniature img{
+    border-radius: 20px;
+}
+
+input{
+    width: 100px;
+}
+
+.specs{
+    max-width: 300px;
+}

@@ -22,28 +22,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(TaxesTableSeeder::class); 
-        // $this->call(RolesTableSeeder::class);
-        // $this->call(UsersTableSeeder::class);
-        // $this->call(AddressesTableSeeder::class);
-        // $this->call(ProductsTableSeeder::class);
-        // $this->call(PermissionsTableSeeder::class);
-        // $this->call(RolesPermissionsSeeder::class);
 
-        
-        $role1= Role::create(["name" => "admin"]);
-        $role2= Role::create(["name" => "usuario"]);
-
-        $category = new Category();
-        $image = new Image();
-        $image2 = new Image();
-        $image3 = new Image();
-        $image4 = new Image();
-        $image5 = new Image();
-        $image6 = new Image();
-        $image7 = new Image();
+        $role1 = Role::create(["name" => "admin"]);
+        $role2 = Role::create(["name" => "usuario"]);
 
         $user = new User();
+        $user->name = "Admin";
+        $user->email = "admin@admin.com";
+        $user->password = bcrypt('admin');
+        $user->surname = "Admin Admin";
+        $user->role_id = 1;
         $product = new Product();
         $product2 = new Product();
         $product3= new Product();
@@ -128,21 +116,16 @@ class DatabaseSeeder extends Seeder
         $category->name="Pajero";
 
         $user->assignRole($role1);
-        $tax->save();
-        $product->save();
-        $product2->save();
-        $product3->save();
-        $product4->save();
-        $product5->save();
         $user->save();
-        $image->save();
-        $image2->save();
-        $image3->save();
-        $image4->save();
-        $image5->save();
-        $image6->save();
-        $image7->save();
-        $category->save();
-        
+
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(TaxesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
+        $this->call(AddressesTableSeeder::class);
+        $this->call(PayMethodsTableSeeder::class);
+        $this->call(CouponsTableSeeder::class);
+
     }
 }

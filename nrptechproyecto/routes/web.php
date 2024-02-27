@@ -1,19 +1,18 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
-use App\Models\Product;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\LanguageLocale;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -106,23 +105,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('productos', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('coupons', CouponController::class);
+
     Route::get('/admin', function () {
         return view('admin.dashboard');
-    })->name('admin');
+    })->name("admin");
+    
 
-    Route::delete('/productos/{product}', [ProductController::class, 'destroy'])->name('productos.destroy');
-    Route::put('/productos/{product}', [ProductController::class, 'update'])->name('productos.update');
-    Route::get('/productos/{producto}/add-category', [ProductController::class, 'addCategory'])->name('productos.addCategory');
-    Route::put('/productos/{product}/update-categories', [ProductController::class, 'updateCategories'])->name('productos.updateCategories');
-    Route::put('/productos/{product}/add-category', [ProductController::class, 'deleteCategory'])->name('productos.deleteCategory');
-
-    Route::get('/users/{user}/delete-pay-method', [UserController::class, 'removePayMethod'])->name('users.removePayMethod');
-    Route::put('/users/{user}/delete-pay', [UserController::class, 'deletePayMethod'])->name('users.deletePayMethods');
-
-    Route::get('/users/{user}/delete-addresses', [UserController::class, 'removeAddresses'])->name('users.removeAddresses');
-    Route::put('/users/{user}/delete-address', [UserController::class, 'deleteAddress'])->name('users.deleteAddress');
-
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::post("/coupons/assignToCategories", [CouponController::class, "assignToCategories"])->name("assignToCategories");
 });
 
 

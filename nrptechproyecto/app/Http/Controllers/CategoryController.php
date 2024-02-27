@@ -14,14 +14,9 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('id', 'ASC')->paginate(5);
 
         return view('categories.index', compact('categories'));
-    }
-
-    public function create()
-    {
-        return view('categories.create');
     }
 
     public function store(Request $request)
@@ -32,7 +27,7 @@ class CategoryController extends Controller
 
         $input = $request->all();
 
-        $category = Category::create($input);
+        Category::create($input);
 
         return redirect()->route('categories.index')
             ->with('success', 'Category created successfully');
@@ -45,17 +40,6 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index')->with('success', 'Categoria borrada satisfactoriamente');
-    }
-
-    public function edit(Category $category)
-    {
-        if (!$category) {
-            return redirect()->route('categories.index')->with('error', 'Categoría no encontrado');
-        }
-        
-        $assignedProducts = $category->products;
-    
-        return view('categories.edit', compact('category', 'assignedProducts'));
     }
 
     public function update(Request $request, $id)

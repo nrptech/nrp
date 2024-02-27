@@ -14,8 +14,23 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'idCategorie' => 1,
-            'name' => 'CategoríaEjemplo',
+            'name' => 'CPU',
+        ]);
+
+        Category::create([
+            'name' => 'RAM',
+        ]);
+
+        Category::create([
+            'name' => 'Periférico',
+        ]);
+
+        Category::create([
+            'name' => 'Monitor',
+        ]);
+
+        Category::create([
+            'name' => 'Disipadores',
         ]);
     }
 }

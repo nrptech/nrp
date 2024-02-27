@@ -44,8 +44,13 @@ class Product extends Model
         return $this->belongsTo(Tax::class, 'tax_id', 'id');
     }
 
-    public function wishlists() 
-{
-     return $this->belongsToMany(Wishlist::class, 'wishlist_has_products');
-}
+    public function wishlists()
+    {
+        return $this->belongsToMany(Wishlist::class, 'wishlist_has_products');
+    }
+
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
 }

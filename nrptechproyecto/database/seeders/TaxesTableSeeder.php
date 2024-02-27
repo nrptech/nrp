@@ -10,17 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class TaxesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    
     public function run(): void
     {
-        DB::table('taxes')->insert([
-            'id' => 1,
-            'taxName' => 'Primerita',
-            'amount' => 5598,
-            'created_at' => '2023-12-10',
-            'updated_at' => '2023-12-11',
+        
+        Tax::create([
+            'taxName' => 'IVA',
+            'amount' => 21,
+        ]);
+
+        Tax::create([
+            'taxName' => 'Prueba',
+            'amount' => 5,
         ]);
 
     }

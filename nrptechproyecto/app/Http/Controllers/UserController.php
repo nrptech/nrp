@@ -19,9 +19,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'DESC')->paginate(5);
-        return view('users.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $users = User::orderBy('id', 'ASC')->paginate(5);
+        $roles = Role::pluck('name', 'name')->all();
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
@@ -62,22 +62,6 @@ class UserController extends Controller
             ->with('success', 'User created successfully');
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
-
-        return response()->view('users.edit', compact('user', 'roles', 'userRole'));
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -92,7 +76,7 @@ class UserController extends Controller
             'surname' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'sometimes|confirmed',
-            'roles' => 'required',
+            'role' => 'required',
         ]);
 
         $input = $request->all();
@@ -104,9 +88,12 @@ class UserController extends Controller
         }
 
         $user = User::find($id);
+        $user->role_id = Role::findByName($request->input('role'))->id;
         $user->update($input);
 
-        $user->syncRoles($request->input('roles'));
+        
+
+        $user->syncRoles($request->input('role'));
 
         return redirect()->back()->with('success', 'User updated successfully');
     }
@@ -172,6 +159,8 @@ class UserController extends Controller
                 ->with('error', 'User not found');
         }
 
+        $user->payMethods()->delete();
+        $user->addresses()->delete();
         $user->delete();
 
         return redirect()->route('users.index')

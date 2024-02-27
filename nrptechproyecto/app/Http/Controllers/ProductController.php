@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Image;
 use App\Models\Category;
+use App\Models\Tax;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -20,9 +21,11 @@ class ProductController extends Controller
 
     public function index()
     {
-        $productos = Product::all();
+        $productos = Product::orderBy('id', 'ASC')->paginate(5);
+        $taxes = Tax::all();
+        $allCategories = Category::all();
 
-        return view('productos.index', compact('productos'));
+        return view('productos.index', compact('productos', 'taxes', "allCategories"));
     }
 
     public function create()
@@ -72,7 +75,7 @@ class ProductController extends Controller
         return view('productos.edit', compact('producto', 'assignedCategories', 'allCategories'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product_id)
     {
         $request->validate([
             'name' => 'required',
@@ -84,44 +87,34 @@ class ProductController extends Controller
             'features' => 'string',
             'tax_id' => 'numeric',
             'color' => 'string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for image file
+            'categories' => 'array',
         ]);
-
-        // Update product information
-        $data = $request->except('image');
+        
+        $product = Product::FindOrFail($product_id);
+    
+        $data = $request->except('image', 'category');
+    
         $product->update($data);
-
-        // Delete the old image
-        $product->images()->delete();
-
-        // Upload and create a new image
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = "images/";
-            $filename = time() . "-" . $file->getClientOriginalName();
-            $file->move($path, $filename);
-            $product->images()->create(['url' => $path . $filename]);
+    
+        $product->categories()->detach();
+        if ($request->has('categories')) {
+            foreach ($request->categories as $category_id) {
+                $category = Category::find($category_id);
+                $product->categories()->attach($category);
+            }
         }
-
+    
         return redirect()->route('productos.index')
             ->with('success', 'Product updated successfully');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Product $product)
     {
-        $productId = $request->input('product_id');
-        $product = Product::find($productId); 
-    
-        if (!$product) {
-            return redirect()->route('productos.index')->with('error', 'Product not found');
-        }
-    
-        // Si el producto existe, procede con la eliminación
         $product->categories()->detach();
         $product->images()->delete();
         $product->delete();
     
-        return redirect()->route('productos.index')->with('success', 'Product deleted successfully');
+        return redirect()->route('productos.index')->with('success', 'Tengo que poner aún para que se oculten');
     }
 
     public function showProducts()
@@ -147,20 +140,6 @@ class ProductController extends Controller
         $assignedCategories = $producto->categories;
 
         return view('productos.addCategory', compact('producto', 'assignedCategories', 'allCategories'));
-    }
-
-    public function assingCategoryToAProduct($productoId, $categoriaId)
-    {
-        $producto = Product::find($productoId);
-        $categoria = Category::find($categoriaId);
-
-        if (!$producto || !$categoria) {
-            return redirect()->back()->with('error', 'Producto o categoría no encontrados');
-        }
-
-        $producto->categories()->attach($categoria);
-
-        return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
     }
 
     public function updateCategories(Request $request)
@@ -204,7 +183,7 @@ class ProductController extends Controller
         }
 
         $categories = Category::all();
-        
+
         return view('products/index', ['products' => $products], ['categories' => $categories]);
     }
 }

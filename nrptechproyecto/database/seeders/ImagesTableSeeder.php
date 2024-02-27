@@ -14,9 +14,39 @@ class ImagesTableSeeder extends Seeder
     public function run(): void
     {
         Image::create([
-            'idImage' => 1,
-            'Products_idProduct' => 1,
-            'url' => 'url_ejemplo.jpg',
+            'product_id' => 1,
+            'url' => "images/nrp.webp",
         ]);
+
+        Image::create([
+            'product_id' => 2,
+            'url' => "images/nrp.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 1,
+            'url' => "images/xokas.jpg",
+        ]);
+
+        Image::create([
+            'product_id' => 3,
+            'url' => "images/prros.jpg",
+        ]);
+
+        Image::create([
+            'product_id' => 3,
+            'url' => "images/patrocinador.png",
+        ]);
+
+        Image::create([
+            'product_id' => 3,
+            'url' => "images/xokas.jpg",
+        ]);
+
+        Image::create([
+            'product_id' => 4,
+            'url' => "images/patrocinador.png",
+        ]);
+
     }
 }

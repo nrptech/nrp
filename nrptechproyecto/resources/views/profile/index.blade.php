@@ -3,22 +3,74 @@
 @section('title', 'Ajustes')
 
 @section('links')
-    <script defer src="{{ asset('js/cart.js') }}"></script>
+    <script defer src="{{ asset('js/profile.js') }}"></script>
 @endsection
 
 @section('content')
     <div>
-        <h1>Datos de usuario</h1>
-        <ul>
-            <li>{{ $user->name }}</li>
-            <li>{{ $user->surname }}</li>
-            <li>{{ $user->email }}</li>
-        </ul>
-        <form method="GET" action="{{ route('profile.edit', $user->name) }}">
-            @csrf
-            <input type="hidden" name="user_id" value="{{ $user->id }}">
-            <button type="submit" class="btn btn-primary">Editar datos de usuario</button>
-        </form>
+        <div id="view">
+            <h1>Datos de usuario</h1>
+            <ul>
+                <li><strong>Nombre:</strong> {{ $user->name }}</li>
+                <li><strong>Apellidos:</strong> {{ $user->surname }}</li>
+                <li><strong>Email:</strong> {{ $user->email }}</li>
+            </ul>
+            <button onclick="edit()" class="btn btn-primary">Editar tus datos</button>
+        </div>
+        <div id="edit" hidden>
+            <h1>Editar datos de usuario</h1>
+            <form method="POST" action="{{ route('profile.update', $user->id) }}">
+                @method('PATCH')
+                @csrf
+            
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Name:</strong>
+                            <input type="text" name="name" placeholder="Name" class="form-control"
+                                value="{{ old('name', $user->name) }}">
+                        </div>
+                    </div>
+            
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Surname:</strong>
+                            <input type="text" name="surname" placeholder="surname" class="form-control"
+                                value="{{ old('surname', $user->surname) }}">
+                        </div>
+                    </div>
+            
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Email:</strong>
+                            <input type="text" name="email" placeholder="Email" class="form-control"
+                                value="{{ old('email', $user->email) }}">
+                        </div>
+                    </div>
+            
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Password:</strong>
+                            <input type="password" name="password" placeholder="Password" class="form-control">
+                        </div>
+                    </div>
+            
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Confirm Password:</strong>
+                            <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control">
+                        </div>
+                    </div>
+            
+            
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Confirmar cambios</button>
+                        <button class="btn btn-danger" type="button" onclick="view()">X</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div>
             <h1>Datos de pago</h1>
             <div class="d-flex flex-column">
@@ -116,8 +168,8 @@
                         data-bs-target="#deleteAddressModal">🗑️</button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="deleteAddressModal" tabindex="-1"
-                        aria-labelledby="deleteAddressModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteAddressModal" tabindex="-1" aria-labelledby="deleteAddressModalLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
