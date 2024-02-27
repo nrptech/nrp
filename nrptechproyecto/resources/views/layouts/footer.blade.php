@@ -1,53 +1,35 @@
-</main>
-
-<footer class="main-footer bg-dark text-light">
+<footer class="footer bg-dark text-white">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h3>Contacto</h3>
-                <ul>
-                    <li><a href="#">Centro de soporte</a></li>
-                    <li><a href="mailto:info@tudominio.com">Email</a></li>
-                    <li>Dirección física</li>
-                </ul>
+            <div class="col-md-4">
+                <h5>Dirección</h5>
+                <p>Calle de la Empresa, 123<br> Ciudad</p>
             </div>
-
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h3>Comunidad</h3>
-                <ul>
-                    <li><a href="#">Redes sociales</a></li>
-                    <li><a href="https://www.instagram.com/tuinstagram" target="_blank">Instagram</a></li>
-                    <li><a href="#">Enlace X</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
+            <div class="col-md-4">
+                <h5>Teléfono</h5>
+                <p>+34 123 456 789</p>
             </div>
-
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h3>Otros</h3>
-                <ul>
-                    <li><a href="#">Black Friday</a></li>
-                    <li><a href="#">Cyber Monday</a></li>
-                    <li><a href="#">PcDays</a></li>
-                </ul>
-            </div>
-
-            <div class="col-lg-3 col-md-6 mb-4">
-                <h3>Métodos de pago</h3>
-                <ul class="payment-icons">
-                    <li><i class="bi bi-credit-card"></i></li>
-                        <li><i class="bi bi-credit-card-2-front"></i></li>
-                    <!-- Agrega más iconos de bancos según sea necesario -->
-                </ul>
+            <div class="col-md-4">
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="ubicacionDropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ubicación
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="ubicacionDropdown">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12679.727951397128!2d-6.020480990409865!3d37.3914406640193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126d421eeb1993%3A0x8bac543d1b973081!2sCentro%20Comercial%20TORRE%20SEVILLA!5e0!3m2!1ses!2ses!4v1709064533359!5m2!1ses!2ses"
+                            width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </footer>
 
-<!-- Agrega el script al final del cuerpo del documento -->
-<script src="{{ asset('js/footer.js') }}"></script>
-
-
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>
