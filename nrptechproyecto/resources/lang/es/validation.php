@@ -133,6 +133,29 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'name' => [
+            'required' => 'Por favor, ingrese su nombre.',
+            'alpha' => 'El nombre solo puede contener caracteres alfabéticos.',
+            'max' => 'El nombre no puede tener más de :max caracteres.',
+        ],
+        'surname' => [
+            'required' => 'Por favor, ingrese sus apellidos.',
+            'alpha' => 'Los apellidos solo pueden contener caracteres alfabéticos.',
+            'max' => 'Los apellidos no pueden tener más de :max caracteres.',
+        ],
+        'email' => [
+            'required' => 'Por favor, ingrese su correo electrónico.',
+            'email' => 'Ingrese una dirección de correo electrónico válida.',
+            'regex' => 'La dirección de correo electrónico debe tener el formato cuenta@servidor.extension.',
+            'max' => 'El correo electrónico no puede tener más de :max caracteres.',
+            'unique' => 'Esta dirección de correo electrónico ya está en uso.',
+        ],
+        'password' => [
+            'required' => 'Por favor, ingrese una contraseña.',
+            'string' => 'La contraseña debe ser una cadena de caracteres.',
+            'min' => 'La contraseña debe tener al menos :min caracteres.',
+            'regex' => 'La contraseña debe contener al menos una mayúscula, un número y un carácter especial.',
+        ],
     ],
 
     /*

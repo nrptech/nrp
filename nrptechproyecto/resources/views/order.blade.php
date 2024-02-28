@@ -19,19 +19,19 @@
                 $totalPrice = 0;
             @endphp
 
-        @foreach ($products as $product)
-            @php
-                $basePrice = 0;
-                $afterTaxes = 0;
-                if ($product->coupon->discount > 0) {
+            @foreach ($products as $product)
+                @php
+                    $basePrice = 0;
+                    $afterTaxes = 0;
+                    if ($product->coupon->discount > 0) {
                     $basePrice = $product->price * ((100 - $product->coupon->discount) / 100);
                     $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
-                } else {
-                    $basePrice = $product->price;
-                    $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
-                }
-                $totalPrice += $afterTaxes * $product->pivot->amount;
-            @endphp
+                    } else {
+                        $basePrice = $product->price;
+                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                    }
+                    $totalPrice += $afterTaxes * $product->pivot->amount;
+                @endphp
 
                 <li class="list-group-item d-flex justify-content-between align-items-center singleItem">
                     <div class="d-flex gap-2 align-items-center">
@@ -71,7 +71,6 @@
         </div>
 
         @if (Auth::user()->payMethods->isEmpty())
-            <button type="submit" class="btn btn-primary mt-3" disabled>Confirmar Pedido</button>
             <p class="text-danger">No tienes métodos de pago guardados.</p>
             <form method="post" action="{{ route('savePay') }}">
                 @csrf
@@ -103,6 +102,20 @@
                 </div>
             </form>
         @else
+            
+    
+            <form method="post" action="{{ route('confirmOrder') }}">
+                @csrf
+                <div class="mt-3">
+                    <label for="payment_method" class="form-label">Seleccionar método de pago:</label>
+                    <select name="payment_method" id="payment_method" class="form-select">
+                        @foreach (Auth::user()->payMethods as $paymentMethod)
+                            <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+
             <div class="mt-3">
                 <button onclick="addPayMethod(this)" class="btn btn-primary">Añadir un nuevo método de pago</button>
                 <div hidden>
@@ -136,19 +149,6 @@
                     </form>
                 </div>
             </div>
-    
-            <form method="post" action="{{ route('confirmOrder') }}">
-                @csrf
-                <div class="mt-3">
-                    <label for="payment_method" class="form-label">Seleccionar método de pago:</label>
-                    <select name="payment_method" id="payment_method" class="form-select">
-                        @foreach (Auth::user()->payMethods as $paymentMethod)
-                            <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success mt-3">Confirmar Pedido</button>
-            </form>
         @endif
 
         @if (Auth::user()->addresses->isEmpty())

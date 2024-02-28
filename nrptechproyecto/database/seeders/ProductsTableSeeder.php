@@ -17,51 +17,54 @@ class ProductsTableSeeder extends Seeder
     {
 
         Product::create([
-            'name' => 'Productoria',
-            'price' => 129,
-            'description' => "Es muy bueno!!",
+            'name' => 'Portátil UltraSlim',
+            'price' => 1350,
+            'description' => "Diseño ultradelgado y potencia excepcional con su procesador de última generación.",
             'tax_id' => 1,
             'coupon_id' => 1,
-            'color' => 'ROJO',
-            'stock' => 100,
-            'specs' => 'Muy poderoso',
-            'features' => 'Hace muchas cosas'
+            'color' => 'Plata Estelar',
+            'stock' => 80,
+            'specs' => 'Pantalla Full HD, Teclado retroiluminado',
+            'features' => 'Movilidad extrema y rendimiento superior'
         ]);
-
+        
         Product::create([
-            'name' => 'Pruebax',
-            'price' => 78,
-            'description' => "Es aún mejor",
+            'name' => 'PC Gamer Xtreme',
+            'price' => 2500,
+            'description' => "Diseñada para gamers, con tarjeta gráfica potente y gran capacidad de almacenamiento.",
             'tax_id' => 1,
             'coupon_id' => 1,
-            'color' => 'VERDE',
-            'stock' => 100,
-            'specs' => 'Más poderoso',
-            'features' => 'Lo hace todo'
+            'color' => 'Negro/Rojo',
+            'stock' => 50,
+            'specs' => 'Procesador de alta frecuencia, Tarjeta gráfica dedicada',
+            'features' => 'Experiencia de juego inmersiva'
         ]);
+        
 
         Product::create([
-            'name' => 'Perro pajero',
-            'price' => 1125,
-            'description' => "Es muy Pajero!!",
+            'name' => 'Tarjeta Gráfica GeForce RTX 3080',
+            'price' => 1200,
+            'description' => "Potencia gráfica incomparable para juegos y aplicaciones de edición de video.",
             'tax_id' => 1,
             'coupon_id' => 1,
-            'color' => 'Blanco',
-            'stock' => 1,
-            'specs' => 'Está todo el puto dia matandose a pajas',
-            'features' => 'Tambien es capaz de mantener relaciones sexuales con otros perros'
-        ]);
+            'color' => 'Plateado/Negro',
+            'stock' => 30,
+            'specs' => 'Memoria GDDR6, Ray Tracing en tiempo real',
+            'features' => 'Rendimiento gráfico de última generación'
+        ]);        
 
         Product::create([
-            'name' => 'Don kamaron',
-            'price' => 120,
-            'description' => "No es tan bueno",
+            'name' => 'Teclado Mecánico RGB',
+            'price' => 150,
+            'description' => "Switches mecánicos para una experiencia de escritura rápida y precisa.",
             'tax_id' => 1,
-            'color' => 'VERDE',
-            'stock' => 1450,
-            'specs' => 'En don camarón tenemos el mejor lugar para comer en familia o en pareja, los mejores mariscos solo los encuentras aquí en el restaurante don camarón, también encuentras pollos y costillas asadas al estilo patzcuaro,y las micheladas al 2x1 todos los días, nuestro horario es de 12pm a 7 pm, estamos en el entronque por la entrada de autozone, don camarón el mejor lugar para comer en familia o en pareja.',
-            'features' => 'Mariscos, Pollos, Costillas asadas al estilo patzcuaro, Micheladas'
+            'coupon_id' => 1,
+            'color' => 'Negro',
+            'stock' => 120,
+            'specs' => 'Switches mecánicos, Retroiluminación RGB',
+            'features' => 'Comodidad y estilo para tus sesiones de juego o trabajo'
         ]);
+        
 
     }
 }

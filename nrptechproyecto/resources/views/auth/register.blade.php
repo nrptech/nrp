@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Title</title>
+    <title>Registro</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -12,6 +12,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
     <link rel="stylesheet" href="{{ asset('styles/Login.css') }}">
+
 </head>
 
 <body>
@@ -25,48 +26,69 @@
                                 <div class="card-body p-md-5 mx-md-4">
 
                                     <div class="text-center">
-                                        <img src="{{ asset('images/nrp.webp') }}"
-                                            style="width: 185px;" alt="logo">
+                                        <img src="{{ asset('images/nrp.webp') }}" style="width: 185px;" alt="logo">
                                     </div>
 
                                     <form action="{{ route('register') }}" method="post">
-        @csrf
-        <p>Iniciar sesión:</p>
+                                        @csrf
+                                        <p>Iniciar sesión:</p>
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form2Example11">Nombre</label>
-            <input type="text" name="name" id="form2Example11" class="form-control" placeholder="Ingresar nombre" required />
-        </div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="formNombre">Nombre</label>
+                                            <input value="{{old('name')}}" type="text" name="name" id="formNombre" class="form-control"
+                                                placeholder="Ingresar nombre"  />
+                                            @error('name')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="formApellido">Apellidos</label>
+                                            <input value="{{old('surname')}}" type="text" name="surname" id="formApellido" class="form-control"
+                                                placeholder="Ingresar apellidos"  />
+                                            @error('surname')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="formEmail">Email</label>
+                                            <input value="{{old('email')}}" type="email" name="email" id="formEmail" class="form-control"
+                                                placeholder="Correo electrónico"  autocomplete="off" />
+                                            @error('email')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="formPass">Contraseña</label>
+                                            <input type="password" name="password" id="formPass" class="form-control"
+                                                 />
+                                            @error('password')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="form2Pass">Confirmar contraseña</label>
+                                            <input type="password" name="password_confirmation" id="form2Pass"
+                                                class="form-control"  />
+                                            @error('password_confirmation')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form2Example11">Apellidos</label>
-            <input type="text" name="surname" id="form2Example11" class="form-control" placeholder="Ingresar apellidos" required />
-        </div>
+                                        <div class="text-center pt-1 mb-5 pb-1">
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                type="submit">Registrarse</button>
+                                        </div>
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form2Example11">Email</label>
-            <input type="email" name="email" id="form2Example11" class="form-control" placeholder="Correo electrónico" required autocomplete="off" />
-        </div>
-
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form2Example22">Contraseña</label>
-            <input type="password" name="password" id="form2Example22" class="form-control" required />
-        </div>
-
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form2Example22">Confirmar contraseña</label>
-            <input type="password" name="password_confirmation" id="form2Example22" class="form-control" required />
-        </div>
-
-        <div class="text-center pt-1 mb-5 pb-1">
-            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Registrarse</button>
-        </div>
-
-        <div class="d-flex align-items-center justify-content-center pb-4">
-            <p class="mb-0 me-2">¿Ya tienes cuenta?</p>
-            <a href="{{ route('login') }}"><button type="button" class="btn btn-outline-danger">Iniciar sesión</button></a>
-        </div>
-    </form>
+                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <p class="mb-0 me-2">¿Ya tienes cuenta?</p>
+                                            <a href="{{ route('login') }}"><button type="button"
+                                                    class="btn btn-outline-danger">Iniciar sesión</button></a>
+                                        </div>
+                                    </form>
 
                                 </div>
                             </div>
@@ -86,6 +108,8 @@
             </div>
         </div>
     </section>
+
+    <script src="{{ asset('js/register-validation.js') }}"></script>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

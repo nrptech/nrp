@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ImagesTableSeeder::class);
         $this->call(AddressesTableSeeder::class);
         $this->call(PayMethodsTableSeeder::class);
+        $this->call(ProductHasCategoriesSeeder::class);
         // No toqueis esta vista porque ya está bien hecha así
 
     }
