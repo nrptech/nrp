@@ -104,7 +104,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile/deletePayMethod', [UserController::class, 'deletePayMethod'])->name('profile.deletePayMethod');
     Route::delete('/profile/deleteAddress', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
 
-    Route::post('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
+    // Route::post('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

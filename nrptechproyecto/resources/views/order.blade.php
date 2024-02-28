@@ -21,13 +21,11 @@
 
             @foreach ($products as $product)
                 @php
-                    $basePrice = 0;
+                    $basePrice = $product->price;
                     $afterTaxes = 0;
                     if ($product->coupon->discount > 0) {
-                    $basePrice = $product->price * ((100 - $product->coupon->discount) / 100);
-                    $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
+                        $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
                     } else {
-                        $basePrice = $product->price;
                         $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
                     }
                     $totalPrice += $afterTaxes * $product->pivot->amount;
@@ -83,7 +81,8 @@
 
                     <div class="col-md-6">
                         <label for="card_holder" class="form-label">Titular de la tarjeta:</label>
-                        <input type="text" id="card_holder" name="card_holder" class="form-control" required max="100">
+                        <input type="text" id="card_holder" name="card_holder" class="form-control" required
+                            max="100">
                     </div>
 
                     <div class="col-md-6">
@@ -102,8 +101,6 @@
                 </div>
             </form>
         @else
-            
-    
             <form method="post" action="{{ route('confirmOrder') }}">
                 @csrf
                 <div class="mt-3">
@@ -124,24 +121,26 @@
                         <div class="row g-3 mt-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Nombre de la tarjeta:</label>
-                                <input type="text" id="name" name="name" class="form-control" required max="100">
+                                <input type="text" id="name" name="name" class="form-control" required
+                                    max="100">
                             </div>
-    
+
                             <div class="col-md-6">
                                 <label for="card_holder" class="form-label">Titular de la tarjeta:</label>
-                                <input type="text" id="card_holder" name="card_holder" class="form-control" required max="100">
+                                <input type="text" id="card_holder" name="card_holder" class="form-control" required
+                                    max="100">
                             </div>
-    
+
                             <div class="col-md-6">
                                 <label for="card_number" class="form-label">Numero de la tarjeta:</label>
                                 <input type="number" id="card_number" name="card_number" class="form-control" required>
                             </div>
-    
+
                             <div class="col-md-6">
                                 <label for="cvv" class="form-label">CVV:</label>
                                 <input type="number" id="cvv" name="cvv" class="form-control" required>
                             </div>
-    
+
                             <div class="col-12">
                                 <button type="submit" class="btn btn-success">Guardar Método de Pago</button>
                             </div>
@@ -156,43 +155,43 @@
             <p class="text-danger">No tienes direcciones guardadas.</p>
             <form method="post" action="{{ route('saveAddress') }}">
                 @csrf
-    
+
                 <div class="row g-3 mt-3">
                     <div class="col-md-6">
                         <label for="name" class="form-label">Nombre de la dirección:</label>
                         <input type="text" id="name" name="name" class="form-control" required>
                     </div>
-    
+
                     <div class="col-md-6">
                         <label for="province" class="form-label">Provincia:</label>
                         <input type="text" id="province" name="province" class="form-control" required>
                     </div>
-    
+
                     <div class="col-md-6">
                         <label for="city" class="form-label">Ciudad:</label>
                         <input type="text" id="city" name="city" class="form-control" required>
                     </div>
-    
+
                     <div class="col-md-6">
                         <label for="street" class="form-label">Calle:</label>
                         <input type="text" id="street" name="street" class="form-control" required>
                     </div>
-    
+
                     <div class="col-md-6">
                         <label for="number" class="form-label">Número:</label>
                         <input type="text" id="number" name="number" class="form-control" required>
                     </div>
-    
+
                     <div class="col-md-6">
                         <label for="pc" class="form-label">Código postal:</label>
                         <input type="text" id="pc" name="pc" class="form-control" required>
                     </div>
-    
+
                     <div class="col-md-6">
                         <label for="country" class="form-label">País:</label>
                         <input type="text" id="country" name="country" class="form-control" required>
                     </div>
-    
+
                     <div class="col-12">
                         <button type="submit" class="btn btn-success">Guardar Dirección</button>
                     </div>
@@ -209,37 +208,37 @@
                                 <label for="name" class="form-label">Nombre de la dirección:</label>
                                 <input type="text" id="name" name="name" class="form-control" required>
                             </div>
-        
+
                             <div class="col-md-6">
                                 <label for="province" class="form-label">Provincia:</label>
                                 <input type="text" id="province" name="province" class="form-control" required>
                             </div>
-        
+
                             <div class="col-md-6">
                                 <label for="city" class="form-label">Ciudad:</label>
                                 <input type="text" id="city" name="city" class="form-control" required>
                             </div>
-        
+
                             <div class="col-md-6">
                                 <label for="street" class="form-label">Calle:</label>
                                 <input type="text" id="street" name="street" class="form-control" required>
                             </div>
-        
+
                             <div class="col-md-6">
                                 <label for="number" class="form-label">Número:</label>
                                 <input type="text" id="number" name="number" class="form-control" required>
                             </div>
-        
+
                             <div class="col-md-6">
                                 <label for="pc" class="form-label">Código postal:</label>
                                 <input type="text" id="pc" name="pc" class="form-control" required>
                             </div>
-        
+
                             <div class="col-md-6">
                                 <label for="country" class="form-label">País:</label>
                                 <input type="text" id="country" name="country" class="form-control" required>
                             </div>
-        
+
                             <div class="col-12">
                                 <button type="submit" class="btn btn-success">Guardar Dirección</button>
                             </div>
@@ -247,7 +246,7 @@
                     </form>
                 </div>
             </div>
-    
+
             <form method="post" action="{{ route('confirmOrder') }}">
                 @csrf
                 <div class="mt-3">
@@ -261,7 +260,7 @@
                 <button type="submit" class="btn btn-success mt-3">Confirmar Pedido</button>
             </form>
         @endif
-    
+
         <form method="post" action="{{ route('rejectOrder') }}">
             @csrf
             <button type="submit" class="btn btn-danger mt-3">Rechazar Pedido</button>

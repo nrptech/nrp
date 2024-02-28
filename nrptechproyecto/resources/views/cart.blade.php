@@ -32,16 +32,14 @@
 
                 @foreach ($products as $product)
                     @php
-                        $basePrice = 0;
+                        $basePrice = $product->price;
                         $afterTaxes = 0;
 
                         // Check if the product has a coupon
                         if ($product->coupon) {
                             if ($product->coupon->discount > 0) {
-                                $basePrice = $product->price * ((100 - $product->coupon->discount) / 100);
                                 $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
                             } else {
-                                $basePrice = $product->price;
                                 $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
                             }
                         } else {

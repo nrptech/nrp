@@ -213,7 +213,7 @@ class CartController extends Controller
         ];
 
         // Send the email with the tracking information
-        Mail::to($user->email)->send(new OrderShipped(['order' => $orderData]));
+        // Mail::to($user->email)->send(new OrderShipped(['order' => $orderData]));
 
         // Redirect to the thank you view
         return view('agradecimiento', compact('orderData'));

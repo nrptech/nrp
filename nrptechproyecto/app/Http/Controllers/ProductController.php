@@ -162,20 +162,4 @@ class ProductController extends Controller
 
         return redirect()->back()->with('status', 'Categoría eliminada correctamente del producto');
     }
-
-    public function filter(Request $request)
-    {
-        $categoryId = $request->input('category');
-
-        if ($categoryId) {
-            $category = Category::findOrFail($categoryId);
-            $products = $category->products;
-        } else {
-            $products = Product::all();
-        }
-
-        $categories = Category::all();
-
-        return view('products/index', ['products' => $products], ['categories' => $categories]);
-    }
 }

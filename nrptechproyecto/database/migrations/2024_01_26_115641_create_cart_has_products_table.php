@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cart_has_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cart_id');
-            $table->unsignedBigInteger('product_id')->unique();
+            $table->unsignedBigInteger('product_id'); //Ya he arreglado lo de que más de un usuario pueda tener carrito
             $table->integer('amount')->default(1);
             $table->timestamps();
 

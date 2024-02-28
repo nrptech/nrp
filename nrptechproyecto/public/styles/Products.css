@@ -40,17 +40,39 @@
     overflow: hidden;
 }
 
+.categories {
+    display: flex;
+    gap: 10px;
+    width: 50%;
+    height: auto;
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0037ff;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #001e8a;
+}
+
 /* Media query para teléfonos */
 @media (max-width: 576px) {
     .allProductsViewIndex {
-       
     }
-
 }
 
 /* Media query para tablets */
 @media (min-width: 577px) and (max-width: 991px) {
-
 }
 
 /* Media query para pantallas grandes */
