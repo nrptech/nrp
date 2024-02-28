@@ -40,5 +40,9 @@ class CategoriesTableSeeder extends Seeder
         Category::create([
             'name' => 'PCs',
         ]);
+
+        Category::create([
+            'name' => 'GPU',
+        ]);
     }
 }
