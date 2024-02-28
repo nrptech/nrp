@@ -15,37 +15,81 @@ class ImagesTableSeeder extends Seeder
     {
         Image::create([
             'product_id' => 1,
-            'url' => "images/nrp.webp",
-        ]);
-
-        Image::create([
-            'product_id' => 2,
-            'url' => "images/nrp.webp",
+            'url' => "images/portatil1.webp",
         ]);
 
         Image::create([
             'product_id' => 1,
-            'url' => "images/xokas.jpg",
+            'url' => "images/portatil2.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 1,
+            'url' => "images/portatil3.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 1,
+            'url' => "images/portatil4.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 2,
+            'url' => "images/pc1.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 2,
+            'url' => "images/pc2.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 2,
+            'url' => "images/pc3.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 2,
+            'url' => "images/pc4.webp",
+        ]);
+        Image::create([
+            'product_id' => 3,
+            'url' => "images/rtx1.webp",
         ]);
 
         Image::create([
             'product_id' => 3,
-            'url' => "images/prros.jpg",
+            'url' => "images/rtx2.webp",
         ]);
 
         Image::create([
             'product_id' => 3,
-            'url' => "images/patrocinador.png",
+            'url' => "images/rtx3.webp",
         ]);
 
         Image::create([
             'product_id' => 3,
-            'url' => "images/xokas.jpg",
+            'url' => "images/rtx4.webp",
         ]);
 
         Image::create([
             'product_id' => 4,
-            'url' => "images/patrocinador.png",
+            'url' => "images/kb1.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 4,
+            'url' => "images/kb2.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 4,
+            'url' => "images/kb3.webp",
+        ]);
+
+        Image::create([
+            'product_id' => 4,
+            'url' => "images/kb4.webp",
         ]);
 
     }

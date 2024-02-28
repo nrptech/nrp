@@ -32,5 +32,13 @@ class CategoriesTableSeeder extends Seeder
         Category::create([
             'name' => 'Disipadores',
         ]);
+
+        Category::create([
+            'name' => 'Portátiles',
+        ]);
+
+        Category::create([
+            'name' => 'PCs',
+        ]);
     }
 }
