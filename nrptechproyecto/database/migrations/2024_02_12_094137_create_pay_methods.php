@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("card_holder", 100);
             $table->string("card_number", 16);
             $table->integer('cvv');
+            $table->boolean("deleted")->default(false);
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');

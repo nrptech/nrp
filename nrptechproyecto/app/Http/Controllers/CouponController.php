@@ -89,14 +89,5 @@ class CouponController extends Controller
     
         return redirect()->back()->with('success', 'Cupón creado con éxito');
     }
-    
-
-
-    public function assignToUsers()
-    {
-    }
-
-    public function assignToProducts()
-    {
-    }
+ 
 }

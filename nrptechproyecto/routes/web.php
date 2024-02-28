@@ -111,6 +111,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('coupons', CouponController::class);
+    Route::resource('orders', OrderController::class);
 
     Route::get('/admin', function () {
         return view('admin.dashboard');

@@ -27,12 +27,12 @@ class ProductController extends Controller
         $allCategories = Category::all();
         $coupons = Coupon::all();
 
-        return view('productos.index', compact('productos', 'taxes', "allCategories", "coupons"));
+        return view('admin.productos.index', compact('productos', 'taxes', "allCategories", "coupons"));
     }
 
     public function create()
     {
-        return view('productos.create');
+        return view('admin.productos.create');
     }
 
     public function store(Request $request)
@@ -61,7 +61,7 @@ class ProductController extends Controller
             $product->images()->create(['url' => $path . $filename]);
         }
 
-        return redirect()->route('productos.index')->with('success', 'Product created successfully.');
+        return redirect()->back()->with('success', 'Product created successfully.');
     }
 
     public function update(Request $request, $product_id)
@@ -97,15 +97,14 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Producto actualizadísimo correctamente');
+        return redirect()->back()->with('success', 'Producto actualizadísimo correctamente');
     }
 
     public function hide(Product $product)
     {
         $product->update(['visible' => !$product->visible]);
 
-        return redirect()->route('productos.index')->with('success', 'El producto se ha ocultado correctamente.');
+        return redirect()->back()->with('success', 'El producto se ha ocultado correctamente.');
     }
 
 
@@ -119,19 +118,6 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return view('products.show', compact('product'));
-    }
-
-    public function addCategory(Product $producto)
-    {
-        if (!$producto) {
-            return redirect()->route('productos.index')->with('error', 'Producto no encontrado');
-        }
-
-        $allCategories = Category::all();
-
-        $assignedCategories = $producto->categories;
-
-        return view('productos.addCategory', compact('producto', 'assignedCategories', 'allCategories'));
     }
 
     public function updateCategories(Request $request)
@@ -152,14 +138,5 @@ class ProductController extends Controller
         $producto->categories()->attach($categoryId);
 
         return redirect()->back()->with('status', 'Categoría asignada al producto correctamente');
-    }
-
-    public function deleteCategory(Request $request, Product $product)
-    {
-        $categoriaId = $request->input('category');
-
-        $product->categories()->detach($categoriaId);
-
-        return redirect()->back()->with('status', 'Categoría eliminada correctamente del producto');
     }
 }

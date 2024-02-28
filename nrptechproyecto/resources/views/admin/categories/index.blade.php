@@ -26,6 +26,7 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Gestionar</th>
         </tr>
         @foreach ($categories as $category)
             <tr id="view{{ $category->id }}">

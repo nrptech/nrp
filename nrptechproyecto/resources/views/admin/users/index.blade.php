@@ -119,36 +119,46 @@
                     <td>
                         @if (count($user->payMethods) > 0)
                             @foreach ($user->payMethods as $payMethod)
-                                <form id="deletePayMethodForm" method="POST"
-                                    action="{{ route('users.deletePayMethods', $user->id) }}"
-                                    enctype="multipart/form-data">
-                                    @method('PUT')
-                                    @csrf
+                                @if (!$payMethod->deleted)
+                                    <form id="deletePayMethodForm" method="POST"
+                                        action="{{ route('users.deletePayMethods', $user->id) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
 
-                                    <input name="payMethod" type="hidden"
-                                        value="{{ $payMethod->id }}">{{ $payMethod->name }}</input>
+                                        <input name="payMethod" type="hidden"
+                                            value="{{ $payMethod->id }}">{{ $payMethod->name }}</input>
 
-                                    <button class="btn btn-danger">Eliminar</button>
+                                        <button class="btn btn-danger">Eliminar</button>
 
-                                </form>
+                                    </form>
+                                @else
+                                <p>{{ $payMethod->name }} <span class="text-muted">-- Eliminado</span></p>
+                                @endif
                             @endforeach
                         @else
                             <p>El usuario no tiene métodos de pago</p>
                         @endif
 
                     </td>
-                    <td>
+                    <td class="d-flex">
                         @if (count($user->addresses) > 0)
                             @foreach ($user->addresses as $address)
-                                <form id="deleteAddressesForm" method="POST"
-                                    action="{{ route('users.deleteAddress', $user->id) }}" enctype="multipart/form-data">
-                                    @method('PUT')
-                                    @csrf
+                                @if (!$address->deleted)
+                                    <form id="deleteAddressesForm" method="POST"
+                                        action="{{ route('users.deleteAddress', $user->id) }}"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
 
-                                    <input type="hidden" name="address" value="{{ $address->id }}">{{ $address->name }}
+                                        <input type="hidden" name="address"
+                                            value="{{ $address->id }}">{{ $address->name }}
 
-                                    <button class="btn btn-danger">Eliminar</button>
-                                </form>
+                                        <button class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                @else
+                                    <p>{{ $address->name }} <span class="text-muted">-- Eliminado</span></p>
+                                @endif
                             @endforeach
                         @else
                             <p>El usuario no tiene direcciones guardadas</p>

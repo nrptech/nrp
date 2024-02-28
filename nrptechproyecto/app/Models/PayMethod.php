@@ -9,7 +9,7 @@ class PayMethod extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name','card_number', 'card_holder', 'cvv'];
+    protected $fillable = ['user_id', 'name','card_number', 'card_holder', 'cvv', 'deleted'];
 
     /**
      * Define la relación inversa con el Usuario.

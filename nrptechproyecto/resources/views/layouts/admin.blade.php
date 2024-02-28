@@ -41,10 +41,13 @@
                             <a class="nav-link" href="{{ route('productos.index') }}">Gestionar Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('coupons.index') }}">Gestionar cupones</a>
+                            <a class="nav-link" href="{{ route('coupons.index') }}">Gestionar Cupones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('categories.index') }}">Gestionar categorias</a>
+                            <a class="nav-link" href="{{ route('categories.index') }}">Gestionar Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.index') }}">Gestionar Pedidos</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

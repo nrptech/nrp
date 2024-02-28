@@ -52,13 +52,13 @@
                         <p class="card-text text-white">
                             <strong>Discounted Price:</strong>
                             <span class="text-success">
-                                {{ $afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100) }}€
+                                {{  number_format($afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100), 2, '.', ',') }}€
                             </span>
                         </p>
                     @else
                         <p class="card-text text-white">
                             <strong>Price:</strong>
-                            {{ $afterTaxes = $product->price * (1 + $product->tax->amount / 100) }}€
+                            {{ number_format($afterTaxes = $product->price * (1 + $product->tax->amount / 100), 2, '.', ',') }}€
                         </p>
                     @endif
                     

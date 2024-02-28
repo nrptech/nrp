@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('id', 'ASC')->paginate(5);
 
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     public function store(Request $request)
@@ -29,7 +29,7 @@ class CategoryController extends Controller
 
         Category::create($input);
 
-        return redirect()->route('categories.index')
+        return redirect()->back()
             ->with('success', 'Category created successfully');
     }
 
@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $category->products()->delete();
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Categoria borrada satisfactoriamente');
+        return redirect()->back()->with('success', 'Categoria borrada satisfactoriamente');
     }
 
     public function update(Request $request, $id)
@@ -53,8 +53,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->update($input);
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Categoría actualizada correctamente');
+        return redirect()->back()->with('success', 'Categoría actualizada correctamente');
     }
 
 }

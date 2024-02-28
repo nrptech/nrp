@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $users = User::orderBy('id', 'ASC')->paginate(5);
         $roles = Role::pluck('name', 'name')->all();
-        return view('users.index', compact('users', 'roles'));
+        return view('admin.users.index', compact('users', 'roles'));
     }
 
     /**
@@ -32,7 +32,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return response()->view('users.create', compact('roles'));
+        return response()->view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController extends Controller
         // Use the correct role names and set the guard_name
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('users.index')
+        return redirect()->back()
             ->with('success', 'User created successfully');
     }
 
@@ -155,7 +155,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return redirect()->route('users.index')
+            return redirect()->back()
                 ->with('error', 'User not found');
         }
 
@@ -163,7 +163,7 @@ class UserController extends Controller
         $user->addresses()->delete();
         $user->delete();
 
-        return redirect()->route('users.index')
+        return redirect()->back()
             ->with('success', 'User deleted successfully');
     }
 
@@ -190,27 +190,17 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Método de pago guardado exitosamente.');
     }
 
-    public function removePayMethod(User $user)
-    {
-        if (!$user) {
-            return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
-        }
-
-        $assignedPayMethods = $user->payMethods;
-
-        return view('users.removePayMethod', compact('user', 'assignedPayMethods'));
-    }
-
     public function deletePayMethod(Request $request)
     {
         $payMethodId = $request->input('payMethod');
-        $payMethodId = PayMethod::find($payMethodId);
+        $payMethod = PayMethod::find($payMethodId);
 
-        if (!$payMethodId) {
+        if (!$payMethod) {
             return redirect()->back()->with('error', 'Método de pago no encontrado');
         }
 
-        $payMethodId->delete();
+        $payMethod->deleted = true;
+        $payMethod->save();
 
         return redirect()->back()->with('status', 'Método de pago eliminado correctamente');
     }
@@ -244,28 +234,18 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Dirección guardada exitosamente.');
     }
 
-    public function removeAddresses(User $user)
-    {
-        if (!$user) {
-            return redirect()->route('user.index')->with('error', 'Usuario no encontrado');
-        }
-
-        $assignedAddresses = $user->addresses;
-
-        return view('users.removeAddresses', compact('user', 'assignedAddresses'));
-    }
-
     public function deleteAddress(Request $request)
     {
         $addressId = $request->input('address');
-        $addressId = Address::find($addressId);
+        $address = Address::find($addressId);
 
 
-        if (!$addressId) {
+        if (!$address) {
             return redirect()->back()->with('error', 'Dirección no encontrada');
         }
 
-        $addressId->delete();
+        $address->deleted = true;
+        $address->save();
 
         return redirect()->back()->with('status', 'Dirección eliminada correctamente');
     }

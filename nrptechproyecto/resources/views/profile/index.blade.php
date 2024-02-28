@@ -77,47 +77,49 @@
             <div class="d-flex flex-column">
 
                 @foreach ($user->payMethods as $payMethod)
-                    <div class="d-flex">
-                        <ul>
-                            <li>
-                                Método de pago: {{ $payMethod->name }}
-                            </li>
+                    @if (!$payMethod->deleted)
+                        <div class="d-flex">
                             <ul>
-                                <li>Titular de la tarjeta: {{ $payMethod->card_holder }}</li>
-                                <li>Número de la tarjeta: {{ $payMethod->card_number }}</li>
+                                <li>
+                                    Método de pago: {{ $payMethod->name }}
+                                </li>
+                                <ul>
+                                    <li>Titular de la tarjeta: {{ $payMethod->card_holder }}</li>
+                                    <li>Número de la tarjeta: {{ $payMethod->card_number }}</li>
+                                </ul>
                             </ul>
-                        </ul>
-                        <form id="deletePayMethodForm" method="POST" action="{{ route('profile.deletePayMethod') }}"
-                            enctype="multipart/form-data">
-                            @method('DELETE')
-                            @csrf
-                            <input type="hidden" name="payMethod" value="{{ $payMethod->id }}">
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#deletePayMethodModal">🗑️</button>
+                            <form id="deletePayMethodForm" method="POST" action="{{ route('profile.deletePayMethod') }}"
+                                enctype="multipart/form-data">
+                                @method('DELETE')
+                                @csrf
+                                <input type="hidden" name="payMethod" value="{{ $payMethod->id }}">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deletePayMethodModal">🗑️</button>
 
-                            <div class="modal fade" id="deletePayMethodModal" tabindex="-1"
-                                aria-labelledby="deletePayMethodModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deletePayMethodModalLabel">Confirmar eliminación
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Estás seguro de que deseas eliminar {{ $payMethod->name }}?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                <div class="modal fade" id="deletePayMethodModal" tabindex="-1"
+                                    aria-labelledby="deletePayMethodModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deletePayMethodModalLabel">Confirmar eliminación
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Estás seguro de que deseas eliminar {{ $payMethod->name }}?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    @endif
                 @endforeach
 
             </div>
@@ -147,51 +149,53 @@
         </div>
         <h1>Direcciones</h1>
         @foreach ($user->addresses as $address)
-            <div class="d-flex">
-                <ul>
-                    <li>
-                        Nombre de la dirección: {{ $address->name }}
-                    </li>
+            @if (!$address->deleted)
+                <div class="d-flex">
                     <ul>
-                        <li>País: {{ $address->country }}</li>
-                        <li>Province: {{ $address->province }}</li>
-                        <li>Ciudad: {{ $address->city }}</li>
-                        <li>Calle: {{ $address->street }}, {{ $address->number }}</li>
-                        <li>Código postal: {{ $address->pc }}</li>
+                        <li>
+                            Nombre de la dirección: {{ $address->name }}
+                        </li>
+                        <ul>
+                            <li>País: {{ $address->country }}</li>
+                            <li>Province: {{ $address->province }}</li>
+                            <li>Ciudad: {{ $address->city }}</li>
+                            <li>Calle: {{ $address->street }}, {{ $address->number }}</li>
+                            <li>Código postal: {{ $address->pc }}</li>
+                        </ul>
                     </ul>
-                </ul>
-                <form id="deleteAddress" method="POST" action="{{ route('profile.deleteAddress') }}"
-                    enctype="multipart/form-data">
-                    @method('DELETE')
-                    @csrf
-                    <input type="hidden" name="address" value="{{ $address->id }}">
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                        data-bs-target="#deleteAddressModal">🗑️</button>
+                    <form id="deleteAddress" method="POST" action="{{ route('profile.deleteAddress') }}"
+                        enctype="multipart/form-data">
+                        @method('DELETE')
+                        @csrf
+                        <input type="hidden" name="address" value="{{ $address->id }}">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteAddressModal">🗑️</button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="deleteAddressModal" tabindex="-1"
-                        aria-labelledby="deleteAddressModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteAddressModalLabel">Confirmar eliminación
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Estás seguro de que deseas eliminar {{ $address->name }}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteAddressModal" tabindex="-1"
+                            aria-labelledby="deleteAddressModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteAddressModalLabel">Confirmar eliminación
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de que deseas eliminar {{ $address->name }}?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            @endif
         @endforeach
         <div>
             <button onclick="addPayMethod(this)">Añadir un nuevo método de pago</button>
@@ -227,11 +231,12 @@
     <div>
         <h4>PEDIDOS</h4>
         @foreach ($user->orders as $order)
-        <h5> Referencia del pedido: {{ $order->id }}</h5>
+            <h5> Referencia del pedido: {{ $order->id }}</h5>
             @foreach ($order->products as $product)
                 <img class="w-25" src="{{ $product->images->first()->url }}" alt="{{ $product->name }}">
                 <p>{{ $product->name }}</p>
             @endforeach
+            <p>Estado del pedido: {{ $order->state }}</p>
             <p>
                 @if ($order->invoice)
                     Precio total del pedido: {{ $order->invoice->total }}

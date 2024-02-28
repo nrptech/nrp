@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('number');
             $table->integer('pc');
             $table->string('country', 45);
+            $table->boolean("deleted")->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
