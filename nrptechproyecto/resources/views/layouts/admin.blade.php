@@ -18,19 +18,45 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
 
+    <link rel="stylesheet" href="{{asset('styles/header.css')}}">
     @yield('links')
 </head>
 
 <body>
     <header>
-        <nav class="d-flex justify-content-around p-4 bg-secondary">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Gestionar Usuarios</a>
-            <a class="btn btn-primary" href="{{ route('productos.index') }}"> Gestionar Productos</a>
-            <a class="btn btn-primary" href="{{ route('coupons.index') }}"> Gestionar cupones</a>
-            <a class="btn btn-primary" href="{{ route('categories.index') }}">Gestionar categorias</a>
-            <a href="{{ url('/home') }}" class="btn btn-warning">Vista de usuario</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ route('admin') }}">Administración</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">Gestionar Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('productos.index') }}">Gestionar Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('coupons.index') }}">Gestionar cupones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories.index') }}">Gestionar categorias</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{{ url('/home') }}" class="btn btn-danger">Vista de usuario</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
+    
     
     <main>
         @yield('content')
