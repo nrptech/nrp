@@ -180,12 +180,12 @@
 
                         <div>
                             <label for="quantity" class="form-label me-2">Número de aplicaciones:</label>
-                            <input class="form-control me-2" type="number" name="quantity" placeholder="100">
+                            <input class="form-control me-2" type="number" name="quantity" placeholder="100" min="1">
                         </div>
 
                         <div>
                             <label for="discount" class="form-label me-2">% de descuento:</label>
-                            <input class="form-control me-2" type="number" name="discount" placeholder="30">
+                            <input class="form-control me-2" type="number" name="discount" placeholder="30" max="100" min="1">
                         </div>
 
                         <div class="d-flex flex-column justify-content-center align-items-center">

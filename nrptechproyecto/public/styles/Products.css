@@ -47,21 +47,21 @@
     height: auto;
 }
 
-::-webkit-scrollbar {
+.categories ::-webkit-scrollbar {
     height: 5px;
 }
 
 
-::-webkit-scrollbar-track {
+.categories ::-webkit-scrollbar-track {
     background: #f1f1f100;
 }
 
-::-webkit-scrollbar-thumb {
+.categories ::-webkit-scrollbar-thumb {
     background: #0037ff;
     border-radius: 15px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.categories ::-webkit-scrollbar-thumb:hover {
     background: #001e8a;
 }
 

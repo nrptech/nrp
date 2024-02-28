@@ -29,7 +29,7 @@
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($products as $product)
-                @if ($product->visible)
+                @if ($product->visible && $product->stock>0)
                     <div class="col product @foreach ($product->categories as $category) {{ $category->name }} @endforeach">
 
                         <div class="card h-100">

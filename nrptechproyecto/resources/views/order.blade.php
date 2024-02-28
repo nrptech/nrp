@@ -23,10 +23,10 @@
                 @php
                     $basePrice = $product->price;
                     $afterTaxes = 0;
-                    if ($product->coupon->discount > 0) {
-                        $afterTaxes = $product->price * ((100 - $product->coupon->discount) / 100) * (1 + $product->tax->amount / 100);
-                    } else {
-                        $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+                    if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active) {  
+                        $afterTaxes = $basePrice * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100);
+                    } else {                    
+                        $afterTaxes = $basePrice * (1 + $product->tax->amount / 100);
                     }
                     $totalPrice += $afterTaxes * $product->pivot->amount;
                 @endphp

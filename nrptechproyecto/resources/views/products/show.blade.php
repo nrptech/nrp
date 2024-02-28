@@ -41,7 +41,7 @@
                     @else
                         <p class="text-danger">Out of Stock</p>
                     @endif
-                    @if(optional($product->coupon)->discount > 0 && optional($product->coupon)->active)
+                    @if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active)
                         <h4 class="badge bg-warning text-dark">Special Offer!</h4>
                         <p>Discount: {{ optional($product->coupon)->discount }}%</p>
                         <p class="card-text text-white">Original Price:
@@ -52,15 +52,16 @@
                         <p class="card-text text-white">
                             <strong>Discounted Price:</strong>
                             <span class="text-success">
-                                {{ number_format($product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100), 2) }}€
+                                {{ $afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100) }}€
                             </span>
                         </p>
                     @else
                         <p class="card-text text-white">
                             <strong>Price:</strong>
-                            {{ number_format($product->price * (1 + $product->tax->amount / 100), 2) }}€
+                            {{ $afterTaxes = $product->price * (1 + $product->tax->amount / 100) }}€
                         </p>
                     @endif
+                    
                     <form action="{{ route('cart.add', $product) }}" method="post">
                         @csrf
                         <input hidden type="number" name="amount" value="1" min="1" class="form-control mb-2">

@@ -58,45 +58,34 @@
                     @endif
                 </a>
                 <ul class="dropdown-menu text-smaller" aria-labelledby="dropdownUser1">
-                    @php
-                        $totalPrice = 0;
-                    @endphp
                     @if (Auth::user() && Auth::user()->cart && Auth::user()->cart->products->count() > 0)
                         @foreach (Auth::user()->cart->products as $product)
                             @php
-                                $basePrice = 0;
+                                $totalPrice = 0;
+                                $basePrice = $product->price;
                                 $afterTaxes = 0;
-                                if (optional($product->coupon)->discount > 0) {
-                                    $basePrice = $product->price * ((100 - optional($product->coupon)->discount) / 100);
+                                if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active) {
                                     $afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100);
                                 } else {
-                                    $basePrice = $product->price;
                                     $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
                                 }
+
                                 $totalPrice += $afterTaxes * $product->pivot->amount;
                             @endphp
-
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-
                                 <span>{{ $product->name }} X {{ $product->pivot->amount }}</span>
-
-
                                 <span>
-                                    {{ number_format($afterTaxes * $product->pivot->amount, 2) }}€
+                                    {{ number_format($totalPrice, 2) }}€
                                 </span>
-
                             </li>
-
-                            <!-- Puedes mostrar otros detalles del item aquí -->
                         @endforeach
                     @else
-                        <li>@lang('messages.emptyCart')</li>
+                        <li>El carrito está vacío</li>
                     @endif
 
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-
 
                     <li><a href="{{ url('/cart') }}" class="dropdown-item px-2 link-dark">@lang('messages.goCart')</a></li>
 
@@ -137,7 +126,7 @@
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li>
-                            <a class="dropdown-item" href="{{ route('profile.index') }}">@lang("messages.profile")</a>
+                            <a class="dropdown-item" href="{{ route('profile.index') }}">@lang('messages.profile')</a>
 
                         </li>
                         <li><a class="dropdown-item" href="{{ route('wishlist.index') }}">@lang('messages.Wishlist')</a></li>

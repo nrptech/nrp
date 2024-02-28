@@ -113,15 +113,16 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'El usuario no tiene un carrito');
         }
 
+        $amount = $request->input("amount");
+
+        if ($request->input("amount") >= 10) {
+            $amount = $request->input("freeAmount");
+        }
+
         $productId = $request->input('product_id');
-        $amount = $request->input('amount');
 
-        $currentamount = $cart->products()->where('product_id', $productId)->first()->pivot->amount;
-
-        $newamount = $currentamount - $amount;
-
-        if ($newamount > 0) {
-            $cart->products()->updateExistingPivot($productId, ['amount' => $newamount]);
+        if ($amount > 0) {
+            $cart->products()->updateExistingPivot($productId, ['amount' => $amount]);
         } else {
             $cart->products()->detach($productId);
         }
@@ -224,10 +225,6 @@ class CartController extends Controller
         $order->load(['products', 'invoice']); // Pre-carga las relaciones
         return view('ordershipped', compact('order'));
     }
-
-
-
-
 
     public function rejectOrder()
     {
