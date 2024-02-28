@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->dateTime("expiration")->default(now()->addDays(10));
+            $table->dateTime("expiration")->default(Carbon::now()->addDays(10)->second(0));
             $table->integer("quantity")->default(5);
             $table->integer("discount")->default(1);
             $table->boolean("active")->default(true);

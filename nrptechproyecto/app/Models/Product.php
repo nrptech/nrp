@@ -16,7 +16,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'description', 'discount', 'tax_id', 'color', 'stock', 'specs', 'features',
+        'name', 'price', 'description', 'coupon_id', 'tax_id', 'color', 'stock', 'visible', 'specs', 'features',
     ];
 
     public function carts()
@@ -49,8 +49,8 @@ class Product extends Model
         return $this->belongsToMany(Wishlist::class, 'wishlist_has_products');
     }
 
-    public function coupons()
+    public function coupon()
     {
-        return $this->hasMany(Coupon::class);
+        return $this->belongsTo(Coupon::class);
     }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->foreign('tax_id')->references('id')->on('taxes');
+            $table->foreign('coupon_id')->references('id')->on('coupons')->nullable()->change();
         });
     }
 
@@ -24,6 +25,7 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['tax_id']);
+            $table->dropForeign(['coupon_id']);
         });
     }
 };

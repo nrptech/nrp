@@ -14,6 +14,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\LanguageLocale;
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,12 +112,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
     })->name("admin");
-    
 
-    Route::post("/coupons/assignToCategories", [CouponController::class, "assignToCategories"])->name("assignToCategories");
+    Route::put('productos/{product}/hide', [ProductController::class, "hide"])->name('productos.hide');
+
 });
-
-
+Route::post('/save-pay-method', [OrderController::class, 'savePayMethod'])->name('savePayMethod');
+Route::post('/add-payment-method', [OrderController::class, 'addPaymentMethod'])->name('addPaymentMethod');
+Route::post('/add-address', [OrderController::class, 'addAddress'])->name('addAddress');
 Route::middleware([LanguageLocale::class])->group(function () {
     Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 });

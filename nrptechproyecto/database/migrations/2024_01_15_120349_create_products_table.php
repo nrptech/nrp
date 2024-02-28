@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->integer('price');
             $table->text('description');
-            $table->integer('discount');
+            $table->unsignedBigInteger('coupon_id')->nullable();
             $table->unsignedBigInteger('tax_id');
             $table->string('color', 45)->default('')->nullable();
             $table->integer('stock');
+            $table->boolean("visible")->default(true);
             $table->text('specs')->default('')->nullable();
             $table->text('features')->default('')->nullable();
             $table->timestamps();

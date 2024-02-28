@@ -66,9 +66,9 @@
                             @php
                                 $basePrice = 0;
                                 $afterTaxes = 0;
-                                if ($product->discount > 0) {
-                                    $basePrice = $product->price * ((100 - $product->discount) / 100);
-                                    $afterTaxes = $product->price * ((100 - $product->discount) / 100) * (1 + $product->tax->amount / 100);
+                                if (optional($product->coupon)->discount > 0) {
+                                    $basePrice = $product->price * ((100 - optional($product->coupon)->discount) / 100);
+                                    $afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100);
                                 } else {
                                     $basePrice = $product->price;
                                     $afterTaxes = $product->price * (1 + $product->tax->amount / 100);

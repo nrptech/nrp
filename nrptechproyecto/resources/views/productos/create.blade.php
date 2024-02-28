@@ -51,12 +51,12 @@
                     <input type="text" name="description" class="form-control" placeholder="Description">
                 </div>
             </div>
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <div class="mb-3">
                     <label for="discount" class="form-label">Discount:</label>
                     <input type="number" name="discount" class="form-control" placeholder="Discount" min="0">
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock:</label>
