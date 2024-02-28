@@ -12,6 +12,8 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\LanguageLocale;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 
 
@@ -37,6 +39,8 @@ Route::get('/(dashboard)', function () {
 })->middleware(['auth', 'verified'])->name('home');
 
 Auth::routes();
+Auth::routes(['verify' => true]);
+
 
 Route::middleware(['auth'])->group(function () {
 

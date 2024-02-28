@@ -19,21 +19,17 @@
 
 /* Estilos para el botón de dropdown de Ubicación */
 .dropdown-toggle {
-  background-color: #343a40; /* Fondo oscuro para el botón */
-  color: #fff; /* Texto blanco para el botón */
   border: 1px solid #fff; /* Borde blanco */
 }
 
 /* Estilos para el contenido del dropdown */
 .dropdown-menu {
-  background-color: #343a40; /* Fondo oscuro para el dropdown */
   padding: 15px;
   border: 1px solid #fff; 
 }
 
 /* Estilos para el enlace en el dropdown */
 .dropdown-menu a {
-  color: #fff;
   text-decoration: none;
   display: block;
   margin-bottom: 10px;
