@@ -149,6 +149,7 @@ class CartController extends Controller
 
     public function confirmOrder(Request $request)
     {
+        $finalPrice = $request->input("finalPrice");
 
         $user = Auth::user();
         $cart = $user->cart;
@@ -177,6 +178,14 @@ class CartController extends Controller
 
         // Subtract the purchased quantity from the product stock
         foreach ($cart->products as $product) {
+            if($product->coupon->active && $product->coupon->quantity > 0){
+                $product->coupon->quantity-=1;
+                if($product->coupon->quantity <= 0){
+                    $product->coupon->active=false;
+                }
+                $product->coupon->save(); 
+            }
+
             $requestedAmount = $product->pivot->amount;
             $product->stock -= $requestedAmount;
             $product->save();
@@ -185,22 +194,8 @@ class CartController extends Controller
         // Create a new order associated with the user
         $order = $user->orders()->create(['state' => 'pending']);
 
-        // Logic to create a new invoice
-
-        $basePrice = $product->price;
-        $afterTaxes = 0;
-        $totalPrice = 0;
-
-        if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active) {
-            $afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100);
-        } else {
-            $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
-        }
-
-        $totalPrice += $afterTaxes * $product->pivot->amount;
-
         $invoice = new Invoice([
-            'total' => $totalPrice,
+            'total' => $finalPrice,
             'date' => now(),
             'address_id' => $request->input("address"),
             'payMethod_id' => $request->input("payment_method"),

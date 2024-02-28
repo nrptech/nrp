@@ -11,21 +11,33 @@
 @endsection
 
 @section('content')
+
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+    @if ($message = Session::get('failure'))
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
     <div class="container mt-5">
         <h1 class="mb-4">Resumen del pedido</h1>
 
         <ul class="list-group">
             @php
                 $totalPrice = 0;
+                $discount = Session::get('discount');
             @endphp
 
             @foreach ($products as $product)
                 @php
                     $basePrice = $product->price;
                     $afterTaxes = 0;
-                    if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active) {  
+                    if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active) {
                         $afterTaxes = $basePrice * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100);
-                    } else {                    
+                    } else {
                         $afterTaxes = $basePrice * (1 + $product->tax->amount / 100);
                     }
                     $totalPrice += $afterTaxes * $product->pivot->amount;
@@ -63,16 +75,25 @@
                 </li>
             @endforeach
         </ul>
+        @if ($discount > 0)
+            <h5>Descuento del {{ $discount }}% aplicado</h5>
+            <span class="text-muted">
+                @php
+                    $totalPrice *= 1 - $discount / 100;
+                @endphp
+                Precio total: {{ number_format($totalPrice, 2) }}€
+            </span>
+        @else
+            <div class="mt-3">
+                <h4 class="text-primary">Precio total del pedido: {{ number_format($totalPrice, 2) }}€</h4>
+            </div>
+        @endif
 
-        <div class="mt-3">
-            <h4 class="text-primary">Precio total del pedido: {{ number_format($totalPrice, 2) }}€</h4>
-        </div>
 
         @if (Auth::user()->payMethods->isEmpty())
             <p class="text-danger">No tienes métodos de pago guardados.</p>
             <form method="post" action="{{ route('savePay') }}">
                 @csrf
-                <!-- Add Bootstrap form-control class for styling -->
                 <div class="row g-3 mt-3">
                     <div class="col-md-6">
                         <label for="name" class="form-label">Nombre de la tarjeta:</label>
@@ -151,8 +172,20 @@
             </form>
         @endif
 
+        <form action="{{ route('order.discount') }}" id="discount" method="POST">
+            @csrf
+
+            <label for="couponName">Introduce tu código promocional:</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" name="couponName">
+                <button class="btn btn-primary">Aplicar</button>
+            </div>
+
+        </form>
+
         <form method="POST" action="{{ route('confirmOrder') }}">
             @csrf
+            <input type="hidden" name="finalPrice" value="{{ $totalPrice }}">
             <div class="mt-3">
                 <label for="address" class="form-label">Seleccionar dirección:</label>
                 <select name="address" id="address" class="form-select">

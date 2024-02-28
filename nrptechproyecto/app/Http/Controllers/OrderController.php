@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\PayMethod;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Coupon;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -17,16 +18,6 @@ class OrderController extends Controller
 
         return view('admin.orders.index', compact('orders'));
     }
-
-    // public function destroy(Coupon $coupon)
-    // {
-    //     $coupon->products()->detach();
-    //     $coupon->users()->detach();
-    //     $coupon->categories()->detach();
-    //     $coupon->delete();
-
-    //     return redirect()->back()->with('success', 'Cupón borrado satisfactoriamente');
-    // }
 
     public function update(Request $request, $id)
     {
@@ -40,29 +31,35 @@ class OrderController extends Controller
         $order->update($input);
 
         return redirect()->back()
-            ->with('success', 'Cupón actualizado correctamente');
+            ->with('success', 'Pedido actualizado correctamente');
     }
 
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'name' => 'required',
-    //         'expiration' => 'required|date',
-    //         'quantity' => 'required|integer',
-    //         'discount' => 'required|numeric',
-    //     ]);
+    public function applyDiscount(Request $request)
+    {
 
-    //     $input = $request->all();
+        $code = $request->input('couponName');
+        $coupon = Coupon::where('name', $code)->first();
 
-    //     $expiration = Carbon::parse($input['expiration'])->second(0);
-    //     $input['expiration'] = $expiration;
+        if ($coupon->active && $coupon->quantity > 0) {
+            if ($coupon->products->count() > 0) {
+                return redirect()->back()->with('failure', 'El cupón no se puede aplicar porque está vinculado a productos');
+            }
 
-    //     $input['active'] = $request->has('active');
+            if ($coupon->categories->count() > 0) {
+                return redirect()->back()->with('failure', 'El cupón no se puede aplicar porque está vinculado a categorías');
+            }
 
-    //     Coupon::create($input);
+            $coupon->quantity-=1;
+            if($coupon->quantity <= 0 ){
+                $coupon->active=false;
+            }
+            $coupon->save();
+            $discount = $coupon->discount;
+            return redirect()->back()->with('discount', $discount);
+        }
 
-    //     return redirect()->back()->with('success', 'Cupón creado con éxito');
-    // }
+        return redirect()->back()->with('failure', 'Cupón no encontrado');
+    }
 
     public function showPayMethods()
     {
