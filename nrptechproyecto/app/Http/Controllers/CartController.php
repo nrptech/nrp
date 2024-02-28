@@ -147,8 +147,9 @@ class CartController extends Controller
         return view('order', ['products' => $productsInCart, 'total' => $total]);
     }
 
-    public function confirmOrder()
+    public function confirmOrder(Request $request)
     {
+
         $user = Auth::user();
         $cart = $user->cart;
 
@@ -185,11 +186,24 @@ class CartController extends Controller
         $order = $user->orders()->create(['state' => 'pending']);
 
         // Logic to create a new invoice
+
+        $basePrice = $product->price;
+        $afterTaxes = 0;
+        $totalPrice = 0;
+
+        if (optional($product->coupon)->discount > 0 && optional($product->coupon)->active) {
+            $afterTaxes = $product->price * ((100 - optional($product->coupon)->discount) / 100) * (1 + $product->tax->amount / 100);
+        } else {
+            $afterTaxes = $product->price * (1 + $product->tax->amount / 100);
+        }
+
+        $totalPrice += $afterTaxes * $product->pivot->amount;
+
         $invoice = new Invoice([
-            'total' => $cart->products->sum(function ($product) {
-                return $product->pivot->amount * $product->price;
-            }),
+            'total' => $totalPrice,
             'date' => now(),
+            'address_id' => $request->input("address"),
+            'payMethod_id' => $request->input("payment_method"),
         ]);
 
         // Associate the Invoice with the Order

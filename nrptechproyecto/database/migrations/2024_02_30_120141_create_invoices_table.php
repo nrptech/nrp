@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('payMethod_id');
+            $table->unsignedBigInteger('address_id');
             $table->integer('total');
             $table->date('date');
             $table->timestamps();
-
+            
+            $table->foreign('payMethod_id')->references('id')->on('pay_methods');
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->foreign('order_id')->references('id')->on('orders');
         });
     }

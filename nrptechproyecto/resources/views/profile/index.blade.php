@@ -22,7 +22,7 @@
             <form method="POST" action="{{ route('profile.update', $user->id) }}">
                 @method('PATCH')
                 @csrf
-            
+
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -31,7 +31,7 @@
                                 value="{{ old('name', $user->name) }}">
                         </div>
                     </div>
-            
+
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <strong>Surname:</strong>
@@ -39,7 +39,7 @@
                                 value="{{ old('surname', $user->surname) }}">
                         </div>
                     </div>
-            
+
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <strong>Email:</strong>
@@ -47,22 +47,23 @@
                                 value="{{ old('email', $user->email) }}">
                         </div>
                     </div>
-            
+
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <strong>Password:</strong>
                             <input type="password" name="password" placeholder="Password" class="form-control">
                         </div>
                     </div>
-            
+
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <strong>Confirm Password:</strong>
-                            <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control">
+                            <input type="password" name="password_confirmation" placeholder="Confirm Password"
+                                class="form-control">
                         </div>
                     </div>
-            
-            
+
+
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Confirmar cambios</button>
                         <button class="btn btn-danger" type="button" onclick="view()">X</button>
@@ -168,8 +169,8 @@
                         data-bs-target="#deleteAddressModal">🗑️</button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="deleteAddressModal" tabindex="-1" aria-labelledby="deleteAddressModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="deleteAddressModal" tabindex="-1"
+                        aria-labelledby="deleteAddressModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -222,5 +223,20 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div>
+        <h4>PEDIDOS</h4>
+        @foreach ($user->orders as $order)
+        <h5> Referencia del pedido: {{ $order->id }}</h5>
+            @foreach ($order->products as $product)
+                <img class="w-25" src="{{ $product->images->first()->url }}" alt="{{ $product->name }}">
+                <p>{{ $product->name }}</p>
+            @endforeach
+            <p>
+                @if ($order->invoice)
+                    Precio total del pedido: {{ $order->invoice->total }}
+                @endif
+            </p>
+        @endforeach
     </div>
 @endsection

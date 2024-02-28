@@ -68,7 +68,7 @@
             <h4 class="text-primary">Precio total del pedido: {{ number_format($totalPrice, 2) }}€</h4>
         </div>
 
-        @if (Auth::user()->payMethods->isEmpty())
+        {{-- @if (Auth::user()->payMethods->isEmpty())
             <p class="text-danger">No tienes métodos de pago guardados.</p>
             <form method="post" action="{{ route('savePay') }}">
                 @csrf
@@ -101,17 +101,6 @@
                 </div>
             </form>
         @else
-            <form method="post" action="{{ route('confirmOrder') }}">
-                @csrf
-                <div class="mt-3">
-                    <label for="payment_method" class="form-label">Seleccionar método de pago:</label>
-                    <select name="payment_method" id="payment_method" class="form-select">
-                        @foreach (Auth::user()->payMethods as $paymentMethod)
-                            <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </form>
 
             <div class="mt-3">
                 <button onclick="addPayMethod(this)" class="btn btn-primary">Añadir un nuevo método de pago</button>
@@ -148,9 +137,9 @@
                     </form>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
-        @if (Auth::user()->addresses->isEmpty())
+        {{-- @if (Auth::user()->addresses->isEmpty())
             <button type="submit" class="btn btn-primary mt-3" disabled>Confirmar Pedido</button>
             <p class="text-danger">No tienes direcciones guardadas.</p>
             <form method="post" action="{{ route('saveAddress') }}">
@@ -246,20 +235,26 @@
                     </form>
                 </div>
             </div>
+        @endif --}}
 
-            <form method="post" action="{{ route('confirmOrder') }}">
-                @csrf
-                <div class="mt-3">
-                    <label for="address" class="form-label">Seleccionar dirección:</label>
-                    <select name="address" id="address" class="form-select">
-                        @foreach (Auth::user()->addresses as $address)
-                            <option value="{{ $address->id }}">{{ $address->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success mt-3">Confirmar Pedido</button>
-            </form>
-        @endif
+        <form method="POST" action="{{ route('confirmOrder') }}">
+            @csrf
+            <div class="mt-3">
+                <label for="address" class="form-label">Seleccionar dirección:</label>
+                <select name="address" id="address" class="form-select">
+                    @foreach (Auth::user()->addresses as $address)
+                        <option value="{{ $address->id }}">{{ $address->name }}</option>
+                    @endforeach
+                </select>
+                <label for="payment_method" class="form-label">Seleccionar método de pago:</label>
+                <select name="payment_method" id="payment_method" class="form-select">
+                    @foreach (Auth::user()->payMethods as $paymentMethod)
+                        <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Confirmar Pedido</button>
+        </form>
 
         <form method="post" action="{{ route('rejectOrder') }}">
             @csrf
