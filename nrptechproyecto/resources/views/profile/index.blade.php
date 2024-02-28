@@ -7,63 +7,62 @@
 @endsection
 
 @section('content')
-    <div>
+    <div class="container mt-4">
         <div id="view">
-            <h1>Datos de usuario</h1>
-            <ul>
-                <li><strong>Nombre:</strong> {{ $user->name }}</li>
-                <li><strong>Apellidos:</strong> {{ $user->surname }}</li>
-                <li><strong>Email:</strong> {{ $user->email }}</li>
+            <h1 class="display-4">Datos de usuario</h1>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Nombre:</strong> {{ $user->name }}</li>
+                <li class="list-group-item"><strong>Apellidos:</strong> {{ $user->surname }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ $user->email }}</li>
             </ul>
-            <button onclick="edit()" class="btn btn-primary">Editar tus datos</button>
+            <button onclick="edit()" class="btn btn-primary mt-3">Editar tus datos</button>
         </div>
         <div id="edit" hidden>
-            <h1>Editar datos de usuario</h1>
+            <h1 class="display-4">Editar datos de usuario</h1>
             <form method="POST" action="{{ route('profile.update', $user->id) }}">
                 @method('PATCH')
                 @csrf
             
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="row g-3">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <strong>Name:</strong>
-                            <input type="text" name="name" placeholder="Name" class="form-control"
+                            <label for="name" class="form-label"><strong>Name:</strong></label>
+                            <input type="text" name="name" id="name" placeholder="Name" class="form-control"
                                 value="{{ old('name', $user->name) }}">
                         </div>
                     </div>
             
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <strong>Surname:</strong>
-                            <input type="text" name="surname" placeholder="surname" class="form-control"
+                            <label for="surname" class="form-label"><strong>Surname:</strong></label>
+                            <input type="text" name="surname" id="surname" placeholder="Surname" class="form-control"
                                 value="{{ old('surname', $user->surname) }}">
                         </div>
                     </div>
             
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <strong>Email:</strong>
-                            <input type="text" name="email" placeholder="Email" class="form-control"
+                            <label for="email" class="form-label"><strong>Email:</strong></label>
+                            <input type="text" name="email" id="email" placeholder="Email" class="form-control"
                                 value="{{ old('email', $user->email) }}">
                         </div>
                     </div>
             
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <strong>Password:</strong>
-                            <input type="password" name="password" placeholder="Password" class="form-control">
+                            <label for="password" class="form-label"><strong>Password:</strong></label>
+                            <input type="password" name="password" id="password" placeholder="Password" class="form-control">
                         </div>
                     </div>
             
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <strong>Confirm Password:</strong>
-                            <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control">
+                            <label for="password_confirmation" class="form-label"><strong>Confirm Password:</strong></label>
+                            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" class="form-control">
                         </div>
                     </div>
             
-            
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                    <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Confirmar cambios</button>
                         <button class="btn btn-danger" type="button" onclick="view()">X</button>
                     </div>
@@ -72,9 +71,8 @@
         </div>
 
         <div>
-            <h1>Datos de pago</h1>
+            <h1 class="display-4">Datos de pago</h1>
             <div class="d-flex flex-column">
-
                 @foreach ($user->payMethods as $payMethod)
                     <div class="d-flex">
                         <ul>
@@ -118,33 +116,28 @@
                         </form>
                     </div>
                 @endforeach
-
             </div>
-        </div>
-
-
-        <div>
-            <button onclick="addPayMethod(this)">Añadir un nuevo método de pago</button>
+            <button onclick="addPayMethod(this)" class="btn btn-primary mt-3">Añadir un nuevo método de pago</button>
             <div hidden>
                 <form method="post" action="{{ route('savePay') }}">
                     @csrf
-                    <label for="name">Nombre de la tarjeta:</label>
-                    <input type="text" id="name" name="name" required max="100">
+                    <label for="name" class="form-label">Nombre de la tarjeta:</label>
+                    <input type="text" id="name" name="name" required max="100" class="form-control">
 
-                    <label for="card_holder">Titular de la tarjeta:</label>
-                    <input type="text" id="card_holder" name="card_holder" required max="100">
+                    <label for="card_holder" class="form-label">Titular de la tarjeta:</label>
+                    <input type="text" id="card_holder" name="card_holder" required max="100" class="form-control">
 
-                    <label for="card_number">Numero de la tarjeta:</label>
-                    <input type="number" id="card_number" name="card_number" required>
+                    <label for="card_number" class="form-label">Numero de la tarjeta:</label>
+                    <input type="number" id="card_number" name="card_number" required class="form-control">
 
-                    <label for="cvv">CVV:</label>
-                    <input type="number" id="cvv" name="cvv" required>
+                    <label for="cvv" class="form-label">CVV:</label>
+                    <input type="number" id="cvv" name="cvv" required class="form-control">
 
-                    <button type="submit">Guardar Método de Pago</button>
+                    <button type="submit" class="btn btn-primary mt-3">Guardar Método de Pago</button>
                 </form>
             </div>
         </div>
-        <h1>Direcciones</h1>
+        <h1 class="display-4">Direcciones</h1>
         @foreach ($user->addresses as $address)
             <div class="d-flex">
                 <ul>
@@ -167,7 +160,6 @@
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#deleteAddressModal">🗑️</button>
 
-                    <!-- Modal -->
                     <div class="modal fade" id="deleteAddressModal" tabindex="-1" aria-labelledby="deleteAddressModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
@@ -192,35 +184,33 @@
                 </form>
             </div>
         @endforeach
-        <div>
-            <button onclick="addPayMethod(this)">Añadir un nuevo método de pago</button>
-            <div hidden>
-                <form method="post" action="{{ route('saveAddress') }}">
-                    @csrf
-                    <label for="name">Nombre de la dirección:</label>
-                    <input type="text" id="name" name="name" required>
+        <button onclick="addAddress(this)" class="btn btn-primary mt-3">Añadir una nueva dirección</button>
+        <div hidden>
+            <form method="post" action="{{ route('saveAddress') }}">
+                @csrf
+                <label for="name" class="form-label">Nombre de la dirección:</label>
+                <input type="text" id="name" name="name" required class="form-control">
 
-                    <label for="province">Provincia:</label>
-                    <input type="text" id="province" name="province" required>
+                <label for="province" class="form-label">Provincia:</label>
+                <input type="text" id="province" name="province" required class="form-control">
 
-                    <label for="city">Ciudad:</label>
-                    <input type="text" id="city" name="city" required>
+                <label for="city" class="form-label">Ciudad:</label>
+                <input type="text" id="city" name="city" required class="form-control">
 
-                    <label for="street">Calle:</label>
-                    <input type="text" id="street" name="street" required>
+                <label for="street" class="form-label">Calle:</label>
+                <input type="text" id="street" name="street" required class="form-control">
 
-                    <label for="number">Número:</label>
-                    <input type="text" id="number" name="number" required>
+                <label for="number" class="form-label">Número:</label>
+                <input type="text" id="number" name="number" required class="form-control">
 
-                    <label for="pc">Código postal:</label>
-                    <input type="text" id="pc" name="pc" required>
+                <label for="pc" class="form-label">Código postal:</label>
+                <input type="text" id="pc" name="pc" required class="form-control">
 
-                    <label for="country">País:</label>
-                    <input type="text" id="country" name="country" required>
+                <label for="country" class="form-label">País:</label>
+                <input type="text" id="country" name="country" required class="form-control">
 
-                    <button type="submit">Guardar Dirección</button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-primary mt-3">Guardar Dirección</button>
+            </form>
         </div>
     </div>
 @endsection
