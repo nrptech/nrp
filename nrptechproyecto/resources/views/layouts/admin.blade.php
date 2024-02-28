@@ -28,12 +28,39 @@
 
 <body>
     <header>
-        <nav class="d-flex justify-content-around p-4 bg-primary"> <!-- Use primary blue color -->
-            <a class="btn btn-light" href="{{ route('users.index') }}"> Gestionar Usuarios</a> <!-- Light button -->
-            <a class="btn btn-light" href="{{ route('productos.index') }}"> Gestionar Productos</a>
-            <a class="btn btn-light" href="{{ route('coupons.index') }}"> Gestionar Cupones</a>
-            <a class="btn btn-light" href="{{ route('categories.index') }}">Gestionar Categorias</a>
-            <a href="{{ url('/home') }}" class="btn btn-warning">Vista de Usuario</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ route('admin') }}">Administración</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">Gestionar Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('productos.index') }}">Gestionar Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('coupons.index') }}">Gestionar Cupones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories.index') }}">Gestionar Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.index') }}">Gestionar Pedidos</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{{ url('/home') }}" class="btn btn-danger">Vista de usuario</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
     
