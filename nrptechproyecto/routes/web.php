@@ -107,6 +107,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile/deleteAddress', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
 
     Route::post("order/disocount", [OrderController::class, "applyDiscount"])->name("order.discount");
+
+    Route::get('/profile/pdf-download/{orderId}', [OrderController::class, 'printInvoice'])->name('profile.print');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

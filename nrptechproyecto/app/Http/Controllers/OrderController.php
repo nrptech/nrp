@@ -8,6 +8,7 @@ use App\Models\PayMethod;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Coupon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -108,5 +109,15 @@ class OrderController extends Controller
         $addresses = $user->addresses;
 
         return view('order.summary', compact('user', 'products', 'paymentMethods', 'addresses'));
+    }
+
+    public function printInvoice($orderId){
+        $order = Order::findOrFail($orderId);
+
+        $pdf = Pdf::loadView('users.invoice');
+
+        $fecha = now()->format('Y-m-d_H-i-s');
+
+        return $pdf->download('Factura_BayGaming_'.$fecha.'.pdf');
     }
 }

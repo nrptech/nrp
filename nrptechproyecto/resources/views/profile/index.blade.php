@@ -222,6 +222,7 @@
         <h4>PEDIDOS</h4>
         @foreach ($user->orders as $order)
             <h5> Referencia del pedido: {{ $order->id }}</h5>
+            <a href="{{route("profile.print", ['orderId'=> $order->id])}}">Descargar PDF</a>
             @foreach ($order->products as $product)
                 <img class="w-25" src="{{ $product->images->first()->url }}" alt="{{ $product->name }}">
                 <p>{{ $product->name }}</p>
