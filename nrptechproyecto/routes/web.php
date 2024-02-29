@@ -125,9 +125,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::post('/save-pay-method', [OrderController::class, 'savePayMethod'])->name('savePayMethod');
 Route::post('/add-payment-method', [OrderController::class, 'addPaymentMethod'])->name('addPaymentMethod');
 Route::post('/add-address', [OrderController::class, 'addAddress'])->name('addAddress');
-Route::middleware([LanguageLocale::class])->group(function () {
-    Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
-});
+Route::get('/switch-language/{language}', [LanguageController::class, 'switchLanguage'])->name('switch.language');
 
 // Register Route for verification notice
 Route::get('/verify', function () {
