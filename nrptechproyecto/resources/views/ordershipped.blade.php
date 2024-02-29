@@ -3,12 +3,15 @@
 
 <head>
     @section('links')
+    <!-- Replace the Bootstrap 4 link with Bootstrap 5 links -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
     <script defer src="{{ asset('js/home.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
+    <!-- Include Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('styles/orderShipped.css') }}">
-@endsection
+    <link rel="stylesheet" href="{{ asset('styles/offer.css') }}">
+    @endsection
     <title>Confirmación de Pedido</title>
 </head>
 
@@ -21,30 +24,21 @@
                         <h1 class="mb-0">¡Gracias por tu compra!</h1>
                     </div>
                     <div class="invoice-body">
-                        <p class="lead">Estado del pedido: En proceso</p>
+                        <p class="lead">Estado del pedido: {{ $latestOrder->state }}</p>
 
                         <div class="product-details">
                             <h4>Productos:</h4>
                             <ul>
-                                @if (isset($order['products']))
-                                    @forelse ($order['products'] as $product)
-                                        <li>{{ $product->name }} - Precio: ${{ $product->price }} - Cantidad:
-                                            {{ $product->pivot->amount }}</li>
-                                    @empty
-                                        <li>No hay productos</li>
-                                    @endforelse
-                                @else
+                                @forelse ($latestOrder->products as $product)
+                                    <li>{{ $product->name }} - Precio: ${{ $product->price }} - Cantidad:
+                                        {{ $product->pivot->amount }}</li>
+                                @empty
                                     <li>No hay productos</li>
-                                @endif
+                                @endforelse
                             </ul>
                         </div>
 
-
-                        @if (isset($order['invoice']))
-                            <p class="lead">El coste total de tu factura es: ${{ $order['invoice']['total'] }}</p>
-                        @else
-                            <p class="lead">El coste total de tu factura es desconocido</p>
-                        @endif
+                        <p class="lead">El coste total de tu factura es: ${{ $latestOrder->invoice->total }}</p>
                     </div>
                 </div>
             </div>
