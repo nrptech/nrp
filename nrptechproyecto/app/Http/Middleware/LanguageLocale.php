@@ -9,19 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class LanguageLocale
 {
-   // LanguageLocale.php
-public function handle(Request $request, Closure $next)
-{
-    if (Auth::check()) {
-        $userLanguage = Auth::user()->language;
-        App::setLocale($userLanguage);
-    } elseif (session()->has('locale')) {
-        App::setLocale(session('locale'));
-    }
 
-    // Your existing middleware logic
-
-    return $next($request);
-}
+   public function handle(Request $request, Closure $next)
+   {
+       if (Auth::check() && Auth::user()->language) {
+           $userLanguage = Auth::user()->language;
+           App::setLocale($userLanguage);
+       } elseif (session()->has('locale')) {
+           App::setLocale(session()->get('locale'));
+       } else {
+           
+           $browserLanguage = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+           App::setLocale($browserLanguage);
+       }
+   
+       return $next($request);
+   }
+   
 
 }

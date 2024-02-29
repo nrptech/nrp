@@ -10,7 +10,6 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Wishlist;
 
-
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -26,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'role_id',
+        'language', 
     ];
 
     /**
@@ -46,6 +46,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+    ];
+
+    // Set default language to English
+    protected $attributes = [
+        'language' => 'en',
     ];
 
     public function addresses()
@@ -87,5 +92,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Coupon::class);
     }
-    
 }

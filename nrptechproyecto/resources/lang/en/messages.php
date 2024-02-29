@@ -1,22 +1,27 @@
-<?php 
+<?php
 
 return [
     "welcome" => "Welcome home",
     "overview" => "Overview",
     "inventory" => "Inventory",
     "cart" => "Cart",
+    "aboutUs" => "About Us",
+    "servProd" => "Services and Products",
+    "infoUs" => "We are NRP-tech, an IT company that specializes in selling products and providing services since 2023",
+    "infoServProd" => "Here, you will find all IT products, including PC components, mobile devices, drivers, and various IT services that encompass repairs or assemblies.",
+    "promise" => "We commit to giving our best to meet the needs of our customers in the best possible way.",
     "products" => "Explore products",
-    "profile" => "Profile", 
+    "profile" => "Profile",
     "logout" => "Logout",
-    "Wishlist"=>"Wishlist",
+    "Wishlist" => "Wishlist",
     "settings" => "My profile",
-    "Search"=> "Search...",
-    "adm"=> "Admin",
-    "langEn"=>"English",
-    "langEsp"=>"Spanish",
+    "Search" => "Search...",
+    "adm" => "Admin",
+    "langEn" => "English",
+    "langEsp" => "Spanish",
     "category" => "Categories",
     "emptyCart" => "The cart is empty",
-    "goCart"=> "Go to the cart",
+    "goCart" => "Go to the cart",
     "E-Mail Address" => "E-Mail Address",
     "Password" => "Password",
     "Remember Me" => "Remember Me",
@@ -49,5 +54,3 @@ return [
     "click here to request another" => "click here to request another",
     "All rights reserved." => "All rights reserved."
 ];
-
-?>
