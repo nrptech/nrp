@@ -1,6 +1,29 @@
 <style>
     .cardP {
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card-body {
+        flex-grow: 1;
+        margin-top: auto; /* Empuja el contenido hacia arriba */
+    }
+
+    .imgMiniature {
+        text-align: center;
+    }
+
+    .imgMiniature img {
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+        width: auto;
+    }
+
+    .btn-block {
+        align-self: flex-end; /* Alinea el botón a la izquierda */
     }
 </style>
 
@@ -20,13 +43,13 @@
                                 alt="{{ $product->name }}" class="img-fluid" id="img{{ $product->id }}-0">
                         @endif
                     </div>
-                    <div class="card-body h-100">
+                    <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text">{{ $product->price }},00 €</p>
-                        <a href="{{ route('products.show', $product) }}" class="btn btn-warning btn-block">
-                            <i>🔎</i> Visitar
-                        </a>
                     </div>
+                    <a href="{{ route('products.show', $product) }}" class="btn btn-warning btn-block">
+                        <i>🔎</i> Visitar
+                    </a>
                 </div>
             </div>
         @endforeach
