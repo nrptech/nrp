@@ -36,7 +36,7 @@
 
         <section class="d-flex justify-content-around align-items-center w-100 navItems">
 
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none mainLogo">
+            <a href="/home" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none mainLogo">
                 <img src="{{ asset('images/nrplogo.png') }}" alt="NrpLogo" width="50" height="auto" />
             </a>
 

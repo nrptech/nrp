@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Compras Hechas</h5>
                     <p class="card-text">Ver tus compras anteriores</p>
-                    <a href="" class="btn btn-primary">Ver Compras</a>
+                    <a href="{{ route('user.orders') }}" class="btn btn-primary">Ver Compras</a>
                 </div>
             </div>
             <div class="card mt-3">

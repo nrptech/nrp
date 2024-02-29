@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Middleware\LanguageLocale;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -94,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/reject', [CartController::class, 'rejectOrder'])->name('rejectOrder');
     Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
     Route::get('/invoice', [OrderController::class, 'showInvoice'])->name('invoice.show');
+    Route::get('/my-orders', [InvoicesController::class, 'showOrders'])->name('user.orders');
     Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::get('/gracias-por-comprar', [CartController::class, 'mostrarAgradecimiento'])->name('agradecimiento');
