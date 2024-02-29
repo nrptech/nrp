@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $user = new User();
         $user->name = "Admin";
         $user->email = "admin@admin.com";
+        $user->email_verified_at ="2023-12-12 12:00:00";
         $user->password = bcrypt('admin');
         $user->surname = "Admin Admin";
         $user->role_id = 1;
