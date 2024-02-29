@@ -3,58 +3,8 @@
 @section('title', 'Orders')
 
 @section('links')
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .order-summary {
-            border: 1px solid #e1e1e1;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .order-number {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .product-list {
-            width: 100%;
-        }
-
-        .product-list th,
-        .product-list td {
-            border-bottom: 1px solid #e1e1e1;
-            padding: 10px;
-            text-align: left;
-        }
-
-        .product-list th {
-            background-color: #f8f9fa;
-        }
-
-        .product-name {
-            font-weight: bold;
-        }
-
-        .total-price {
-            font-size: 1.2em;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .imgMiniature {
-            width: 40px;
-            margin-right: 10px;
-        }
-
-        .imgMiniature img {
-            border-radius: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('styles/userOrder.css') }}">
 @endsection
 
 @section('content')
@@ -76,7 +26,8 @@
                         @foreach ($order->products as $product)
                             <tr>
                                 <td>
-                                    <img src="{{ $product->images->first()->url }}" alt="{{ $product->name }}" class="imgMiniature">
+                                    <img src="{{ $product->images->first()->url }}" alt="{{ $product->name }}"
+                                        class="imgMiniature">
                                     <span class="product-name">{{ $product->name }}</span>
                                 </td>
                                 <td>${{ $product->price }}</td>
@@ -85,11 +36,11 @@
                     </tbody>
                 </table>
 
-                <p class="order-status">Estado del pedido: {{ $order->state }}</p>
-
-                @if ($order->invoice)
-                    <p class="total-price">Precio total del pedido: ${{ $order->invoice->total }}</p>
+                
+                @if ($order->invoice->total)
+                <p class="total-price">Total + IVA: ${{ $order->invoice->total }}</p>
                 @endif
+                <p class="order-status">Estado actual: {{ $order->state }}</p>
             </div>
         @endforeach
     </div>

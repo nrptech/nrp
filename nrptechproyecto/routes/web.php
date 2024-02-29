@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/order', [CartController::class, 'showOrder'])->name('order.show');
 
+    Route::get('/ultimo-pedido', [CartController::class, 'showLastOrderDetails'])->name('lastOrder.show');
 
     Route::post('/order/savePayMethod', [UserController::class, 'savePayMethod'])->name('savePay');
     Route::post('/order/saveAddress', [UserController::class, 'saveAddress'])->name('saveAddress');

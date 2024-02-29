@@ -1,9 +1,3 @@
-<style>
-    .cardP {
-        height: 100%;
-    }
-</style>
-
 <div class="container mt-5">
     <h2 class="text-center mb-4">Productos Destacados</h2>
     <div class="row">
@@ -20,13 +14,13 @@
                                 alt="{{ $product->name }}" class="img-fluid" id="img{{ $product->id }}-0">
                         @endif
                     </div>
-                    <div class="card-body h-100">
+                    <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text">{{ $product->price }},00 €</p>
-                        <a href="{{ route('products.show', $product) }}" class="btn btn-warning btn-block">
-                            <i>🔎</i> Visitar
-                        </a>
                     </div>
+                    <a href="{{ route('products.show', $product) }}" class="btn btn-warning btn-block">
+                        <i>🔎</i> Visitar
+                    </a>
                 </div>
             </div>
         @endforeach
