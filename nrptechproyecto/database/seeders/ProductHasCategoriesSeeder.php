@@ -35,8 +35,8 @@ class ProductHasCategoriesSeeder extends Seeder
         ]);
 
         DB::table('product_has_categories')->insert([
-            'category_id' => 7,
-            'product_id' => 4,
+            'category_id' => 4,
+            'product_id' => 5,
         ]);
 
         DB::table('product_has_categories')->insert([
