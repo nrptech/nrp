@@ -50,7 +50,7 @@ class CategoriesTableSeeder extends Seeder
         ]);
 
         Category::create([ //10
-            'name' => 'Placa Base',
+            'name' => 'PlacaBase',
         ]);
 
         Category::create([ //11

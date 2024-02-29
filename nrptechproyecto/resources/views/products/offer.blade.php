@@ -1,32 +1,3 @@
-<style>
-    .cardP {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .card-body {
-        flex-grow: 1;
-        margin-top: auto; /* Empuja el contenido hacia arriba */
-    }
-
-    .imgMiniature {
-        text-align: center;
-    }
-
-    .imgMiniature img {
-        max-width: 100%;
-        max-height: 100%;
-        height: auto;
-        width: auto;
-    }
-
-    .btn-block {
-        align-self: flex-end; /* Alinea el botón a la izquierda */
-    }
-</style>
-
 <div class="container mt-5">
     <h2 class="text-center mb-4">Productos Destacados</h2>
     <div class="row">
