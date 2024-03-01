@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text">{{ $product->price }},00 €</p>
+                        <p class="card-text">{{ number_format($afterTaxes = $product->price * (1 + $product->tax->amount / 100), 2, '.', ',') }}€</p>
                     </div>
                     <a href="{{ route('products.show', $product) }}" class="btn btn-warning btn-block">
                         <i>🔎</i> Visitar
