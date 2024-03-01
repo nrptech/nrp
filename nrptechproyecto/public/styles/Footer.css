@@ -18,13 +18,6 @@
   margin-bottom: 0.8rem;
 }
 
-/* Estilos para el botón de dropdown de Ubicación */
-.dropdown-toggle {
-  background-color: #17a2b8;
-  color: #fff;
-  border: 1px solid #17a2b8;
-}
-
 /* Estilos para el contenido del dropdown */
 .dropdown-menu {
   padding: 15px;
