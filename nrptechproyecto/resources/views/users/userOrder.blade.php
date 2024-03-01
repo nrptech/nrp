@@ -11,7 +11,7 @@
     <div class="container">
         <h2 class="mt-4 mb-4">Mis Pedidos</h2>
 
-        @foreach ($user->orders as $order)
+        @foreach ($user->orders->reverse() as $order)
             <div class="order-summary">
                 <h3 class="order-number">Pedido #{{ $order->id }}</h3>
 
