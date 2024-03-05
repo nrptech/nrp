@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+Use PDF;
 
 class CartController extends Controller
 {
@@ -148,86 +149,95 @@ class CartController extends Controller
     }
 
     public function confirmOrder(Request $request)
-    {
-        $finalPrice = $request->input("finalPrice");
+{
+    $finalPrice = $request->input("finalPrice");
 
-        $user = Auth::user();
-        $cart = $user->cart;
+    $user = Auth::user();
+    $cart = $user->cart;
 
-        if (!$cart || $cart->products->isEmpty()) {
-            return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
-        }
-
-        $productsWithInsufficientStock = [];
-
-        // Check if there is enough stock for each product
-        foreach ($cart->products as $product) {
-            $requestedAmount = $product->pivot->amount;
-
-            if ($product->stock < $requestedAmount) {
-                // Store the product with insufficient stock in an array
-                $productsWithInsufficientStock[] = $product->name;
-            }
-        }
-
-        if (!empty($productsWithInsufficientStock)) {
-            // Redirect back with an error message for products with insufficient stock
-            $error_message = 'No hay suficiente stock disponible para los siguientes productos: ' . implode(', ', $productsWithInsufficientStock);
-            return redirect()->route('cart.show')->with('error', $error_message);
-        }
-
-        // Subtract the purchased quantity from the product stock
-        foreach ($cart->products as $product) {
-            if($product->coupon->active && $product->coupon->quantity > 0){
-                $product->coupon->quantity-=1;
-                if($product->coupon->quantity <= 0){
-                    $product->coupon->active=false;
-                }
-                $product->coupon->save(); 
-            }
-
-            $requestedAmount = $product->pivot->amount;
-            $product->stock -= $requestedAmount;
-            $product->save();
-        }
-
-        // Create a new order associated with the user
-        $order = $user->orders()->create(['state' => 'pending']);
-
-        $invoice = new Invoice([
-            'total' => $finalPrice,
-            'date' => now(),
-            'address_id' => $request->input("address"),
-            'payMethod_id' => $request->input("payment_method"),
-        ]);
-
-        // Associate the Invoice with the Order
-        $invoice->order()->associate($order);
-        $invoice->save();
-
-        // Detach all products from the cart
-        $cart->products()->detach();
-        // Delete the cart
-        $cart->delete();
-
-        // Attach products from the cart to the order through the intermediate table
-        foreach ($cart->products as $product) {
-            $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
-        }
-        $order->load(['products', 'invoice']);
-        $orderData = [
-            'order_id' => $order->id,
-            'total' => $invoice->total,
-            'order' => $order,
-            'invoice' => $invoice,
-        ];
-
-        // Send the email with the tracking information
-        // Mail::to($user->email)->send(new OrderShipped(['order' => $orderData]));
-
-        // Redirect to the thank you view
-        return view('agradecimiento', compact('orderData'));
+    if (!$cart || $cart->products->isEmpty()) {
+        return redirect()->route('cart.show')->with('error', 'El carrito está vacío');
     }
+
+    $productsWithInsufficientStock = [];
+
+    // Check if there is enough stock for each product
+    foreach ($cart->products as $product) {
+        $requestedAmount = $product->pivot->amount;
+
+        if ($product->stock < $requestedAmount) {
+            // Store the product with insufficient stock in an array
+            $productsWithInsufficientStock[] = $product->name;
+        }
+    }
+
+    if (!empty($productsWithInsufficientStock)) {
+        // Redirect back with an error message for products with insufficient stock
+        $error_message = 'No hay suficiente stock disponible para los siguientes productos: ' . implode(', ', $productsWithInsufficientStock);
+        return redirect()->route('cart.show')->with('error', $error_message);
+    }
+
+    // Subtract the purchased quantity from the product stock
+    foreach ($cart->products as $product) {
+        if($product->coupon->active && $product->coupon->quantity > 0){
+            $product->coupon->quantity-=1;
+            if($product->coupon->quantity <= 0){
+                $product->coupon->active=false;
+            }
+            $product->coupon->save(); 
+        }
+
+        $requestedAmount = $product->pivot->amount;
+        $product->stock -= $requestedAmount;
+        $product->save();
+    }
+
+    // Create a new order associated with the user
+    $order = $user->orders()->create(['state' => 'pending']);
+
+    $invoice = new Invoice([
+        'total' => $finalPrice,
+        'date' => now(),
+        'address_id' => $request->input("address"),
+        'payMethod_id' => $request->input("payment_method"),
+    ]);
+
+    // Associate the Invoice with the Order
+    $invoice->order()->associate($order);
+    $invoice->save();
+
+    // Detach all products from the cart
+    $cart->products()->detach();
+    // Delete the cart
+    $cart->delete();
+
+    // Attach products from the cart to the order through the intermediate table
+    foreach ($cart->products as $product) {
+        $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
+    }
+    $order->load(['products', 'invoice']);
+
+    // Generar los datos del pedido para la factura
+    $orderData = [
+        'order_id' => $order->id,
+        'total' => $invoice->total,
+        'order' => $order,
+        'invoice' => $invoice,
+    ];
+
+   
+    // Crear factura en PDF (opcional)
+    $pdf = PDF::loadView('invoice', compact('orderData'));
+
+    // Elige si mostrar PDF o la vista Blade (descomenta la opción deseada)
+
+    // 1. Mostrar PDF:
+    return $pdf->stream('factura.pdf'); 
+
+    // 2. Mostrar la vista Blade (invoice.blade.php):
+    //return view('invoice', compact('orderData')); 
+}
+
 
     public function ordershipped(Order $order)
     {

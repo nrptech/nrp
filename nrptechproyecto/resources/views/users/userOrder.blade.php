@@ -30,7 +30,7 @@
                                         class="imgMiniature">
                                     <span class="product-name">{{ $product->name }}</span>
                                 </td>
-                                <td>${{ $product->price }}</td>
+                                <td>{{ $product->price }} €</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -38,7 +38,7 @@
 
                 
                 @if ($order->invoice->total)
-                <p class="total-price">Total + IVA: ${{ $order->invoice->total }}</p>
+                <p class="total-price">Total + IVA: {{ $order->invoice->total }} €</p>
                 @endif
                 <p class="order-status">Estado actual: {{ $order->state }}</p>
             </div>
