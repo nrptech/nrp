@@ -50,8 +50,9 @@
                         <tr>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->pivot->amount }}</td>
-                            <td>{{ number_format($product->price, 2) }}€</td>
-                            <td>{{ number_format($product->pivot->amount * $product->price, 2) }}€</td>
+
+                            <td>{{ number_format(($product->price * (1 + ($product->tax->amount / 100))), 2) }}€</td>
+                            <td>{{ number_format($product->pivot->amount * ($product->price * (1 + ($product->tax->amount / 100))), 2) }}€</td>
                         </tr>
                         @endforeach
                     </tbody>
