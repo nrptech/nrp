@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
+Use PDF;
 
 class InvoiceController extends Controller
 {
@@ -36,14 +37,23 @@ class InvoiceController extends Controller
     }
 
     public function show()
-    {
-        $user = Auth::user();
-        $invoice = $user->invoices()->latest()->first();
+{
+    $user = Auth::user();
+    $invoice = $user->invoices()->latest()->first();
 
-        if (!$invoice) {
-            return redirect()->route('cart.show')->with('error', 'No hay factura disponible');
-        }
-
-        return view('invoice.show', ['invoice' => $invoice]);
+    if (!$invoice) {
+        return redirect()->route('cart.show')->with('error', 'No hay factura disponible');
     }
+
+    $orderData = [
+        'order_id' => $invoice->order->id,
+        'total' => $invoice->total,
+        'order' => $invoice->order,
+        'invoice' => $invoice,
+    ];
+
+    $pdf = PDF::loadView('invoice.show', compact('orderData'));
+
+    return $pdf->stream('factura.pdf');
+}
 }

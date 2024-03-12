@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('payMethod_id');
             $table->unsignedBigInteger('address_id');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->date('date');
             $table->timestamps();
             
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('payMethod_id')->references('id')->on('pay_methods');
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->foreign('order_id')->references('id')->on('orders');

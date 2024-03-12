@@ -1,19 +1,13 @@
-@extends('layouts.layout')
-
-@section('title', 'Home')
-
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h1 class="mb-4">¡Gracias por su Compra!</h1>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Su compra se ha realizado con éxito. Agradecemos su preferencia.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura NRP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Agrega el enlace a Bootstrap CDN para utilizar sus estilos -->
+</head>
+<body>
     <div class="container">
         <div class="row mt-4">
             <div class="col-md-6">
@@ -56,6 +50,7 @@
                         <tr>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->pivot->amount }}</td>
+
                             <td>{{ number_format(($product->price * (1 + ($product->tax->amount / 100))), 2) }}€</td>
                             <td>{{ number_format($product->pivot->amount * ($product->price * (1 + ($product->tax->amount / 100))), 2) }}€</td>
                         </tr>
@@ -72,13 +67,6 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-12 text-center">
-                <a href="{{ route('invoice.show') }}" target="_blank" class="btn btn-primary">Descargar Factura</a>
-            </div>
-        </div>
-        
-
-        <div class="row mt-4">
             <div class="col-md-12">
                 <div class="footer">
                     <p>Gracias por su compra.</p>
@@ -87,4 +75,5 @@
             </div>
         </div>
     </div>
-@endsection
+</body>
+</html>
